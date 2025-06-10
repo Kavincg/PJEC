@@ -1,0 +1,87 @@
+﻿﻿@{
+	ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+     <div style="width: 100vw; margin-left: calc(-50vw + 50%)">
+        <header class="hero-section mb-5" style="background-image: url('@Url.Content("~/img/banner.jpg")');
+                                            background-repeat: no-repeat;
+                                            background-position: center;
+                                            background-size: cover;
+                                            height: 90vh;
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                            text-align: center;
+                                            position: relative;">
+
+            <!-- Overlay -->
+            <div class="overlay position-absolute top-0 left-0 w-100 h-100" style="background-color: rgba(0, 0, 0, 0.4);"></div>
+            <!-- Content -->
+            <div class="content position-relative text-white z-index-1">
+                <h1 class="display-1 font-weight-bold">Welcome to Fresh Supermarket</h1>
+                <p class="fs-3 mt-3" style="letter-spacing:0.4rem">SHOPPING MADE EASY</p>
+            </div>
+
+            <!-- Features Section at the bottom-right -->
+            <div class="position-absolute bottom-0 end-0 m-1 p-2" style="background-color: #65a844; text-align: center; color: white ;width: 300px;">
+                <i class="fas fa-sync-alt" style="font-size: 2rem;"></i>
+                <h3 class="fw-bold mt-2">Home of fresh groceries</h3>
+                <p>Fresh Products Every Day.</p>
+            </div>
+
+        </header>
+
+       
+
+    </div>
+
+	@* Show Categories as Pagination *@
+	 <div id="pagination-container"></div> 
+
+</div>
+<style>
+    #category-carousel {
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        
+    }
+
+        #category-carousel::-webkit-scrollbar {
+            display: none; /* Hide scrollbar */
+        }
+        
+
+    img.round {
+        border-radius:100px;
+        transition: transform 0.2s ease-in-out;
+    }
+
+        img.round:hover {
+            transform: scale(1.1) !important;
+        }
+</style>
+@section Scripts
+{
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$.ajax({
+				url: '@Url.Action("Pagination", "Category")',
+				success: function (result) {
+					var htmlContent = $(result).find("#pagination-content").html();
+
+					$("#pagination-container").html(htmlContent);
+
+					console.log(htmlContent);
+
+					// Extract and execute inline scripts from Pagination content
+					var scripts = $(result).filter("script");
+					scripts.each(function () {
+						$.globalEval(this.text); // Dynamically run each script
+					});
+
+				}
+			});
+		});
+	</script>
+}

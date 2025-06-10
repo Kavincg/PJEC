@@ -1,0 +1,131 @@
+﻿@model List<Category>
+@using Supermarket.RolesAndEmailSender
+
+@* <div class="card border-0 my-4"> *@
+@*     <div class="card-header bg-body bg-gradient ml-0 py-3"> *@
+@*         <div class="row"> *@
+@*             <div class="col-12 text-start"> *@
+@*                 <h2 class="text-dark py-2">All categories</h2> *@
+@*             </div> *@
+@*         </div> *@
+@*     </div> *@
+@*     <div class="card-body p-4"> *@
+        
+       
+
+@*     <div class="container" > *@
+@*              <div class="row row-cols-4 g-4 pb-3"> *@
+@*                 @foreach (var category in Model) *@
+@*             { *@
+@*                   <div class="menu-item"> *@
+@*                       	<a asp-controller="Product" asp-action="FindByCategory" asp-route-categoryId="@category.id" class="d-block text-decoration-none"> *@
+@*                         <img src="/img/@category.logoUrl" alt="@category.Name" class="img-fluid"> *@
+@*                         <h3>@category.Name</h3> *@
+@*                         </a> *@
+@*                     </div> *@
+@*             } *@
+@*         </div> *@
+@*     </div> *@
+@* </div> *@
+@* </div> *@
+
+@*  <style> *@
+   
+@*     body { *@
+@*         font-family: Arial, sans-serif; *@
+@*         background-color: #f5f5f5; *@
+@*         color: #000; *@
+@*         line-height: 1.6; *@
+@*     } *@
+
+@*     .menu-item { *@
+@*         background-color: white; *@
+@*         text-align: center; *@
+@*          transition: transform 0.3s ease; *@
+@*          border-radius:5px; *@
+@*         display: flex;   *@
+@*         flex-direction: row; *@
+@*     } *@
+
+       
+
+@*         .menu-item img { *@
+@*             width: 200px; *@
+@*             height: 200px; *@
+@*             margin-bottom: 17px; *@
+@*         } *@
+
+@*         .menu-item h3 { *@
+@*             font-size: 1.3em; *@
+@*             margin-bottom: 10px; *@
+@*             color: #333; *@
+@*         } *@
+@* </style> *@
+<div class="card shadow-lg border-0 my-4 rounded-3">
+    <div class="card-header bg-primary text-white py-3 rounded-top-3">
+        <div class="row align-items-center">
+            <div class="col-12 text-center">
+                <h2 class="text-uppercase mb-0 py-1 fw-bold">All Categories</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="container py-3">
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4 pb-3">
+                @foreach (var category in Model)
+                {
+                    <div class="col d-flex">
+                        <a asp-controller="Product" asp-action="FindByCategory" asp-route-categoryId="@category.id"
+                           class="card h-100 text-decoration-none text-dark category-card shadow-sm border-0 transition-transform">
+                            <div class="card-body text-center d-flex flex-column align-items-center justify-content-center p-3">
+                                <div style="width: 120px; height: 120px; margin-bottom: 1rem; overflow: hidden; display: flex; align-items: center; justify-content: center; border-radius: 50%; background-color: white; border: 1px solid #e9ecef; box-shadow: 0 2px 4px rgba(0,0,0,.05);">
+                                    <img src="/img/@category.logoUrl" alt="@category.Name" class="img-fluid"
+                                         style="max-width: 100px; max-height: 100px; object-fit: contain;">
+                                </div>
+                                <h3 class="card-title h5 mb-0 fw-semibold text-truncate" style="color: #333;">@category.Name</h3>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* Modern font stack */
+        background-color: #f0f2f5; /* Lighter, modern background */
+        color: #212529; /* Darker text for better readability */
+        line-height: 1.6;
+    }
+
+    /* Custom styles for category cards */
+    .category-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 10px; /* More rounded corners */
+        overflow: hidden; /* Ensures content respects border-radius */
+    }
+
+        .category-card:hover {
+            transform: translateY(-5px); /* Lift effect on hover */
+            box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important; /* More pronounced shadow on hover */
+        }
+
+        .category-card .card-body {
+            min-height: 180px; /* Ensure consistent card height */
+        }
+
+        .category-card .card-title {
+            white-space: nowrap; /* Prevent wrapping for category name */
+            overflow: hidden;
+            text-overflow: ellipsis; /* Add ellipsis for long names */
+            max-width: 100%; /* Ensure text-truncate works */
+        }
+
+    /* Consistent header styling */
+    .card-header.bg-primary {
+        background-color: #007bff !important;
+        background-image: linear-gradient(to right, #0056b3, #007bff);
+    }
+</style>

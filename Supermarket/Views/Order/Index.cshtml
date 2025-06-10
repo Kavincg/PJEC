@@ -1,0 +1,105 @@
+﻿@model List<OrderHeader>
+
+<div class="card shadow-lg border-0 mt-5 mb-4">
+    <div class="card-header bg-primary text-white py-3">
+        <div class="row align-items-center">
+            <div class="col-12 text-center">
+                <h2 class="mb-0">Order List</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">User ID</th>
+                        <th scope="col">User Name</th>
+                        <th scope="col">User Phone</th>
+                        <th scope="col">Payment ID</th>
+                        <th scope="col">Payment Date</th>
+                        <th scope="col">Order Date</th>
+                        <th scope="col">Order Total Price</th>
+                        <th scope="col">Order Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var obj in Model.OrderByDescending(h => h.OrderTotal))
+                    {
+                        <tr>
+                            <td>@obj.ApplicationUserId</td>
+                            <td>@obj.Name</td>
+                            <td>@obj.Phone</td>
+                            <td>@obj.PaymentIntentId</td>
+                            <td>@obj.PaymentDate.ToString("yyyy-MM-dd HH:mm")</td>
+                            <td>@obj.OrderDate.ToString("yyyy-MM-dd HH:mm")</td>
+                            <td>@obj.OrderTotal.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-IN"))</td>
+                            <td>
+                                <div class="d-grid">
+                                    <a href="#" class="btn btn-outline-info btn-sm">
+                                        <i class="bi bi-info-circle"></i> Details
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Customizations for a more modern feel */
+    .card-header.bg-primary {
+        background-color: #007bff !important; /* A slightly softer blue */
+        background-image: linear-gradient(to right, #0056b3, #007bff); /* Subtle gradient */
+    }
+
+    .table th, .table td {
+        white-space: nowrap; /* Prevent wrapping in table cells */
+        overflow: hidden;
+        text-overflow: ellipsis; /* Add ellipsis for overflow */
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0.03); /* Lighter stripe effect */
+    }
+
+    .btn-outline-info {
+        color: #17a2b8;
+        border-color: #17a2b8;
+        transition: all 0.3s ease; /* Smooth transition for hover effects */
+    }
+
+        .btn-outline-info:hover {
+            background-color: #17a2b8;
+            color: #fff;
+        }
+
+    /* Adjust font sizes for better readability */
+    h2 {
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .table thead th {
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+    }
+
+    .table tbody td {
+        font-size: 0.9rem;
+    }
+
+    /* Specific style for table borders if you want a slightly softer border */
+    .table-bordered {
+        border-color: #000; /* Lighter border color */
+    }
+
+        .table-bordered th,
+        .table-bordered td {
+            border-color: #000; /* Lighter border color for cells */
+        }
+</style>

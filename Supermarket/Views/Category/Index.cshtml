@@ -1,0 +1,148 @@
+﻿@using Supermarket.Models
+@model List<Category>
+
+<div class="card shadow-lg border-1 mt-5 mb-4">
+    <div class="card-header bg-black text-white py-3">
+        <div class="row align-items-center">
+            <div class="col-12 text-center">
+                <h2 class="mb-0">Category List</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="row pb-3 align-items-center">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6 text-end">
+                <a asp-controller="Category" asp-action="Create" class="btn btn-primary btn-lg shadow-sm">
+                    <i class="bi bi-plus-circle me-2"></i> Create New Category
+                </a>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Category Name</th>
+                        <th scope="col">Display Order</th>
+                        <th scope="col">Logo</th>
+                        <th scope="col" class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var obj in Model.OrderBy(u => u.DisplayOrder))
+                    {
+                        <tr>
+                            <td>@obj.Name</td>
+                            <td>@obj.DisplayOrder</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(obj.logoUrl))
+                                {
+                                    <img class="img-fluid rounded-circle shadow-sm" style="width: 60px; height: 60px; object-fit: cover;" src="~/img/@obj.logoUrl" alt="Category Logo" />
+                                }
+                                else
+                                {
+                                    <span class="text-muted fst-italic">No logo</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.id" class="btn btn-outline-info btn-sm">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </a>
+                                    <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.id" class="btn btn-outline-danger btn-sm">
+                                        <i class="bi bi-trash-fill"></i> Delete
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Customizations for a more modern feel */
+    .card-header.bg-primary {
+        background-color: #007bff !important; /* A slightly softer blue */
+        background-image: linear-gradient(to right, #0056b3, #007bff); /* Subtle gradient */
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        transition: all 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+
+    .table th, .table td {
+        white-space: nowrap; /* Prevent wrapping in table cells */
+        overflow: hidden;
+        text-overflow: ellipsis; /* Add ellipsis for overflow */
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0); /* Lighter stripe effect */
+    }
+
+    .btn-outline-info {
+        color: #17a2b8;
+        border-color: #17a2b8;
+        transition: all 0.3s ease;
+    }
+
+        .btn-outline-info:hover {
+            background-color: #17a2b8;
+            color: #fff;
+        }
+
+    .btn-outline-danger {
+        color: #dc3545;
+        border-color: #dc3545;
+        transition: all 0.3s ease;
+    }
+
+        .btn-outline-danger:hover {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+    /* Adjust font sizes for better readability */
+    h2 {
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .table thead th {
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+    }
+
+    .table tbody td {
+        font-size: 0.9rem;
+    }
+
+    /* Logo specific styles */
+    .img-fluid.rounded-circle.shadow-sm {
+        border: 2px solid rgba(0, 0, 0, 0.05); /* Subtle border for images */
+    }
+
+    /* Specific style for table borders if you want a slightly softer border */
+    .table-bordered {
+        border-color: #000; /* Lighter border color */
+    }
+
+        .table-bordered th,
+        .table-bordered td {
+            border-color: #000; /* Lighter border color for cells */
+        }
+</style>
