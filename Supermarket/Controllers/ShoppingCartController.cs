@@ -109,11 +109,12 @@ namespace Supermarket.Controllers
                 _unitOfWork.Save();
             }
 
-            var domain = "https://localhost:44311/";
+            var domain = "https://localhost:7920/";
             var options = new Stripe.Checkout.SessionCreateOptions
             {
-                SuccessUrl = domain + $"ShoppingCart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
-                CancelUrl = domain + $"ShoppingCart/Index",
+                //SuccessUrl = domain + $"ShoppingCart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
+                SuccessUrl = domain + "ShoppingCart/OrderConfirmation",
+                CancelUrl = domain + $"ShoppingCart/Summary",
                 LineItems = new List<Stripe.Checkout.SessionLineItemOptions>(),
                 Mode = "payment",
             };
@@ -125,8 +126,8 @@ namespace Supermarket.Controllers
                 {
                     PriceData = new SessionLineItemPriceDataOptions
                     {
-                        UnitAmount = (long)(item.price * 100), // $20.50 => 2050
-                        Currency = "usd",
+                        UnitAmount = (long)(item.price * 100), 
+                        Currency = "inr",
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
                             Name = item.Product.Name
@@ -142,7 +143,7 @@ namespace Supermarket.Controllers
             Session session = service.Create(options);
             _unitOfWork.OrderHeader.UpdateStripePaymentID(ShoppingCartVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
             _unitOfWork.Save();
-            Response.Headers.Add("Location", session.Url);
+            Response.Headers.Append("Location", session.Url);
             return new StatusCodeResult(303);
 
             //return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartVM.OrderHeader.Id });
