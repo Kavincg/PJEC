@@ -62,7 +62,7 @@
                     <div class="m-2 fw-bold">
                         <a class="nav-link d-flex" style="color: black" onmouseover="this.style.color='grey';" onmouseout="this.style.color='black';" asp-area="" asp-controller="ShoppingCart" asp-action="Index">
                             @* <i class="bi bi-cart2 me-1"></i> My cart *@
-                            My cart
+                            Cart
                         </a>
                     </div>
                     @if (User.Identity.IsAuthenticated)
@@ -79,13 +79,13 @@
                         <div class="m-2 fw-bold">
                             <a class="nav-link d-flex" style="color: black" onmouseover="this.style.color='grey';" onmouseout="this.style.color='black';" asp-area="Identity" asp-page="/Account/Register">
                                 @* <i class="bi bi-shop me-1"></i> Create User *@
-                                Create User
+                                Add User
                             </a>
                         </div>
                         <div class="m-2 fw-bold">
                             <a class="nav-link d-flex" style="color: black" onmouseover="this.style.color='grey';" onmouseout="this.style.color='black';" asp-controller="Order" asp-action="Index">
                                 @* <i class="bi bi-bar-chart-line-fill me-1"></i> *@
-                                All Orders
+                                Orders
                             </a>
                         </div>
                     }
@@ -112,7 +112,7 @@
                 <div class="col-4 d-flex justify-content-center align-items-center">
                     <form asp-controller="Category" asp-action="Search" method="get" class="d-flex justify-content-end mb-1">
                         <div class="input-group search-elegant" style="max-width: 380px;">
-                            <input type="text" name="search" class="form-control form-control-elegant" placeholder="Search categories..." aria-label="Search categories">
+                            <input type="text" name="search" class="form-control form-control-elegant" placeholder="Search Categories" aria-label="Search categories">
                             <button type="submit" class="btn btn-dark-elegant">
                                 <i class="bi bi-search me-1"></i> Search
                             </button>
