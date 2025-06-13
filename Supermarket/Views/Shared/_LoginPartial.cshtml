@@ -20,7 +20,7 @@
         @* </li> *@
         <div class="m-2 fw-bold">
             <form id="logoutForm" class="form-inline d-flex justify-content-center align-items-center" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0 d-flex align-items-center" style="text-transform: none;">
+                <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0 d-flex align-items-center justify-content-center" style="text-transform: none;">
                     <i class="bi bi-box-arrow-right mb-2 me-2"></i> Logout
                 </button>
             </form>
