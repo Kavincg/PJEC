@@ -4,13 +4,21 @@
 <div class="card shadow-lg border-1 mt-5 mb-4">
     <div class="card-header bg-black text-white py-3">
         <div class="row align-items-center">
-            <div class="col-12 text-center">
+            <div class="col-6">
+                <!-- Changed to col-6 for the heading -->
                 <h2 class="mb-0">Category List</h2>
+            </div>
+            <div class="col-6 text-end">
+                <!-- New col-6 for the button, aligned right -->
+                <a asp-controller="Category" asp-action="Create" class="btn btn-primary btn-lg shadow-sm">
+                    <i class="bi bi-plus-circle me-2"></i> Create New Category
+                </a>
             </div>
         </div>
     </div>
     <div class="card-body p-4">
-        <div class="row pb-3 align-items-center">
+        <!-- The row below is no longer needed as the button is moved -->
+        <!-- <div class="row pb-3 align-items-center">
             <div class="col-md-6">
             </div>
             <div class="col-md-6 text-end">
@@ -18,7 +26,7 @@
                     <i class="bi bi-plus-circle me-2"></i> Create New Category
                 </a>
             </div>
-        </div>
+        </div> -->
 
         <div class="table-responsive">
             <table class="table table-bordered table-striped table-hover align-middle">
@@ -39,7 +47,7 @@
                             <td>
                                 @if (!string.IsNullOrEmpty(obj.logoUrl))
                                 {
-                                    <img class="img-fluid rounded-circle shadow-sm" style="width: 60px; height: 60px; object-fit: cover;" src="~/img/@obj.logoUrl" alt="Category Logo" />
+                                    <img class="img-fluid shadow-sm" style="width: 60px; height: 60px; object-fit: cover;" src="~/img/@obj.logoUrl" alt="Category Logo" />
                                 }
                                 else
                                 {
@@ -132,7 +140,7 @@
     }
 
     /* Logo specific styles */
-    .img-fluid.rounded-circle.shadow-sm {
+    .img-fluid.shadow-sm {
         border: 2px solid rgba(0, 0, 0, 0.05); /* Subtle border for images */
     }
 

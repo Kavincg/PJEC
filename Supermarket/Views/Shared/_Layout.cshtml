@@ -42,7 +42,7 @@
                 <div class="col-2">
                     <div class="d-flex align-items-center me-2">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
-                            <img class="avatar" style="width: 250px; height: 55px;" src="~/img/logoo2.jpg" />
+                            <img class="avatar" style="width: 55px; height: 55px;" src="~/img/logo3.png" />
                         </a>
                         @* <button class="navbar-toggler mx-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation"> *@
                         @*    <span class="navbar-toggler-icon"></span> *@
@@ -119,78 +119,6 @@
                         </div>
                     </form>
                 </div>
-                @* <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel"> *@
-                @*     <div class="offcanvas-header"> *@
-                @*         <h5 class="offcanvas-title fw-bolder text-center ps-3" id="offcanvasNavbarLabel"></h5> *@
-                @*         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button> *@
-                @*     </div> *@
-                     
-                @*     <div class="offcanvas-body"> *@
-                @*         <div class="container"> *@
-                @*             <div class="row"> *@
-                                 
-                @*                 <div class="col-8 align-content-center"> *@
-                @*                     <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity?.Name</a> *@
-                @*                 </div> *@
-                @*             </div> *@
-                @*         </div> *@
-
-                @*         <ul class="navbar-nav justify-content-end flex-grow-1 p-3 list-group h4"> *@
-                @*             <li class="nav-item my-2 px-3 rounded border border-3"> *@
-                @*                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a> *@
-                @*             </li> *@
-                @*             <li class="nav-item my-2 px-3 rounded border border-3"> *@
-                @*                 <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index"> *@
-                @*                     <i class="bi bi-shop"></i> Products *@
-                @*                 </a> *@
-                @*             </li> *@
-                @*             <li class="nav-item my-2 px-3 rounded border border-3"> *@
-                @*                 <a class="nav-link text-dark" asp-area="" asp-controller="ShoppingCart" asp-action="Index"> *@
-                @*                     <i class="bi bi-cart2 me-2"></i> My cart *@
-                @*                 </a> *@
-                @*             </li> *@
-                @*             @if (User.Identity.IsAuthenticated) *@
-                @*             { *@
-                @*                 <li class="nav-item my-2 px-3 rounded border border-3"> *@
-                @*                     <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="GetFavs"> *@
-                @*                         <i class="bi bi-heart"></i> Favourites *@
-                @*                     </a> *@
-                @*                 </li> *@
-                @*             } *@
-                @*             @if (User.IsInRole(SD.Role_Admin)) *@
-                @*             { *@
-                @*                 <li class="nav-item my-2 px-3 rounded border border-3"> *@
-                @*                     <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register"> *@
-                @*                         <i class="bi bi-shop"></i> Create User *@
-                @*                     </a> *@
-                @*                 </li> *@
-                @*                 <li class="nav-item my-2 px-3 rounded border border-3"> *@
-                @*                     <a class="nav-link text-dark" asp-controller="Order" asp-action="Index"> *@
-                @*                         <i class="bi bi-bar-chart-line-fill"></i> *@
-                @*                         All Orders *@
-                @*                     </a> *@
-                @*                 </li> *@
-                @*             } *@
-                @*             @if (User.IsInRole(SD.Role_Admin)){ *@
-                @*                 <li class="nav-item my-2 px-3 rounded border border-3"> *@
-                @*                     <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index"> *@
-                @*                         <i class="bi bi-grid"></i> Categories *@
-                @*                     </a> *@
-                @*                 </li> *@
-                @*             } *@
-                @*             else{ *@
-                @*                 <li class="nav-item my-2 px-3 rounded border border-3"> *@
-                @*                     <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index2"> *@
-                @*                         <i class="bi bi-grid"></i> Categories *@
-                @*                     </a> *@
-                @*                 </li> *@
-                @*             } *@
-
-
-                @*             <partial name="_LoginPartial" /> *@
-                @*         </ul> *@
-                @*     </div> *@
-                @* </div> *@
             </div>
         </nav>
     </header>
@@ -204,38 +132,26 @@
 	@* for Footer overlapping *@
 	<div style="height: 60px;"></div>
 
-    <footer>
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>Contact Us</h3>
-                
-            </div>
-            <div class="footer-section">
-                <h3>Operating Hours</h3>
-                
-            </div>
-            <div class="footer-section ">
-                <h3>Follow Us</h3>
-                <div class="links">
-                    <a href="#">Facebook
-                        <i class="bi bi-facebook" style="color: #3b5998;"></i>
-                    </a>
-
-                    <a href="#">
-                        Instagram
-                        <i class="fab fa-instagram" style="color: #ac2bac;"></i>
-
-                    </a>
-
-                    <a href="#">
-                        Twitter
-                        <i class="fab fa-twitter fa-2x" style="color: #55acee;"></i>
-                    </a>
-
-                </div>
-            </div>
-        </div>
-    </footer>
+    @* <footer> *@
+    @*     <div class="footer-container"> *@
+    @*         <div class="footer-section"> *@
+    @*             <h3>Contact Us</h3>  *@
+    @*             <p>800-123-4567</p> *@
+    @*         </div> *@
+    @*         <div class="footer-section"> *@
+    @*             <h3>Operating Hours</h3> *@
+    @*             <p>08:30AM - 18:30PM</p> *@
+    @*         </div> *@
+    @*         <div class="footer-section"> *@
+    @*             <h3>Follow Us</h3> *@
+    @*             <div class="links"> *@
+    @*                 <a href="#">Facebook<i class="bi bi-facebook" style="color: #3b5998;"></i></a> *@
+    @*                 <a href="#">Instagram<i class="fab fa-instagram" style="color: #ac2bac;"></i></a> *@
+    @*                 <a href="#">Twitter<i class="fab fa-twitter fa-2x" style="color: #55acee;"></i></a> *@
+    @*             </div> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* </footer> *@
     
     <style>
         footer {
@@ -250,7 +166,7 @@
             display: flex;
             flex-direction: row;
             justify-content: space-around;
-            height: 300px;
+            height: 150px;
             align-items: center;
             flex-wrap: nowrap;
         }
