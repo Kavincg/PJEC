@@ -37,8 +37,8 @@
 </head>
 <body>
     <header style="margin-top:70px;">
-        <nav class="navbar bg-light border-bottom mb-3 fixed-top" style="height: 70px;">
-            <div class="container-fluid">
+        <nav class="navbar border-bottom mb-3 fixed-top topbar-color" style="height: 70px;">
+            <div class="container-fluid ">
                 <div class="col-2">
                     <div class="d-flex align-items-center me-2">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
@@ -109,12 +109,12 @@
                     }
 
                 </div>
-                <div class="col-4 d-flex justify-content-center align-items-center">
-                    <form asp-controller="Category" asp-action="Search" method="get" class="d-flex justify-content-end mb-1">
+                <div class="col-2 d-flex justify-content-center align-items-center">
+                    <form asp-controller="Category" asp-action="Search" method="get" class="d-flex justify-content-end">
                         <div class="input-group search-elegant" style="max-width: 380px;">
                             <input type="text" name="search" class="form-control form-control-elegant" placeholder="Search Categories" aria-label="Search categories">
                             <button type="submit" class="btn btn-dark-elegant">
-                                <i class="bi bi-search me-1"></i> Search
+                                <i class="bi bi-search me-1"></i>
                             </button>
                         </div>
                     </form>
@@ -206,7 +206,7 @@
 
         .input-group > .form-control,
         .input-group > .btn {
-            height: 42px; /* Ensure consistent height */
+            height: 40px; /* Ensure consistent height */
         }
 
         .btn-primary {
@@ -259,6 +259,10 @@
                 background-color: #212529; /* Even darker on hover */
                 border-color: #1a1d20;
             }
+
+        .topbar-color {
+            background-color: rgb(234,80,28)
+        }
 
         /* Adjust the input-group styling for a seamless look */
         .search-elegant .input-group-text,
