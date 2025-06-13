@@ -109,11 +109,11 @@ namespace Supermarket.Controllers
                 _unitOfWork.Save();
             }
 
-            var domain = "https://localhost:7920/";
+            var domain = Request.Scheme + "://" + Request.Host.Value + "/";
             var options = new Stripe.Checkout.SessionCreateOptions
             {
                 //SuccessUrl = domain + $"ShoppingCart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
-                SuccessUrl = domain + "ShoppingCart/OrderConfirmation",
+                SuccessUrl = domain + $"ShoppingCart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
                 CancelUrl = domain + $"ShoppingCart/Summary",
                 LineItems = new List<Stripe.Checkout.SessionLineItemOptions>(),
                 Mode = "payment",
