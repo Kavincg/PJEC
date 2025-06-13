@@ -1,7 +1,7 @@
 ﻿@using Supermarket.Models
 @model Category
 
-<div class="card border-0 mt-4">
+@* <div class="card border-0 mt-4">
     <div class="card-header bg-body bg-gradient ml-0 py-3">
     <div class="row">
         <div class="col-12 text-start">
@@ -44,13 +44,64 @@
             </div>
         </form>
     </div>
+</div> *@
+<div class="container py-5">
+    <div class="card shadow-lg border-0 rounded-3">
+
+        <div class="card-header bg-dark text-white p-4 rounded-top-3">
+            <div class="row align-items-center">
+                <div class="col-12 text-center text-md-start">
+                    <h3 class="mb-0 text-white">Create New Category</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-4">
+            <form method="post" class="row g-3">
+                <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                <div class="col-12">
+                    <div class="form-floating">
+                        <input asp-for="Name" class="form-control border-secondary rounded-2" placeholder="Category Name" />
+                        <label asp-for="Name" class="text-muted">Category Name</label>
+                        <span asp-validation-for="Name" class="text-danger small mt-1 d-block"></span>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-floating">
+                        <input asp-for="DisplayOrder" class="form-control border-secondary rounded-2" placeholder="Display Order" />
+                        <label asp-for="DisplayOrder" class="text-muted">Display Order</label>
+                        <span asp-validation-for="DisplayOrder" class="text-danger small mt-1 d-block"></span>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-floating">
+                        <input asp-for="logoUrl" class="form-control border-secondary rounded-2" placeholder="Logo URL" />
+                        <label asp-for="logoUrl" class="text-muted">Logo URL</label>
+                        <span asp-validation-for="logoUrl" class="text-danger small mt-1 d-block"></span>
+                    </div>
+                </div>
+
+                <div class="col-12 d-flex justify-content-end gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary px-4 py-2">
+                        <i class="bi bi-plus-circle me-2"></i> Create
+                    </button>
+                    <a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary px-4 py-2">
+                        <i class="bi bi-arrow-left-circle me-2"></i> Back to List
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 
 
 
-@* @section Scripts{
+@section Scripts{
     @{
     <partial name="_ValidationScriptsPartial"/>
     }
-} *@
+}

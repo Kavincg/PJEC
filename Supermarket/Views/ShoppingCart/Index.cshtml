@@ -1,5 +1,4 @@
-﻿
- @model ShoppingCartVM
+﻿@model ShoppingCartVM
 
 <section class="h-100">
     <div class="container h-100 py-5">
@@ -11,36 +10,53 @@
 
                 @foreach (var item in Model.ShoppingCartList)
                 {
-                    <div class="card rounded-3 mb-4">
-                        <div class="card-body p-4">
-                            <div class="row d-flex justify-content-between align-items-center">
-                                <div class="col-md-2 col-lg-2 col-xl-2">
-                                    <img src="/img/@item.Product.imgURL" class="img-fluid rounded-3" alt="@item.Product.Name"
-                                         style="aspect-ratio: 1 / 1; height: auto; max-height: 100px; object-fit: contain; background-color: white;">
-                                </div>
-                                <div class="col-md-3 col-lg-3 col-xl-3">
-                                    <p class="lead fw-normal mb-2">@item.Product.Name</p>
-                                    <p>
-                                        <span class="text-muted">Description:</span>
-                                        @Html.Raw(item.Product.Description)
-                                    </p>
-                                </div>
-                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                    <a asp-action="Minus" asp-route-cartId="@item.Id" class="btn btn-link px-2">
-                                        <i class="fas fa-minus"></i>
-                                    </a>
-                                    <input id="form1" min="0" name="quantity" value="@item.quantity" type="number" class="form-control form-control-sm" />
-                                    <a asp-action="Plus" asp-route-cartId="@item.Id" class="btn btn-link px-2">
-                                        <i class="fas fa-plus"></i>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                    <h5 class="mb-0"> INR @item.Product.price.ToString("F2")</h5>
-                                </div>
-                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                    <a asp-action="Remove" asp-route-cartId="@item.Id" class="text-danger">
-                                        <i class="fas fa-trash fa-lg"></i>
-                                    </a>
+                    @* new cart card  *@
+                    <div class="row justify-content-center mb-3">
+                        <div class="col-md-12 col-xl-10">
+                            <div class="card shadow-0 border rounded-3">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                                            <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                                                <img src="/img/@item.Product.imgURL"
+                                                     class="w-100" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-6 col-xl-6">
+                                            <h5 class="m-2">@item.Product.Name</h5>
+                                            
+                                            <p class="text-truncate-container m-2 mb-md-0">
+                                                @Html.Raw(item.Product.Description)
+                                            </p>
+                                            
+                                        </div>
+                                        <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                                            <div class="d-flex flex-row align-items-center mb-1">
+                                                <h4 class="mb-1 me-1">INR @item.Product.price.ToString("F2")</h4>
+                                            </div>
+                                            <div class="d-flex align-items-center justify-content-start mt-4">
+                                                <div class="col-md-1 col-lg-1 col-xl-1 me-2">
+                                                    <a asp-action="Remove" asp-route-cartId="@item.Id" class="text-danger">
+                                                        <i class="fas fa-trash fa-lg"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-4 col-lg-3 col-xl-2 d-flex ms-2">
+                                                    <a asp-action="Minus" asp-route-cartId="@item.Id" class="btn btn-link">
+                                                        <i class="fas fa-minus"></i>
+                                                    </a>
+                                                    
+                                                    <input id="form1" min="0" name="quantity" value="@item.quantity" type="number" class="form-control text-center quantity-input" style="width: 100px;" readonly>
+                                                    <a asp-action="Plus" asp-route-cartId="@item.Id" class="btn btn-link px-2">
+                                                        <i class="fas fa-plus"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            @* <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary btn-sm mt-2" type="button">
+                                                Add to wishlist
+                                            </button> *@
+                                            
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -54,7 +70,7 @@
                             <span>@Model.OrderHeader.OrderTotal.ToString("F2")</span>
                         </h5>
                         <div class="col-md-2 offset-md-5">
-                            <a asp-action="Summary" class="btn btn-outline-success border-1 bg-gradient w-200 py-2">Summary</a>
+                            <a asp-action="Summary" class="btn btn-outline-warning border-1 bg-gradient py-2">Summary</a>
                         </div>
                     </div>
                 </div>
@@ -62,3 +78,35 @@
         </div>
     </div>
 </section>
+
+<style>
+    .text-truncate-container {
+        -webkit-line-clamp: 4;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .quantity-spinner .form-control {
+        width: 50px; /* Adjust this value as needed to ensure the number is visible */
+        min-width: 40px; /* Ensure a minimum width */
+        max-width: 70px; /* Prevent it from becoming too wide */
+        flex-grow: 0; /* Prevent the input from growing unnecessarily */
+        flex-shrink: 0; /* Prevent the input from shrinking unnecessarily */
+    }
+
+    .quantity-spinner .btn {
+        flex-shrink: 0; /* Prevent buttons from shrinking */
+    }
+
+    /* Optional: Further refine input styling for better readability */
+    .quantity-input {
+        -moz-appearance: textfield; /* Remove default number input spinner in Firefox */
+    }
+
+        .quantity-input::-webkit-outer-spin-button,
+        .quantity-input::-webkit-inner-spin-button {
+            -webkit-appearance: none; /* Remove default number input spinner in Webkit browsers */
+            margin: 0;
+        }
+</style>

@@ -1,13 +1,11 @@
 ﻿@model List<Product>
 @using Supermarket.RolesAndEmailSender
 
-
-
 <div class="card border-0" style="margin-top:100px">
     <div class="card-header bg-body bg-gradient ml-0 py-3">
         <div class="row">
             <div class="col-12 text-start">
-                <h2 class="text-dark py-2">Products</h2>
+                <h1>Products</h1>
             </div>
         </div>
     </div>
@@ -43,8 +41,9 @@
                 @foreach (var product in Model)
                 {
                     <div class="col">
-                        <div class="card border-0 p-3 border-5 rounded cardHover">
-                            <!-- Card Link -->
+
+                        @* new card  *@
+                        <div class="card cardHover">
                             <a asp-action="Details" asp-route-id="@product.Id" class="card-link text-decoration-none text-dark">
                                 @{
                                     List<Category> categories = ViewBag.Categories as List<Category>;
@@ -58,60 +57,42 @@
                                         }
                                     }
                                 }
-                                <img src="~/img/@product.imgURL"
-                                     class="card-img-top rounded img-fluid"
-                                     alt="@product.Name"
-                                     style="aspect-ratio: 1 / 1; object-fit: contain; background-color: white;">
-
+                                <img src="~/img/@product.imgURL" class="card-img-top" style="width: 100%; height: 200px;" alt="@product.Name">
                                 <div class="mt-2 text-center">
                                     <p class="card-title h6 text-dark opacity-75">@categoryName</p>
                                 </div>
-
-                                <div class="card-body pb-0 text-center">
-                                    <p class="card-title h5 text-uppercase">@product.Name</p>
-                                </div>
-                                <div class="card-body pb-0 text-center">
-                                    <p class="card-title h6" style="color:gray">@product.Description</p>
-                                </div>
-                                <div class="card-body pb-0 text-center">
-                                    <p class="card-title h6" style="color:darkorange"> INR @product.price.ToString("F2")</p>
-                                </div>
-                            </a>
-
-                            
-                            <div class="container">
-                                <div class="row mt-3 mb-1 align-items-center justify-content-center">
-
-                                    
-                                    <div class="col-4 px-1" style="width:150px">
-                                        <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-success bg-gradient border-0 form-control d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-info-circle me-2 mb-1"></i>
-                                            Details
-                                        </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">@product.Name</h5>
+                                    <p class="card-text text-truncate-container">@product.Description</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="h5 mb-0">₹@product.price.ToString("F2")</span>
                                     </div>
-                                    <div class="col-2 p-0 text-center border py-1 rounded">
-                                        <a href="javascript:void(0)" class="favourite-toggle" data-product-id="@product.Id">
-                                            <i class="bi @(product.IsFavorited ? "bi-heart-fill text-danger" : "bi-heart") h4"></i>
-                                        </a>
-                                    </div>
-
                                 </div>
-                                @if (User.IsInRole(SD.Role_Admin))
-                                {
-                                    <div class="row mt-2">
-                                        <div class="col-12">
-                                            <div class="btn-group w-100" role="group">
-                                                <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-outline-success w-50">
-                                                    <i class="bi bi-pencil-square"></i> Edit
-                                                </a>
-                                                <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-outline-danger w-50">
-                                                    <i class="bi bi-trash-fill"></i> Delete
-                                                </a>
+                                <div class="card-footer d-flex justify-content-between align-items-center bg-light">
+                                    <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-success btn-sm border-0 d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-info-circle me-2 mb-1"></i>
+                                        Details
+                                    </a>
+                                    @if (User.IsInRole(SD.Role_Admin))
+                                    {
+                                        <div class="row m-1">
+                                            <div class="col-12">
+                                                <div class="btn-group w-100" role="group">
+                                                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-outline-success w-50">
+                                                        <i class="bi bi-pencil-square"></i>
+                                                    </a>
+                                                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-outline-danger w-50">
+                                                        <i class="bi bi-trash-fill"></i>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                }
-                            </div>
+                                    }
+                                    <a href="javascript:void(0)" class="favourite-toggle" data-product-id="@product.Id">
+                                        <i class="bi @(product.IsFavorited ? "bi-heart-fill text-danger" : "bi-heart") h4"></i>
+                                    </a>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 }
@@ -120,15 +101,22 @@
     </div>
 </div>
 <style>
-.cardHover {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+    .cardHover {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-.cardHover:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-}
- </style>
+        .cardHover:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+    .text-truncate-container {
+        -webkit-line-clamp: 2;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -163,7 +151,7 @@
                 }
             });
         });
-
+        
         // On page load, restore favorite states
         $(document).ready(function () {
             $('.favourite-toggle').each(function () {
