@@ -43,21 +43,26 @@
                     </a>
                 </div>
                 <div class="col-6 d-flex h-100 justify-content-center align-items-center">
-                    <div class="m-2 fw-bold">
-                        <a class="nav-link text-white hover-lighten-bg rounded-pill px-3 py-2 transition-all" asp-area="" asp-controller="Product" asp-action="Index">
-                            Products
-                        </a>
-                    </div>
-                    <div class="m-2 fw-bold">
-                        <a class="nav-link text-white hover-lighten-bg rounded-pill px-3 py-2 transition-all" asp-area="" asp-controller="ShoppingCart" asp-action="Index">
-                            Cart
-                        </a>
-                    </div>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <div class="m-2 fw-bold">
+                            <a class="nav-link text-white hover-lighten-bg rounded-pill px-3 py-2 transition-all" asp-area="" asp-controller="Product" asp-action="Index">
+                                Products
+                            </a>
+                        </div>
+                        <div class="m-2 fw-bold">
                             <a class="nav-link text-white hover-lighten-bg rounded-pill px-3 py-2 transition-all" asp-area="" asp-controller="Product" asp-action="GetFavs">
                                 Favourites
+                            </a>
+                        </div>
+                        <div class="m-2 fw-bold">
+                            <a class="nav-link text-white hover-lighten-bg rounded-pill px-3 py-2 transition-all" asp-area="" asp-controller="ShoppingCart" asp-action="Index">
+                                Cart
+                            </a>
+                        </div>
+                        <div class="m-2 fw-bold">
+                            <a class="nav-link text-white hover-lighten-bg rounded-pill px-3 py-2 transition-all" asp-controller="Order" asp-action="Index">
+                                Orders
                             </a>
                         </div>
                     }
@@ -66,11 +71,6 @@
                         <div class="m-2 fw-bold">
                             <a class="nav-link text-white hover-lighten-bg rounded-pill px-3 py-2 transition-all" asp-area="Identity" asp-page="/Account/Register">
                                 Users
-                            </a>
-                        </div>
-                        <div class="m-2 fw-bold">
-                            <a class="nav-link text-white hover-lighten-bg rounded-pill px-3 py-2 transition-all" asp-controller="Order" asp-action="Index">
-                                Orders
                             </a>
                         </div>
                         <div class="m-2 fw-bold">

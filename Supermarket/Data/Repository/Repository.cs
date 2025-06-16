@@ -9,12 +9,13 @@ namespace Supermarket.Data.Repository
     {
         private readonly AppDbContext _db;
         internal DbSet<T> dbSet;
+
         public Repository(AppDbContext db)
         {
             _db = db;
             this.dbSet = _db.Set<T>();
-            //_db.Categories == dbSet
-            _db.Products.Include(u => u.Category).Include(u => u.CategoryId);
+            // The following line might not be necessary here if you're including dynamically.
+            // _db.Products.Include(u => u.Category).Include(u => u.CategoryId);
         }
 
         public void Add(T entity)
@@ -30,15 +31,38 @@ namespace Supermarket.Data.Repository
 
         public T Get(Expression<Func<T, bool>> filter)
         {
-            IQueryable<T> query=dbSet;
-           query = query.Where(filter);
+            IQueryable<T> query = dbSet;
+            query = query.Where(filter);
             return query.FirstOrDefault();
         }
 
+        // This is the existing GetAll without parameters.
         public IEnumerable<T> GetAll()
         {
             IQueryable<T> query = dbSet;
-            
+            return query.ToList();
+        }
+
+        // This is the new or updated GetAll method that supports filtering and including related entities.
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
+        {
+            IQueryable<T> query = dbSet;
+
+            // Apply filter if provided
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            // Apply include properties if provided
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp.Trim());
+                }
+            }
+
             return query.ToList();
         }
 
@@ -56,7 +80,7 @@ namespace Supermarket.Data.Repository
 
         public async Task<T> RemoveAsync(T entity)
         {
-            _db.Set<T>().Remove(entity);    
+            _db.Set<T>().Remove(entity);
             return entity;
         }
 
@@ -64,6 +88,5 @@ namespace Supermarket.Data.Repository
         {
             dbSet.RemoveRange(entity);
         }
-
     }
 }
