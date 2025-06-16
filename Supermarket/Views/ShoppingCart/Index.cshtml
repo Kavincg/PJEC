@@ -40,8 +40,8 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-lg-2 col-xl-2 text-end product-price-column">
-                                                <p class="h5 mb-0 text-dark font-bold">INR @((item.Product.price * item.quantity).ToString("F2"))</p>
-                                                <p class="text-muted small mb-0">(@item.Product.price.ToString("F2") per item)</p> 
+                                                <p class="h5 mb-0 text-dark font-bold">₹ @((item.Product.price * item.quantity).ToString("F2"))</p>
+                                                <p class="text-muted small mb-0">@item.Product.price.ToString("F2") / item</p> 
                                                 <a asp-action="Remove" asp-route-cartId="@item.Id" class="text-danger mt-2 d-block text-decoration-none">
                                                     <i class="bi bi-trash-fill me-1"></i> Remove
                                                 </a>
@@ -55,7 +55,7 @@
                                 <div class="card-body p-4">
                                     <h4 class="d-flex justify-content-between align-items-center mb-4 text-dark font-bold">
                                         <span>Cart Total</span>
-                                        <span class="text-orange-600">INR @Model.OrderHeader.OrderTotal.ToString("F2")</span>
+                                        <span class="text-orange-600">₹ @Model.OrderHeader.OrderTotal.ToString("F2")</span>
                                     </h4>
 
                                     <div class="d-grid gap-2"> @* Use d-grid for full width button *@
@@ -73,7 +73,7 @@
                                 Your shopping cart is empty. Start shopping!
                             </div>
                             <div class="text-center mt-4">
-                                <a asp-controller="Home" asp-action="Index" class="btn bg-gradient-header btn-lg rounded-pill px-5 py-3 shadow-sm hover-scale-105 transition-all text-white">
+                                <a asp-controller="Home" asp-action="Index" class=" btn btn-outline-light rounded-pill bg-gradient-header btn-lg rounded-pill py-3 w-100 bg-gradient-header btn-lg px-5 py-3 shadow-sm hover-scale-105 transition-all">
                                     <i class="bi bi-shop me-2"></i> Continue Shopping
                                 </a>
                             </div>

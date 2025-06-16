@@ -13,7 +13,7 @@
                 @if (User.IsInRole(SD.Role_Admin))
                 {
                     <a asp-controller="Product" asp-action="Create"
-                       class="btn bg-gradient-header rounded-pill px-4 py-2 shadow-sm text-white hover-scale-105 transition-all">
+                       class="btn bg-grad-header rounded-pill px-4 py-2 shadow-sm text-white hover-scale-105 transition-all">
                         <i class="bi bi-plus-circle me-2"></i> Create New Product
                     </a>
                 }
@@ -24,10 +24,10 @@
             <div class="mb-4">
                 @* Added margin-bottom for search form *@
                 <form asp-controller="Product" asp-action="Index" method="get">
-                    <div class="input-group search-bar rounded-pill overflow-hidden shadow-sm">
+                    <div class="input-group search-bar rounded-pill overflow-hidden shadow-sm ">
                         @* Styled search bar *@
                         <input type="text" name="search" class="form-control border-0" placeholder="Search Products by name or category...">
-                        <button type="submit" class="btn btn-outline-secondary px-4">
+                        <button type="submit" class="btn px-4  btn-outline-light hover-scale-105 transition-all bg-gradient-header text-dark">
                             <i class="bi bi-search"></i> Search
                         </button>
                     </div>
@@ -305,8 +305,8 @@
     }
 
         .search-bar .btn:hover {
-            background-color: darken(var(--orange-main-color), 10%); /* Darker orange on hover */
-            border-color: darken(var(--orange-main-color), 10%);
+            /* background-color: darken(var(--orange-main-color), 10%);  */
+            /* border-color: darken(var(--orange-main-color), 10%); */
         }
 
     .bg-gradient-header{
@@ -351,4 +351,11 @@
             background-color: #dc3545;
             color: white;
         }
+
+    .bg-grad-header{
+        background-color: black;
+        color:black;
+    }
 </style>
+
+

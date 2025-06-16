@@ -13,7 +13,7 @@
             </button>
             @if (User.IsInRole(SD.Role_Admin))
             {
-                <a asp-controller="Category" asp-action="Index" class="btn bg-gradient-header text-white rounded-pill px-4 py-2 shadow-sm hover-scale-105 transition-all">View All</a>
+                <a asp-controller="Category" asp-action="Index" class="btn btn-outline-light rounded-pill px-4 shadow-sm hover-scale-105 transition-all bg-gradient-header btn-lg rounded-pill w-100">View All</a>
             }
             else
             {
@@ -55,6 +55,17 @@
     .bg-gradient-header {
         background-color: var(--orange-main-color);
     }
+
+    /* --- NEW CSS ADDITION --- */
+    /* Fix for "View All" button text on hover */
+    .btn.bg-gradient-header.text-white.hover-scale-105:hover {
+        /* Set a different text color on hover, e.g., black or the orange-main-color */
+        color: var(--orange-main-color) !important; /* Makes text orange on hover */
+        background-color: white !important; /* Changes background to white on hover */
+        border-color: var(--orange-main-color) !important; /* Adds an orange border on hover */
+    }
+    /* --- END NEW CSS ADDITION --- */
+
 
     /* Re-used utility classes for typography, spacing, and transitions */
     .text-gray-800 {

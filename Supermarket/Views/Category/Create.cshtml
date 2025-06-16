@@ -4,7 +4,7 @@
 <div class="container py-5">
     <div class="card shadow-lg border-0 rounded-3">
 
-        <div class="card-header bg-dark text-white p-4 rounded-top-3">
+        <div class="card-header bg-gradient-header text-white p-4 rounded-top-3">
             <div class="row align-items-center">
                 <div class="col-12 text-center text-md-start">
                     <h3 class="mb-0 text-white">Create New Category</h3>
@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="col-12 d-flex justify-content-end gap-2 mt-4">
-                    <button type="submit" class="btn btn-primary px-4 py-2">
+                    <button type="submit" class="btn bg-gradient-header  px-4 py-2">
                         <i class="bi bi-plus-circle me-2"></i> Create
                     </button>
                     <a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary px-4 py-2">
@@ -61,3 +61,23 @@
     <partial name="_ValidationScriptsPartial"/>
     }
 }
+
+<style>
+    :root {
+        --orange-main-color: rgb(234,80,28); /* The primary orange from your header */
+    }
+
+    .bg-gradient-header {
+        background-color: var(--orange-main-color);
+    }
+
+    /* --- NEW CSS ADDITION --- */
+    /* Fix for "View All" button text on hover */
+    .btn.bg-gradient-header.text-white.hover-scale-105:hover {
+        /* Set a different text color on hover, e.g., black or the orange-main-color */
+        color: var(--orange-main-color) !important; /* Makes text orange on hover */
+        background-color: white !important; /* Changes background to white on hover */
+        border-color: var(--orange-main-color) !important; /* Adds an orange border on hover */
+    }
+
+</style>

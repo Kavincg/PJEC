@@ -8,8 +8,10 @@
 }
 
 <div class="container py-5">
-    <div class="card shadow-lg border-0 rounded-3">
-        <div class="card-header bg-gradient bg-dark text-white p-4 rounded-top-3">
+    <div class="card shadow-lg border-0 rounded-4">
+        @* Changed rounded-3 to rounded-4 for consistency *@
+        <div class="card-header bg-gradient-header text-white p-4 rounded-top-4">
+            @* Changed bg-dark to bg-gradient-header and rounded-top-3 to rounded-top-4 *@
             <div class="row align-items-center">
                 <div class="col-12 text-center text-md-start">
                     <h3 class="mb-0 text-white">Edit Product</h3>
@@ -57,7 +59,8 @@
 
                     <div class="col-12 d-flex justify-content-end gap-2 mt-4">
                         @* Buttons are at the end, with a gap **@
-                        <button type="submit" class="btn btn-primary px-4 py-2">
+                        <button type="submit" class="btn bg-gradient-header px-4 py-2 text-white">
+                            @* Added text-white for consistency and changed btn-primary to bg-gradient-header *@
                             <i class="bi bi-pencil-square me-2"></i> Update Product @* Changed icon for update **@
                         </button>
                         <a asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary px-4 py-2">
@@ -110,3 +113,36 @@
         });
     </script>
 }
+
+<style>
+    /* Custom Orange for consistency */
+    :root {
+        --orange-main-color: rgb(234,80,28); /* The primary orange from your header */
+    }
+
+    .bg-gradient-header {
+        background-color: var(--orange-main-color);
+    }
+
+    /* Adjustments for the button text color in the gradient button */
+    .btn.bg-gradient-header {
+        color: white !important; /* Ensure text is white for contrast */
+    }
+
+        /* Add hover effect for consistency with other buttons */
+        .btn.bg-gradient-header:hover {
+            background-color: white !important;
+            color: var(--orange-main-color) !important;
+            border: 1px solid var(--orange-main-color); /* Add a border to define hover state */
+        }
+
+    /* Styles for rounded corners consistency */
+    .rounded-4 {
+        border-radius: 1rem !important;
+    }
+
+    .rounded-top-4 {
+        border-top-left-radius: 1rem !important;
+        border-top-right-radius: 1rem !important;
+    }
+</style>
