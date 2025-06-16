@@ -61,6 +61,7 @@ namespace Supermarket.Controllers
             ShoppingCartVM.OrderHeader.StreetAddress = ShoppingCartVM.OrderHeader.ApplicationUser.StreetAdress;
             ShoppingCartVM.OrderHeader.City = ShoppingCartVM.OrderHeader.ApplicationUser.City;
             ShoppingCartVM.OrderHeader.State = ShoppingCartVM.OrderHeader.ApplicationUser.State;
+            //ShoppingCartVM.OrderHeader.PostalCode = ShoppingCartVM.OrderHeader.ApplicationUser.PostalCode; // Ensure postal code is also populated
 
 
             foreach (var item in ShoppingCartVM.ShoppingCartList)
@@ -74,7 +75,7 @@ namespace Supermarket.Controllers
 
 
         [HttpPost]
-        public IActionResult SummaryPost()
+        public IActionResult SummaryPost(string paymentMethod) // Added paymentMethod parameter
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -92,6 +93,21 @@ namespace Supermarket.Controllers
                 item.price = item.Product.price;
             }
 
+            // Determine payment method and process accordingly
+            if (paymentMethod == "COD")
+            {
+                // COD Logic: Bypass Stripe, set payment ID to "COD"
+                ShoppingCartVM.OrderHeader.PaymentStatus = "Pending"; // Or any appropriate status for COD before payment
+                ShoppingCartVM.OrderHeader.OrderStatus = "Pending";
+                ShoppingCartVM.OrderHeader.PaymentIntentId = "COD"; // Set payment ID to "COD"
+                ShoppingCartVM.OrderHeader.SessionId = "COD"; // Set session ID to "COD" or null
+            }
+            else // Default to Card/Stripe if not COD
+            {
+                ShoppingCartVM.OrderHeader.PaymentStatus = "Pending";
+                ShoppingCartVM.OrderHeader.OrderStatus = "Pending";
+                // Stripe payment will update these after successful payment
+            }
 
             _unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
             _unitOfWork.Save();
@@ -109,60 +125,74 @@ namespace Supermarket.Controllers
                 _unitOfWork.Save();
             }
 
-            var domain = Request.Scheme + "://" + Request.Host.Value + "/";
-            var options = new Stripe.Checkout.SessionCreateOptions
+            if (paymentMethod == "Card")
             {
-                SuccessUrl = domain + $"ShoppingCart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
-                CancelUrl = domain + $"ShoppingCart/Summary",
-                LineItems = new List<Stripe.Checkout.SessionLineItemOptions>(),
-                Mode = "payment",
-            };
-
-
-            foreach (var item in ShoppingCartVM.ShoppingCartList)
-            {
-                var sessionLineItem = new SessionLineItemOptions
+                // Stripe Integration for Card Payment
+                var domain = Request.Scheme + "://" + Request.Host.Value + "/";
+                var options = new Stripe.Checkout.SessionCreateOptions
                 {
-                    PriceData = new SessionLineItemPriceDataOptions
-                    {
-                        UnitAmount = (long)(item.price * 100), 
-                        Currency = "inr",
-                        ProductData = new SessionLineItemPriceDataProductDataOptions
-                        {
-                            Name = item.Product.Name
-                        }
-                    },
-                    Quantity = item.quantity
+                    SuccessUrl = domain + $"ShoppingCart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
+                    CancelUrl = domain + $"ShoppingCart/Summary",
+                    LineItems = new List<Stripe.Checkout.SessionLineItemOptions>(),
+                    Mode = "payment",
                 };
-                options.LineItems.Add(sessionLineItem);
+
+
+                foreach (var item in ShoppingCartVM.ShoppingCartList)
+                {
+                    var sessionLineItem = new SessionLineItemOptions
+                    {
+                        PriceData = new SessionLineItemPriceDataOptions
+                        {
+                            UnitAmount = (long)(item.price * 100), // Stripe expects amount in cents
+                            Currency = "inr",
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            {
+                                Name = item.Product.Name
+                            }
+                        },
+                        Quantity = item.quantity
+                    };
+                    options.LineItems.Add(sessionLineItem);
+                }
+
+
+                var service = new SessionService();
+                Session session = service.Create(options);
+                _unitOfWork.OrderHeader.UpdateStripePaymentID(ShoppingCartVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
+                _unitOfWork.Save();
+                Response.Headers.Append("Location", session.Url);
+                return new StatusCodeResult(303);
             }
-
-
-            var service = new SessionService();
-            Session session = service.Create(options);
-            _unitOfWork.OrderHeader.UpdateStripePaymentID(ShoppingCartVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
-            _unitOfWork.Save();
-            Response.Headers.Append("Location", session.Url);
-            return new StatusCodeResult(303);
-
-            //return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartVM.OrderHeader.Id });
+            else // COD payment handled above, directly go to confirmation
+            {
+                return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartVM.OrderHeader.Id });
+            }
         }
 
         public IActionResult OrderConfirmation(int id)
         {
             OrderHeader orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == id);
 
-            //this is an order by customer
-
-            var service = new SessionService();
-            Session session = service.Get(orderHeader.SessionId);
-
-            if (session.PaymentStatus.ToLower() == "paid")
+            // This block handles Stripe payment confirmation if a session ID exists and is not "COD"
+            if (orderHeader.SessionId != null && orderHeader.SessionId != "COD")
             {
-                _unitOfWork.OrderHeader.UpdateStripePaymentID(id, session.Id, session.PaymentIntentId);
-                _unitOfWork.Save();
+                var service = new SessionService();
+                Session session = service.Get(orderHeader.SessionId);
+
+                if (session.PaymentStatus.Equals("paid", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    _unitOfWork.OrderHeader.UpdateStripePaymentID(id, session.Id, session.PaymentIntentId);
+                    // Update order status after successful payment
+                    _unitOfWork.OrderHeader.UpdateStatus(id, "Approved", "PaymentApproved");
+                    _unitOfWork.Save();
+                }
             }
-            //HttpContext.Session.Clear();
+            else if (orderHeader.PaymentIntentId == "COD")
+            {
+                // For COD, the order status is already set to Pending, nothing more to do here for status update
+            }
+
 
             List<ShoppingCart> shoppingCarts = _unitOfWork.Carts
                 .GetShoppingCartListByUserId(orderHeader.ApplicationUserId).ToList();
@@ -171,7 +201,6 @@ namespace Supermarket.Controllers
             _unitOfWork.Save();
 
             return View(orderHeader);
-            //return View(id);
         }
 
 
@@ -214,7 +243,5 @@ namespace Supermarket.Controllers
             _unitOfWork.Save();
             return RedirectToAction(nameof(Index));
         }
-
-
     }
 }

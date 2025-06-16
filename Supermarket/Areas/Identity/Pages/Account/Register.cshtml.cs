@@ -119,17 +119,16 @@ namespace Supermarket.Areas.Identity.Pages.Account
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }
 
-
             [Required]
-            public string? Name { get; set; }
+            public string Name { get; set; }
             [Required]
-            public string? StreetAdress { get; set; }
+            public string StreetAdress { get; set; }
             [Required]
-            public string? City { get; set; }
+            public string City { get; set; }
             [Required]
-            public string? State { get; set; }
+            public string State { get; set; }
             [Required]
-            public string? PhoneNumber { get; set; }
+            public string PhoneNumber { get; set; }
 
         }
 

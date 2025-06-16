@@ -1,13 +1,18 @@
 ﻿@model ShoppingCartVM
 
 <form asp-action="SummaryPost" method="post">
-    <section class="py-5"> @* Consistent vertical padding as in shopping cart *@
-        <div class="container py-3"> @* Adjusted padding for content within the section *@
+    <section class="py-5">
+        @* Consistent vertical padding as in shopping cart *@
+        <div class="container py-3">
+            @* Adjusted padding for content within the section *@
             <div class="row d-flex justify-content-center align-items-center">
-                <div class="col-12 col-lg-10"> @* Adjusted column width for wider layout, consistent with cart *@
+                <div class="col-12 col-lg-10">
+                    @* Adjusted column width for wider layout, consistent with cart *@
 
-                    <div class="card border-0 rounded-4 shadow-lg mb-4"> @* Main card styling *@
-                        <div class="card-header bg-gradient-header text-white py-4 px-4 rounded-top-4"> @* Consistent header styling *@
+                    <div class="card border-0 rounded-4 shadow-lg mb-4">
+                        @* Main card styling *@
+                        <div class="card-header bg-gradient-header text-white py-4 px-4 rounded-top-4">
+                            @* Consistent header styling *@
                             <div class="row align-items-center">
                                 <div class="col-6">
                                     <h3 class="mb-0 text-3xl text-gray-800 font-bold text-white">Order Summary</h3>
@@ -18,11 +23,13 @@
                             </div>
                         </div>
 
-                        <div class="card-body p-4"> @* Consistent padding *@
+                        <div class="card-body p-4">
+                            @* Consistent padding *@
                             <div class="row g-4">
                                 <div class="col-12 col-lg-6">
                                     <h5 class="text-dark font-bold mb-3">Shipping Details:</h5> @* Matched text styling *@
-                                    <div class="row mb-3 align-items-center"> @* Added align-items-center for better vertical alignment *@
+                                    <div class="row mb-3 align-items-center">
+                                        @* Added align-items-center for better vertical alignment *@
                                         <label asp-for="OrderHeader.Name" class="col-sm-3 col-form-label fw-medium">Name</label> @* Added fw-medium *@
                                         <div class="col-sm-9">
                                             <input asp-for="OrderHeader.Name" class="form-control rounded-pill shadow-sm" id="OrderHeader_Name" /> @* Rounded input and shadow *@
@@ -68,10 +75,12 @@
 
                                 <div class="col-12 col-lg-6">
                                     <h5 class="text-dark font-bold mb-3">Order Summary:</h5>
-                                    <ul class="list-group mb-3 shadow-sm rounded-3"> @* Added rounded-3 for consistent corners *@
+                                    <ul class="list-group mb-3 shadow-sm rounded-3">
+                                        @* Added rounded-3 for consistent corners *@
                                         @foreach (var details in Model.ShoppingCartList)
                                         {
-                                            <li class="list-group-item d-flex justify-content-between align-items-center py-3"> @* Added vertical padding *@
+                                            <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                                                @* Added vertical padding *@
                                                 <div>
                                                     <h6 class="my-0 text-dark fw-bold">@details.Product.Name</h6>
                                                     <small class="text-muted">Quantity: @details.quantity</small>
@@ -80,26 +89,42 @@
                                             </li>
                                         }
 
-                                        <li class="list-group-item d-flex justify-content-between align-items-center bg-light py-3 rounded-bottom-3"> @* Ensure bottom rounding and padding *@
+                                        <li class="list-group-item d-flex justify-content-between align-items-center bg-light py-3 rounded-bottom-3">
+                                            @* Ensure bottom rounding and padding *@
                                             <h6 class="mb-0 text-dark font-bold">Total Amount:</h6>
                                             <span class="text-orange-600 text-2xl font-bold">₹ @Model.OrderHeader.OrderTotal.ToString("F2")</span> @* Highlighted total and consistent currency *@
                                         </li>
                                     </ul>
+
+                                    <h5 class="text-dark font-bold mt-4 mb-3">Select Payment Method:</h5>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="radio" name="paymentMethod" id="codPayment" value="COD" checked>
+                                        <label class="form-check-label" for="codPayment">
+                                            Cash On Delivery (COD)
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="paymentMethod" id="cardPayment" value="Card">
+                                        <label class="form-check-label" for="cardPayment">
+                                            Card
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="card-footer bg-light p-4 rounded-bottom-4"> @* Rounded bottom for consistency *@
+                        <div class="card-footer bg-light p-4 rounded-bottom-4">
+                            @* Rounded bottom for consistency *@
                             <div class="row align-items-center">
                                 <div class="col-12 col-md-8">
-                                    <p class="text-muted mb-0 fw-medium"> @* Added fw-medium *@
+                                    <p class="text-muted mb-0 fw-medium">
+                                        @* Added fw-medium *@
                                         <i class="bi bi-calendar-check me-2"></i>Estimated Arrival Date:
                                         <span class="fw-bold">@DateTime.Now.AddDays(7).ToShortDateString() - @DateTime.Now.AddDays(14).ToShortDateString()</span>
                                     </p>
                                 </div>
                                 <div class="col-12 col-md-4 text-end mt-3 mt-md-0">
                                     <button type="submit" value="Place Order" class=" btn btn-outline-light rounded-pill px-4 shadow-sm hover-scale-105 transition-all bg-gradient-header btn-lg rounded-pill py-3 w-100">
-                                        @* Styled button *@
                                         Place Order
                                         <i class="bi bi-bag-check ms-2"></i>
                                     </button>
@@ -324,7 +349,7 @@
 
     /* Responsive adjustments */
     /* @@media (max-width: 991.98px) {  */
-    /*     .product-cart-item .card-body .row */
+    /* .product-cart-item .card-body .row */
 
     .product-cart-img {
         margin-bottom: 1rem;

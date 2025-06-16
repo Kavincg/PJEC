@@ -12,8 +12,8 @@ using Supermarket.Data;
 namespace Supermarket.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250613084136_ResetAppNew")]
-    partial class ResetAppNew
+    [Migration("20250616103846_IM")]
+    partial class IM
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -345,6 +345,9 @@ namespace Supermarket.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("OrderStatus")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("OrderTotal")
                         .HasColumnType("float");
 
@@ -354,7 +357,14 @@ namespace Supermarket.Migrations
                     b.Property<string>("PaymentIntentId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PaymentStatus")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

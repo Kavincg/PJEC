@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System; // Make sure this is included for DateTime
 
 namespace Supermarket.Models
 {
     public class OrderHeader
     {
         public int Id { get; set; }
+
         public string ApplicationUserId { get; set; }
         [ForeignKey("ApplicationUserId")]
         [ValidateNever]
@@ -16,6 +18,11 @@ namespace Supermarket.Models
         public double OrderTotal { get; set; }
 
         public DateTime PaymentDate { get; set; }
+
+        // --- Add these properties ---
+        public string? OrderStatus { get; set; } // Added OrderStatus
+        public string? PaymentStatus { get; set; } // Added PaymentStatus
+        // --- End of added properties ---
 
         public string? SessionId { get; set; }
         public string? PaymentIntentId { get; set; }
@@ -32,5 +39,8 @@ namespace Supermarket.Models
         public string State { get; set; }
         [Required]
         public string Name { get; set; }
+
+         // Added PostalCode
+        public string? PostalCode { get; set; }
     }
 }

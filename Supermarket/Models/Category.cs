@@ -14,6 +14,6 @@ namespace Supermarket.Models
         public int DisplayOrder {  get; set; }
         public string? logoUrl {  get; set; }
 
-        public List<Product> products = new List<Product>();
+        public List<Product> products = [];
     }
 }

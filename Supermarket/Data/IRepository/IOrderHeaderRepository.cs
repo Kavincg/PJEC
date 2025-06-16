@@ -6,5 +6,7 @@ namespace Supermarket.Data.IRepository
     {
         void Update(OrderHeader obj);
         void UpdateStripePaymentID(int id, string sessionId, string paymentIntentId);
+        // Add this method
+        void UpdateStatus(int id, string orderStatus, string? paymentStatus = null);
     }
 }
