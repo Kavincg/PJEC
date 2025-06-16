@@ -1,107 +1,94 @@
 ﻿@model List<Product>
 @using Supermarket.RolesAndEmailSender
-@{
-    ViewData["Title"] = "Favorites";
-}
-<div class="card border-0 my-4">
-    <div class="card-header bg-body bg-gradient ml-0 py-3">
-        <div class="row">
-            <div class="col-12 text-start">
-                <h2 class="text-dark py-2">My Favorites</h2>
-            </div>
-        </div>
-    </div>
-    <div class="card-body p-4">
-        <div class="row pb-3">
-            <div class="col-6">
-            </div>
-          
-        </div>
-        
-        <div class="container">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 pb-3 align-items-center">
-                @foreach (var product in Model)
-                {
-                    <div class="col">
-                        
-                        <div class="card cardHover">
-                            <a asp-action="Details" asp-route-id="@product.Id" class="card-link text-decoration-none text-dark">
-                                @{
-                                    List<Category> categories = ViewBag.Categories as List<Category>;
-                                    string categoryName = "";
-                                    if (categories != null)
-                                    {
-                                        var category = categories.FirstOrDefault(c => c.id == product.CategoryId);
-                                        if (category != null)
-                                        {
-                                            categoryName = category.Name;
-                                        }
-                                    }
-                                }
-                                <img src="~/img/@product.imgURL" class="card-img-top" style="width: 100%; height: 200px;" alt="@product.Name">
-                                <div class="mt-2 text-center">
-                                    <p class="card-title h6 text-dark opacity-75">@categoryName</p>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">@product.Name</h5>
-                                    <p class="card-text text-truncate-container">@product.Description</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="h5 mb-0">₹@product.price.ToString("F2")</span>
-                                    </div>
-                                </div>
-                                <div class="card-footer d-flex justify-content-between align-items-center bg-light">
-                                    @if (User.IsInRole(SD.Role_Admin))
-                                    {
-                                        <div class="row m-1">
-                                            <div class="col-12">
-                                                <div class="btn-group w-100" role="group">
-                                                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-outline-success w-50">
-                                                        <i class="bi bi-pencil-square"></i>
-                                                    </a>
-                                                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-outline-danger w-50">
-                                                        <i class="bi bi-trash-fill"></i>
-                                                    </a>
+
+<section class="py-5">
+    @* Consistent vertical padding *@
+    <div class="container py-3">
+        @* Adjusted padding for content within the section *@
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-12 col-lg-10">
+                @* Adjusted column width for wider layout *@
+
+                <div class="card border-0 rounded-4 shadow-lg mb-4">
+                    @* Main card for favorites content *@
+                    <div class="card-header bg-gradient-header text-white py-4 px-4 rounded-top-4">
+                        @* Consistent header styling *@
+                        <h3 class="mb-0 text-3xl text-gray-800 font-bold text-white">My Favorites</h3>
+                    </div>
+                    <div class="card-body p-4">
+                        @* Consistent padding *@
+
+                        @if (Model.Any())
+                        {
+                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+                                @* Responsive grid for favorite products *@
+                                @foreach (var product in Model)
+                                {
+                                    <div class="col">
+                                        <div class="card h-100 product-card shadow-sm hover-scale-105 transition-all" id="favorite-@product.Id">
+                                            @* Individual product card consistent with product display *@
+                                            <a asp-action="Details" asp-controller="Product" asp-route-id="@product.Id" class="card-link text-decoration-none text-dark">
+                                                @{
+                                                    List<Category> categories = ViewBag.Categories as List<Category>;
+                                                    string categoryName = "N/A"; // Default to N/A if category not found
+                                                    if (categories != null)
+                                                    {
+                                                        var category = categories.FirstOrDefault(c => c.id == product.CategoryId);
+                                                        if (category != null)
+                                                        {
+                                                            categoryName = category.Name;
+                                                        }
+                                                    }
+                                                }
+                                                <img src="~/img/@product.imgURL" class="card-img-top product-thumbnail-img" alt="@product.Name">
+                                                <div class="card-body d-flex flex-column">
+                                                    <p class="card-text text-dark opacity-75 fw-medium text-center mb-1">@categoryName</p>
+                                                    <h5 class="card-title text-dark fw-bold text-center mb-2">@product.Name</h5>
+                                                    <p class="card-text text-dark opacity-75 text-truncate-container flex-grow-1 mb-3">@product.Description</p>
+                                                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                                                        <span class="h5 mb-0 text-orange-600 font-bold">INR @product.price.ToString("F2")</span>
+                                                    </div>
                                                 </div>
+                                            </a>
+                                            <div class="favourite-overlay">
+                                                <a href="javascript:void(0)" class="favourite-toggle" data-product-id="@product.Id">
+                                                    <i class="bi @(product.IsFavorited ? "bi-heart-fill text-danger" : "bi-heart") h4"></i>
+                                                </a>
                                             </div>
                                         </div>
-                                    }
-                                    <a href="javascript:void(0)" class="favourite-toggle" data-product-id="@product.Id">
-                                        <i class="bi @(product.IsFavorited ? "bi-heart-fill text-danger" : "bi-heart") h4"></i>
-                                    </a>
-                                </div>
-                            </a>
-                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-info text-center" role="alert">
+                                You haven't added any products to your favorites yet.
+                            </div>
+                            <div class="text-center mt-4">
+                                <a asp-controller="Home" asp-action="Index" class="btn bg-gradient-header btn-lg rounded-pill px-5 py-3 shadow-sm hover-scale-105 transition-all text-white">
+                                    <i class="bi bi-shop me-2"></i> Start Exploring Products
+                                </a>
+                            </div>
+                        }
                     </div>
-                }
+                </div>
             </div>
         </div>
     </div>
-</div>
-<style>
-    .cardHover {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+</section>
 
-        .cardHover:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-        }
-
-    .text-truncate-container {
-        -webkit-line-clamp: 2;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-</style>
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
-        $(document).on('click', '.favourite-toggle', function () {
+        $(document).on('click', '.favourite-toggle', function (e) {
+            e.preventDefault(); // Prevent the card link from navigating
+            e.stopPropagation(); // Stop propagation to prevent card click
+
             var $this = $(this);
             var productId = $this.data('product-id');
-            var productCard = $this.closest('.col'); // Ensure this points to the correct product card element
 
             $.ajax({
                 url: '@Url.Action("Favourite", "Product")',
@@ -109,51 +96,32 @@
                 data: { productId: productId },
                 success: function (response) {
                     if (response.isFavorited) {
-                        // Change the heart icon to filled and red
                         $this.find('i').removeClass('bi-heart').addClass('bi-heart-fill text-danger');
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "Added to Favorites",
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-
-                        // Cache the state in localStorage
                         localStorage.setItem('favorite-' + productId, 'true');
                     } else {
-                        // Change the heart icon back to empty
                         $this.find('i').removeClass('bi-heart-fill text-danger').addClass('bi-heart');
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "Removed from Favorites",
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-
-                        // Remove from cache
                         localStorage.removeItem('favorite-' + productId);
 
-                        // If on "My Favorites" page, remove the product card immediately
-                        if (window.location.pathname.includes("GetFavs") && productCard) {
-                            productCard.remove(); // Remove product card from the page
+                        // If on "My Favorites" page (e.g., GetFavs) and unfavoriting, remove the product card
+                        if (window.location.pathname.includes("GetFavs")) {
+                            $('#favorite-' + productId).remove(); // Assuming each product card has an id="favorite-productId"
+                            // Check if the list becomes empty after removing
+                            if ($('.product-card').length === 0) {
+                                // Reload or update a placeholder for empty favorites
+                                location.reload(); // Simple reload for now, consider dynamic update
+                            }
                         }
                     }
                 },
                 error: function () {
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "error",
-                        title: "Something went wrong!",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    console.error("Something went wrong with favorite toggle!");
+                    Swal.fire('Error', 'Could not update favorite status.', 'error');
                 }
             });
         });
 
-         $(document).ready(function () {
+        // On page load, restore favorite states based on local storage (for consistency across pages)
+        $(document).ready(function () {
             $('.favourite-toggle').each(function () {
                 var $this = $(this);
                 var productId = $this.data('product-id');
@@ -164,3 +132,170 @@
         });
     </script>
 }
+
+<style>
+    /* Custom Orange from your existing styles */
+    :root {
+        --orange-main-color: rgb(234, 80, 28); /* The primary orange from your header */
+    }
+
+    .bg-gradient-header {
+        background-color: var(--orange-main-color);
+    }
+
+    /* Re-used utility classes for typography, spacing, and transitions */
+    .text-gray-800 {
+        color: #343a40;
+    }
+
+    .text-orange-600 {
+        color: #ea501c;
+    }
+    /* Explicitly defined for use */
+    .text-3xl {
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+    }
+
+    .font-bold {
+        font-weight: 700;
+    }
+
+    .font-semibold {
+        font-weight: 600;
+    }
+
+    .fw-medium {
+        font-weight: 500;
+    }
+    /* For custom font-medium */
+
+    .py-5 {
+        padding-top: 3rem !important;
+        padding-bottom: 3rem !important;
+    }
+
+    .mt-4 {
+        margin-top: 1.5rem !important;
+    }
+
+    .mb-4 {
+        margin-bottom: 1.5rem !important;
+    }
+
+    .p-4 {
+        padding: 1.5rem !important;
+    }
+    /* Adjusted to be a bit smaller than p-5 for card body */
+    .px-4 {
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+
+    .py-4 {
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+    }
+
+    .rounded-4 {
+        border-radius: 1rem !important;
+    }
+
+    .rounded-top-4 {
+        border-top-left-radius: 1rem !important;
+        border-top-right-radius: 1rem !important;
+    }
+
+    .shadow-lg {
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, .1) !important;
+    }
+    /* Softer shadow */
+    .shadow-sm {
+        box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+    }
+    /* Bootstrap sm shadow */
+
+    .hover-scale-105:hover {
+        transform: scale(1.05);
+    }
+
+    .transition-all {
+        transition-property: all;
+        transition-duration: 200ms;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Card Styling for Products (re-used for favorites) */
+    .product-card {
+        border-radius: 0.75rem; /* Slightly less rounded than main card */
+        overflow: hidden; /* Ensures rounded corners are visible */
+        position: relative; /* For favorite overlay positioning */
+        display: flex;
+        flex-direction: column;
+        height: 100%; /* Ensures all cards in a row have same height */
+    }
+
+    .product-thumbnail-img {
+        height: 200px; /* Fixed height for product images */
+        object-fit: cover; /* Cover the area, cropping if necessary */
+        border-bottom: 1px solid #eee; /* Subtle separator */
+    }
+
+    .card-link {
+        color: inherit; /* Inherit text color from parent, prevent blue link color */
+        text-decoration: none; /* Remove underline */
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1; /* Allow link to take full height for click */
+    }
+
+    .card-body {
+        padding: 1rem; /* Adjust padding inside product cards */
+    }
+
+    .text-truncate-container {
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Show only 2 lines of description */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 0.9rem; /* Smaller font for description */
+        color: #6c757d; /* Bootstrap text-secondary for description */
+    }
+
+    /* Favorite Overlay (re-used) */
+    .favourite-overlay {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        z-index: 10; /* Ensure it's above the image */
+    }
+
+    .favourite-toggle i {
+        color: #fff; /* White heart by default on image */
+        text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Shadow for visibility */
+        transition: color 0.2s ease;
+    }
+
+        .favourite-toggle i.text-danger {
+            color: #dc3545 !important; /* Red for favorited, ensure it overrides */
+        }
+
+    .favourite-toggle:hover i {
+        transform: scale(1.1); /* Slight zoom on hover */
+    }
+
+    /* Empty Favorites Message */
+    .alert-info {
+        background-color: #e9f7fe;
+        border-color: #bee5eb;
+        color: #0c5460;
+    }
+
+    /* Responsive adjustments (re-used as needed) */
+    @@media (max-width: 767.98px) { /* Small and extra-small screens */
+        .product-card .card-body {
+            text-align: center; /* Center content on smaller screens */
+        }
+    }
+</style>
