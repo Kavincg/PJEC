@@ -1,71 +1,205 @@
-﻿﻿@{
-	ViewData["Title"] = "Home Page";
+﻿@{
+    ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-     <div style="width: 100vw; margin-left: calc(-50vw + 50%)">
-        <header class="hero-section mb-5" style="background-image: url('@Url.Content("")');
-                                            background-repeat: no-repeat;
-                                            background-position: center;
-                                            background-size: cover;
-                                            height: 30vh;
-                                            display: flex;
-                                            justify-content: center;
-                                            align-items: center;
-                                            text-align: center;
-                                            position: relative;">
-            <div class="overlay position-absolute top-0 left-0 w-100 h-100" style="background-color: rgb(234,80,28, 0.5);"></div>
+    <div style="width: 100vw; margin-left: calc(-50vw + 50%)">
+        <header class="hero-section mb-5 position-relative overflow-hidden rounded-bottom-4" style="background-image: url('@Url.Content("~/img/hero-background.jpg")');
+                                                                                                 background-repeat: no-repeat;
+                                                                                                 background-position: center;
+                                                                                                 background-size: cover;
+                                                                                                 height: 40vh; /* Increased height for impact */
+                                                                                                 display: flex;
+                                                                                                 justify-content: center;
+                                                                                                 align-items: center;
+                                                                                                 text-align: center;">
+            <!-- Overlay with consistent orange color and transparency -->
+            <div class="overlay position-absolute top-0 start-0 w-100 h-100 bg-gradient-header" style="opacity: 0.7;"></div>
+            <!-- Content for the hero section -->
             <div class="content position-relative text-white z-index-1">
-                <h1 class="display-1 font-weight-bold">Welcome to BuddyBasket</h1>
-                <p class="fs-4" style="letter-spacing:0.4rem">SHOPPING MADE EASY</p>
+                <h1 class="display-3 font-bold mb-3">Welcome to BuddyBasket</h1>
+                <p class="fs-4 text-white" style="letter-spacing:0.3rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">SHOPPING MADE EASY</p>
             </div>
         </header>
-
     </div>
-	 <div id="pagination-container"></div> 
-
+    <div id="pagination-container" class="mt-5"></div>
 </div>
-<style>
-    #category-carousel {
-        overflow-x: auto;
-        scroll-behavior: smooth;
-    }
 
-        #category-carousel::-webkit-scrollbar {
-            display: none; /* Hide scrollbar */
-        }
-        
-
-    img.round {
-        border-radius:100px;
-        transition: transform 0.2s ease-in-out;
-    }
-
-        img.round:hover {
-            transform: scale(1.1) !important;
-        }
-</style>
 @section Scripts
 {
-	<script type="text/javascript">
-		$(document).ready(function () {
-			$.ajax({
-				url: '@Url.Action("Pagination", "Category")',
-				success: function (result) {
-					var htmlContent = $(result).find("#pagination-content").html();
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                url: '@Url.Action("Pagination", "Category")',
+                success: function (result) {
+                    var htmlContent = $(result).find("#pagination-content").html();
 
-					$("#pagination-container").html(htmlContent);
+                    $("#pagination-container").html(htmlContent);
 
-					console.log(htmlContent);
+                    console.log(htmlContent);
 
-					// Extract and execute inline scripts from Pagination content
-					var scripts = $(result).filter("script");
-					scripts.each(function () {
-						$.globalEval(this.text); // Dynamically run each script
-					});
+                    // Extract and execute inline scripts from Pagination content
+                    var scripts = $(result).filter("script");
+                    scripts.each(function () {
+                        $.globalEval(this.text); // Dynamically run each script
+                    });
 
-				}
-			});
-		});
-	</script>
+                }
+            });
+        });
+    </script>
 }
+
+<style>
+    /* Consistent orange color variables */
+    :root {
+        --orange-main-color: rgb(234,80,28);
+        --orange-line-color: rgba(234,80,28,0.5);
+    }
+
+    /* Consistent header background */
+    .bg-gradient-header {
+        background-color: var(--orange-main-color);
+        /* You can add a subtle gradient if you want, similar to your previous header example: */
+        /* background-image: linear-gradient(to right, rgba(234,80,28,0.8), rgb(234,80,28)); */
+    }
+
+    /* Consistent text colors */
+    .text-black {
+        color: #000;
+    }
+
+    .text-white {
+        color: #fff !important;
+    }
+
+    .text-gray-800 {
+        color: #343a40;
+    }
+
+    /* Consistent typography */
+    .text-3xl {
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+    }
+
+    .font-bold {
+        font-weight: 700;
+    }
+
+    .display-3 {
+        font-size: calc(1.525rem + 3.3vw); /* Responsive display size */
+    }
+
+    /* Consistent rounded corners */
+    .rounded-4 {
+        border-radius: 1rem !important;
+    }
+
+    .rounded-top-4 {
+        border-top-left-radius: 1rem !important;
+        border-top-right-radius: 1rem !important;
+    }
+
+    .rounded-bottom-4 {
+        border-bottom-left-radius: 1rem !important;
+        border-bottom-right-radius: 1rem !important;
+    }
+
+    .rounded-pill {
+        border-radius: 50rem !important;
+    }
+
+    /* Consistent hover effect and transition for general elements */
+    .hover-scale-105:hover {
+        transform: scale(1.05);
+    }
+
+    .transition-all {
+        transition-property: all;
+        transition-duration: 200ms;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Adjust the general card shadow and padding */
+    .card.shadow-lg {
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important;
+    }
+
+    .card-body.p-4 {
+        padding: 1.5rem !important;
+    }
+
+    .card.shadow-sm {
+        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
+    }
+
+    /* Navbar specific styling (copied from _Layout for consistency in this file) */
+    .navbar .nav-link {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        font-weight: 600;
+        color: #fff;
+    }
+
+        .navbar .nav-link.hover-lighten-bg:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            transform: scale(1.02);
+        }
+
+    /* Search bar styling (copied from _Layout for consistency in this file) */
+    .search-consistent .form-control {
+        border-color: rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        height: 40px;
+        box-shadow: none;
+        padding-left: 1rem;
+        padding-right: 0.5rem;
+    }
+
+        .search-consistent .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+            font-style: italic;
+        }
+
+        .search-consistent .form-control:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: none;
+        }
+
+    .search-consistent .btn-secondary-outline-dark {
+        background-color: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-left: none;
+        color: #fff;
+        height: 40px;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+        .search-consistent .btn-secondary-outline-dark:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+    .search-consistent .form-control.rounded-start-pill {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+    }
+
+    .search-consistent .btn.rounded-end-pill {
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+    }
+
+    /* Home page specific styles */
+    .hero-section {
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important; /* Apply shadow to the hero section */
+        border-bottom-left-radius: 1rem !important; /* Rounded bottom corners for hero */
+        border-bottom-right-radius: 1rem !important;
+    }
+</style>

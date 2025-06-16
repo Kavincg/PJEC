@@ -1,77 +1,83 @@
 ﻿@model ShoppingCartVM
 
-<section class="h-100">
-    <div class="container h-100 py-5">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-10">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3 class="fw-normal mb-0 fw-bold">Shopping Cart</h3>
-                </div>
+<section class="py-5"> @* Consistent vertical padding *@
+    <div class="container py-3"> @* Adjusted padding for content within the section *@
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-12 col-lg-10"> @* Adjusted column width for wider layout *@
 
-                @foreach (var item in Model.ShoppingCartList)
-                {
-                    @* new cart card  *@
-                    <div class="row justify-content-center mb-3">
-                        <div class="col-md-12 col-xl-10">
-                            <div class="card shadow-0 border rounded-3">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
-                                            <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                <div class="card border-0 rounded-4 shadow-lg mb-4"> @* Main card for shopping cart content *@
+                    <div class="card-header bg-gradient-header text-white py-4 px-4 rounded-top-4"> @* Consistent header styling *@
+                        <h3 class="mb-0 text-3xl text-gray-800 font-bold text-white">Shopping Cart</h3>
+                    </div>
+                    <div class="card-body p-4"> @* Consistent padding *@
+
+                        @if (Model.ShoppingCartList.Any())
+                        {
+                            @foreach (var item in Model.ShoppingCartList)
+                            {
+                                <div class="card shadow-sm border rounded-3 mb-3 product-cart-item"> @* Individual product item card *@
+                                    <div class="card-body">
+                                        <div class="row d-flex align-items-center">
+                                            <div class="col-md-3 col-lg-2 col-xl-2 text-center"> @* Product Image Column *@
                                                 <img src="/img/@item.Product.imgURL"
-                                                     class="w-100" />
+                                                     class="img-fluid rounded product-cart-img" alt="@item.Product.Name" />
                                             </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-6 col-xl-6">
-                                            <h5 class="m-2">@item.Product.Name</h5>
-                                            
-                                            <p class="text-truncate-container m-2 mb-md-0">
-                                                @Html.Raw(item.Product.Description)
-                                            </p>
-                                            
-                                        </div>
-                                        <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
-                                            <div class="d-flex flex-row align-items-center mb-1">
-                                                <h4 class="mb-1 me-1">INR @item.Product.price.ToString("F2")</h4>
+                                            <div class="col-md-6 col-lg-5 col-xl-5"> @* Product Details Column *@
+                                                <h5 class="mb-1 text-dark fw-bold">@item.Product.Name</h5>
+                                                <p class="text-dark opacity-75 text-truncate-container mb-0">
+                                                    @Html.Raw(item.Product.Description)
+                                                </p>
                                             </div>
-                                            <div class="d-flex align-items-center justify-content-start mt-4">
-                                                <div class="col-md-1 col-lg-1 col-xl-1 me-2">
-                                                    <a asp-action="Remove" asp-route-cartId="@item.Id" class="text-danger">
-                                                        <i class="fas fa-trash fa-lg"></i>
+                                            <div class="col-xl offset-lg-1 text-center quantity-control-column"> @* Quantity Column *@
+                                                <div class="input-group quantity-selector border rounded-pill overflow-hidden shadow-sm d-inline-flex align-items-center"> @* Added align-items-center *@
+                                                    <a asp-action="Minus" asp-route-cartId="@item.Id" class="btn btn-outline-secondary minus-btn flex-grow-0 py-2 px-3">
+                                                        <i class="bi bi-dash-lg"></i>
                                                     </a>
-                                                </div>
-                                                <div class="col-md-4 col-lg-3 col-xl-2 d-flex ms-2">
-                                                    <a asp-action="Minus" asp-route-cartId="@item.Id" class="btn btn-link">
-                                                        <i class="fas fa-minus"></i>
-                                                    </a>
-                                                    
-                                                    <input id="form1" min="0" name="quantity" value="@item.quantity" type="number" class="form-control text-center quantity-input" style="width: 100px;" readonly>
-                                                    <a asp-action="Plus" asp-route-cartId="@item.Id" class="btn btn-link px-2">
-                                                        <i class="fas fa-plus"></i>
+                                                    <input type="text" value="@item.quantity" class="form-control text-center quantity-input border-0 bg-white" readonly>
+                                                    <a asp-action="Plus" asp-route-cartId="@item.Id" class="btn btn-outline-secondary plus-btn flex-grow-0 py-2 px-3">
+                                                        <i class="bi bi-plus-lg"></i>
                                                     </a>
                                                 </div>
                                             </div>
-                                            @* <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary btn-sm mt-2" type="button">
-                                                Add to wishlist
-                                            </button> *@
-                                            
+                                            <div class="col-md-6 col-lg-2 col-xl-2 text-end product-price-column">
+                                                <p class="h5 mb-0 text-dark font-bold">INR @((item.Product.price * item.quantity).ToString("F2"))</p>
+                                                <p class="text-muted small mb-0">(@item.Product.price.ToString("F2") per item)</p> 
+                                                <a asp-action="Remove" asp-route-cartId="@item.Id" class="text-danger mt-2 d-block text-decoration-none">
+                                                    <i class="bi bi-trash-fill me-1"></i> Remove
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                }
+                            }
 
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="d-flex justify-content-between align-items-center">
-                            <span>Total</span>
-                            <span>INR @Model.OrderHeader.OrderTotal.ToString("F2")</span>
-                        </h5>
-                        <div class="col-md-2 offset-md-5">
-                            <a asp-action="Summary" class="btn btn-outline-warning border-1 bg-gradient py-2">Summary</a>
-                        </div>
+                            <div class="card rounded-4 shadow-sm mt-4"> @* Total Summary Card *@
+                                <div class="card-body p-4">
+                                    <h4 class="d-flex justify-content-between align-items-center mb-4 text-dark font-bold">
+                                        <span>Cart Total</span>
+                                        <span class="text-orange-600">INR @Model.OrderHeader.OrderTotal.ToString("F2")</span>
+                                    </h4>
+
+                                    <div class="d-grid gap-2"> @* Use d-grid for full width button *@
+                                        <a asp-action="Summary" class="btn bg-gradient-header btn-lg rounded-pill py-3 text-white shadow-sm hover-scale-105 transition-all">
+                                            Proceed to Summary
+                                            <i class="bi bi-arrow-right-circle ms-2"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-info text-center" role="alert">
+                                Your shopping cart is empty. Start shopping!
+                            </div>
+                            <div class="text-center mt-4">
+                                <a asp-controller="Home" asp-action="Index" class="btn bg-gradient-header btn-lg rounded-pill px-5 py-3 shadow-sm hover-scale-105 transition-all text-white">
+                                    <i class="bi bi-shop me-2"></i> Continue Shopping
+                                </a>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -79,34 +85,169 @@
     </div>
 </section>
 
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @* Ensure jQuery is loaded if needed for other scripts, though for this basic +/- it's not strictly necessary *@
+    @* <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> *@
+
+    <script>
+        // Client-side +/- button logic for immediate feedback (actual update still needs server call)
+        document.addEventListener('click', function (e) {
+            if (e.target.closest('.minus-btn')) {
+                const quantityInput = e.target.closest('.input-group').querySelector('.quantity-input');
+                let currentQuantity = parseInt(quantityInput.value);
+                if (currentQuantity > 1) {
+                    quantityInput.value = currentQuantity - 1;
+                    // Note: This only updates the display. The actual cart update happens via the asp-action links.
+                }
+            } else if (e.target.closest('.plus-btn')) {
+                const quantityInput = e.target.closest('.input-group').querySelector('.quantity-input');
+                let currentQuantity = parseInt(quantityInput.value);
+                quantityInput.value = currentQuantity + 1;
+                // Note: This only updates the display. The actual cart update happens via the asp-action links.
+            }
+        });
+    </script>
+}
+
 <style>
+    /* Custom Orange from your existing styles */
+    :root {
+        --orange-main-color: rgb(234,80,28);
+    }
+
+    .bg-gradient-header {
+        background-color: var(--orange-main-color);
+    }
+
+    /* Re-used utility classes */
+    .text-gray-800 { color: #343a40; }
+    .text-orange-600 { color: #ea501c; }
+    .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+    .font-bold { font-weight: 700; }
+    .fw-medium { font-weight: 500; }
+    .py-5 { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+    .px-4 { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+    .py-4 { padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; }
+    .p-4 { padding: 1.5rem !important; }
+
+    .rounded-4 { border-radius: 1rem !important; }
+    .rounded-top-4 { border-top-left-radius: 1rem !important; border-top-right-radius: 1rem !important; }
+    .shadow-lg { box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important; }
+    .shadow-sm { box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important; }
+
+    .hover-scale-105:hover { transform: scale(1.05); }
+    .transition-all {
+        transition-property: all;
+        transition-duration: 200ms;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Shopping Cart Specific Styles */
+    .product-cart-item {
+        border-radius: 0.75rem; /* Slightly less rounded for inner cards */
+        overflow: hidden;
+        background-color: #fff; /* Ensure white background for each item */
+    }
+
+    .product-cart-img {
+        width: 100%;
+        height: 120px; /* Fixed height for consistent image display */
+        object-fit: contain; /* Contain the entire image within the area */
+        background-color: #f8f9fa; /* Light background for images */
+        border-radius: 0.5rem;
+    }
+
     .text-truncate-container {
-        -webkit-line-clamp: 4;
         display: -webkit-box;
+        -webkit-line-clamp: 2; /* Show up to 2 lines of description */
         -webkit-box-orient: vertical;
         overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 0.9rem; /* Smaller font for description */
+        color: #495057; /* Bootstrap text-muted or text-secondary */
     }
 
-    .quantity-spinner .form-control {
-        width: 50px; /* Adjust this value as needed to ensure the number is visible */
-        min-width: 40px; /* Ensure a minimum width */
-        max-width: 70px; /* Prevent it from becoming too wide */
-        flex-grow: 0; /* Prevent the input from growing unnecessarily */
-        flex-shrink: 0; /* Prevent the input from shrinking unnecessarily */
+    /* Quantity Selector in Cart */
+    .quantity-selector {
+        /* Ensure all items inside are aligned to the center vertically */
+        align-items: center;
     }
 
-    .quantity-spinner .btn {
-        flex-shrink: 0; /* Prevent buttons from shrinking */
+    .quantity-selector .btn {
+        background-color: #f8f9fa; /* Light background for buttons */
+        border-color: #dee2e6;
+        color: #343a40;
+        font-weight: bold;
+        /* Ensure button height matches input height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: calc(1.5em + .75rem + 2px); /* Bootstrap's default input height formula */
+        padding: .375rem .75rem; /* Adjusted padding for better alignment with text input */
+    }
+    .quantity-selector .btn:hover {
+        background-color: #e2e6ea;
+        color: #212529;
+    }
+    .quantity-selector .form-control {
+        border: 0;
+        box-shadow: none;
+        background-color: white;
+        width: 60px; /* Explicit width for the input field */
+        text-align: center; /* Ensure text is centered */
+        color: #343a40; /* Explicitly set text color to ensure visibility */
+        font-weight: bold; /* Make the quantity number bold */
+        font-size: 1.1rem; /* Slightly larger font size for readability */
+        padding: .375rem .25rem; /* Adjust padding if needed to center text */
+        height: calc(1.5em + .75rem + 2px); /* Match button height */
+    }
+    .quantity-selector .form-control:focus {
+        box-shadow: none;
     }
 
-    /* Optional: Further refine input styling for better readability */
-    .quantity-input {
-        -moz-appearance: textfield; /* Remove default number input spinner in Firefox */
+    .quantity-control-column {
+        min-width: 150px; /* Ensure enough space for quantity control */
     }
 
-        .quantity-input::-webkit-outer-spin-button,
-        .quantity-input::-webkit-inner-spin-button {
-            -webkit-appearance: none; /* Remove default number input spinner in Webkit browsers */
-            margin: 0;
+    .product-price-column {
+        min-width: 120px; /* Ensure enough space for price and remove button */
+    }
+
+    /* Buttons for Quantity and Remove */
+    .text-danger { color: #dc3545 !important; } /* Bootstrap red for danger */
+    .text-danger:hover {
+        color: #b02a37 !important; /* Darker red on hover */
+    }
+
+    /* Empty Cart Message */
+    .alert-info {
+        background-color: #e9f7fe;
+        border-color: #bee5eb;
+        color: #0c5460;
+    }
+
+    /* Responsive adjustments */
+    @@media (max-width: 991.98px) { /* Medium and smaller screens */
+        .product-cart-item .card-body .row {
+            flex-direction: column;
+            text-align: center;
         }
+
+        .product-cart-img {
+            margin-bottom: 1rem;
+            max-width: 150px; /* Smaller image on mobile */
+            height: auto;
+        }
+
+        .quantity-control-column,
+        .product-price-column {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .quantity-selector {
+            justify-content: center; /* Center the quantity selector */
+        }
+    }
 </style>

@@ -1,43 +1,44 @@
 ﻿@model List<OrderHeader>
 
-<div class="card shadow-lg border-0 mt-5 mb-4">
-    <div class="bg-black bg-primary text-white py-3">
+@{
+    ViewData["Title"] = "Order List"; // Set the title for this page
+}
+
+<div class="card shadow-lg border-0 mt-5 mb-4 rounded-4">
+    <div class="bg-gradient-header text-white py-4 px-4 rounded-top-4">
         <div class="row align-items-center">
             <div class="col-12 text-center">
-                <h2 class="mb-0">Order List</h2>
+                <h2 class="mb-0 text-3xl text-black font-bold">Order List</h2>
             </div>
         </div>
     </div>
     <div class="card-body p-4">
         <div class="table-responsive">
             <table class="table table-bordered table-striped table-hover align-middle">
-                <thead class="table-dark">
+                <thead class="table-header-custom text-black">
                     <tr>
-                        <th scope="col">User ID</th>
-                        <th scope="col">User Name</th>
-                        <th scope="col">Phone No</th>
-                        <th scope="col">Payment ID</th>
-                        <th scope="col">Payment Date</th>
-                        @* <th scope="col">Order Date</th> *@
-                        <th scope="col">Order Cost</th>
-                        <th scope="col">Order Details</th>
+                        <th class="text-black" scope="col">User Name</th>
+                        <th class="text-black" scope="col">Mail</th>
+                        <th class="text-black" scope="col">Payment ID</th>
+                        <th class="text-black" scope="col">Order Date</th>
+                        <th class="text-black" scope="col">Order Cost</th>
+                        <th class="text-black" scope="col">Order Details</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var obj in Model.OrderByDescending(h => h.OrderTotal))
+                    @foreach (var obj in Model.OrderByDescending(h => h.OrderDate)) // Changed to OrderDate for typical order list sorting
                     {
                         <tr>
-                            <td>@obj.ApplicationUserId</td>
                             <td>@obj.Name</td>
                             <td>@obj.Phone</td>
-                            <td>@obj.PaymentIntentId</td>
-                            <td>@obj.PaymentDate.ToString("yyyy-MM-dd HH:mm")</td>
+                            <td>@(string.IsNullOrEmpty(obj.PaymentIntentId) ? "N/A" : obj.PaymentIntentId)</td>
                             <td>@obj.OrderDate.ToString("yyyy-MM-dd HH:mm")</td>
                             <td>@obj.OrderTotal.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-IN"))</td>
                             <td>
                                 <div class="d-grid">
-                                    <a href="#" class="btn btn-outline-info btn-sm">
-                                        <i class="bi bi-info-circle"></i> Details
+                                    <a asp-controller="ShoppingCart" asp-action="OrderConfirmation" asp-route-id="@obj.Id"
+                                       class="btn bg-gradient-header btn-sm rounded-pill px-3 py-2 shadow-sm text-white hover-scale-105 transition-all">
+                                        <i class="bi bi-info-circle me-1"></i> Details
                                     </a>
                                 </div>
                             </td>
@@ -49,57 +50,132 @@
     </div>
 </div>
 
+@section Scripts {
+    <script>
+        // Any specific JavaScript for this page can go here if needed.
+    </script>
+}
+
 <style>
-    /* Customizations for a more modern feel */
-    .card-header.bg-primary {
-        background-color: #007bff !important; /* A slightly softer blue */
-        background-image: linear-gradient(to right, #0056b3, #007bff); /* Subtle gradient */
+    /* Re-using styles from your Order Confirmation page for consistency */
+    :root {
+        --orange-main-color: rgb(234,80,28); /* The primary orange from your header */
+        --orange-line-color: rgba(234,80,28,0.5); /* A lighter shade for the lines (if needed elsewhere) */
     }
 
-    .table th, .table td {
-        white-space: nowrap; /* Prevent wrapping in table cells */
-        overflow: hidden;
-        text-overflow: ellipsis; /* Add ellipsis for overflow */
+    .bg-gradient-header {
+        background-color: var(--orange-main-color);
+        /* You can add a subtle gradient if you want, similar to your previous header example: */
+        /* background-image: linear-gradient(to right, rgba(234,80,28,0.8), rgb(234,80,28)); */
     }
 
-    .table-striped tbody tr:nth-of-type(odd) {
-        background-color: rgba(0, 0, 0, 0.03); /* Lighter stripe effect */
+    /* General text colors to ensure readability and hierarchy */
+    .text-gray-800 {
+        color: #343a40;
     }
 
-    .btn-outline-info {
-        color: #17a2b8;
-        border-color: #17a2b8;
-        transition: all 0.3s ease; /* Smooth transition for hover effects */
+    .text-gray-600 {
+        color: #6c757d;
     }
 
-        .btn-outline-info:hover {
-            background-color: #17a2b8;
-            color: #fff;
+    .text-gray-700 {
+        color: #495057;
+    }
+
+    .text-orange-600 {
+        color: #ea501c;
+    }
+
+    /* Typography adjustments from previous file */
+    .text-3xl {
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+    }
+
+    .font-bold {
+        font-weight: 700;
+    }
+
+    .font-semibold {
+        font-weight: 600;
+    }
+
+    .font-medium {
+        font-weight: 500;
+    }
+
+    /* Rounded corners from previous file */
+    .rounded-4 {
+        border-radius: 1rem !important;
+    }
+
+    .rounded-top-4 {
+        border-top-left-radius: 1rem !important;
+        border-top-right-radius: 1rem !important;
+    }
+
+    /* Hover effect and transition from previous file */
+    .hover-scale-105:hover {
+        transform: scale(1.05);
+    }
+
+    .transition-all {
+        transition-property: all;
+        transition-duration: 200ms;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Table Specific Styling */
+    .table-header-custom {
+        background-color: var(--orange-main-color); /* Match header background */
+        color: #fff; /* White text for header */
+    }
+
+        .table-header-custom th {
+            border-color: rgba(255, 255, 255, 0.3) !important; /* Lighter borders for header cells */
+            padding: 0.75rem 1rem; /* Adjust padding */
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
         }
 
-    /* Adjust font sizes for better readability */
-    h2 {
-        font-weight: 600;
-        letter-spacing: 0.5px;
-    }
-
-    .table thead th {
-        font-weight: 700;
-        text-transform: uppercase;
-        font-size: 0.9rem;
-    }
-
-    .table tbody td {
-        font-size: 0.9rem;
-    }
-
-    /* Specific style for table borders if you want a slightly softer border */
     .table-bordered {
-        border-color: #000; /* Lighter border color */
+        border-color: #dee2e6; /* Bootstrap default border for general table */
     }
 
         .table-bordered th,
         .table-bordered td {
-            border-color: #000; /* Lighter border color for cells */
+            border-color: #dee2e6; /* Ensure all cells have the standard border */
         }
+
+    .table th, .table td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 0.6rem 1rem; /* Consistent padding for body cells */
+        font-size: 0.95rem; /* Slightly larger for readability */
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f8f9fa; /* Lighter stripe, consistent with bg-light-gray */
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #e2e6ea; /* Subtle hover effect */
+        cursor: pointer;
+    }
+
+    /* Adjust the general card shadow and padding */
+    .card.shadow-lg {
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important; /* Softer shadow */
+    }
+
+    .card-body.p-4 {
+        padding: 1.5rem !important; /* Slightly more padding for the card body */
+    }
+
+    /* Small adjustment for the details button icon spacing */
+    .btn .bi {
+        vertical-align: middle; /* Align icon better with text */
+    }
 </style>

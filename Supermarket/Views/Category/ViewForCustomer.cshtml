@@ -1,67 +1,154 @@
 ﻿@model List<Category>
 @using Supermarket.RolesAndEmailSender
-
-<div class="card shadow-lg border-0 mt-4 rounded-3">
-    <div class="card-header bg-dark text-white py-2 rounded-top-3">
-            <div class="col-12 text-center">
-                <h2 class="py-1 fw-bold">All Categories</h2>
+<div class="container py-5">
+    <div class="card border-0 rounded-4 shadow-lg">
+        <div class="card-header bg-gradient-header text-white py-4 px-4 rounded-top-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="mb-0 text-3xl text-gray-800 font-bold text-white">Categories</h1>
+                @if (User.IsInRole(SD.Role_Admin))
+                {
+                    <a asp-controller="Category" asp-action="Create"
+                       class="btn bg-gradient-header rounded-pill px-4 py-2 shadow-sm text-white hover-scale-105 transition-all">
+                        <i class="bi bi-plus-circle me-2"></i> Create New Category
+                    </a>
+                }
             </div>
-    </div>
-    <div class="card-body mt-2 w-100 h-100">
-        <div class="container w-100 h-100">
-            <div class="row g-4 h-100 w-100">
+        </div>
+        <div class="card-body p-4">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 pb-3">
                 @foreach (var category in Model)
                 {
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" style="">
-                        <a asp-controller="Product" asp-action="FindByCategory" asp-route-categoryId="@category.id" class="d-block text-decoration-none" style="width: 100%; height: 75%;">
-                            <div class="card border border-1 category-card" style="width: 100%; height: 80%;">
-                                <img src="/img/@category.logoUrl" class="card-img-top border border-1 w-100" alt="@category.Name" style="height: 80%;">
-                                <div class="card-body text-dark text-center border border-1">
-                                    <h5 class="card-title">@category.Name</h5>
+                    <div class="col">
+                        <a asp-controller="Product" asp-action="FindByCategory" asp-route-categoryId="@category.id" class="card-link text-decoration-none text-dark h-100">
+                            <div class="card h-100 category-card shadow-sm hover-scale-105 transition-all">
+                                <img src="/img/@category.logoUrl" class="card-img-top category-thumbnail-img" alt="@category.Name">
+                                <div class="card-body d-flex flex-column justify-content-center align-items-center p-3">
+                                    <h5 class="card-title text-dark fw-bold text-center mb-0">@category.Name</h5>
                                 </div>
                             </div>
                         </a>
                     </div>
                 }
             </div>
+            @if (!Model.Any())
+            {
+                <div class="alert alert-info text-center mt-4" role="alert">
+                    No categories found.
+                </div>
+            }
         </div>
     </div>
 </div>
 
 <style>
-    body {
-        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* Modern font stack */
-        background-color: #f0f2f5; /* Lighter, modern background */
-        color: #212529; /* Darker text for better readability */
-        line-height: 1.6;
+    /* Re-using styles from the product display page for consistency */
+    :root {
+        --orange-main-color: rgb(234,80,28); /* Consistent orange color */
     }
 
-    /* Custom styles for category cards */
+    .bg-gradient-header {
+        background-color: var(--orange-main-color);
+    }
+
+    .text-gray-800 {
+        color: #343a40;
+    }
+
+    .text-3xl {
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+    }
+
+    .font-bold {
+        font-weight: 700;
+    }
+
+    .py-5 {
+        padding-top: 3rem !important;
+        padding-bottom: 3rem !important;
+    }
+
+    .p-4 {
+        padding: 1.5rem !important;
+    }
+
+    .px-4 {
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+
+    .py-4 {
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+    }
+
+    .rounded-4 {
+        border-radius: 1rem !important;
+    }
+
+    .rounded-top-4 {
+        border-top-left-radius: 1rem !important;
+        border-top-right-radius: 1rem !important;
+    }
+
+    .shadow-lg {
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important;
+    }
+
+    .shadow-sm {
+        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
+    }
+
+    .hover-scale-105:hover {
+        transform: scale(1.05);
+    }
+
+    .transition-all {
+        transition-property: all;
+        transition-duration: 200ms;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card-link {
+        color: inherit;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    /* Category Card Specific Styles */
     .category-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border-radius: 10px; /* More rounded corners */
-        overflow: hidden; /* Ensures content respects border-radius */
+        border-radius: 0.75rem;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 100%; /* Ensure consistent height in grid */
     }
 
-        .category-card:hover {
-            transform: translateY(-5px); /* Lift effect on hover */
-            box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important; /* More pronounced shadow on hover */
-        }
+    .category-thumbnail-img {
+        height: 150px; /* Fixed height for category logos */
+        object-fit: cover;
+        border-bottom: 1px solid #eee;
+    }
 
-        .category-card .card-body {
-            min-height: 180px; /* Ensure consistent card height */
-        }
+    .category-card .card-body {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1; /* Take remaining vertical space */
+    }
 
-        .category-card .card-title {
-            white-space: nowrap; /* Prevent wrapping for category name */
-            overflow: hidden;
-            text-overflow: ellipsis; /* Add ellipsis for long names */
-            max-width: 100%; /* Ensure text-truncate works */
-        }
-
-    /* Consistent header styling */
-    .card-header.bg-primary {
-        background-color: #007bff !important;
-        background-image: linear-gradient(to right, #0056b3, #007bff);
+    .category-card .card-title {
+        font-size: 1.1rem;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
     }
 </style>

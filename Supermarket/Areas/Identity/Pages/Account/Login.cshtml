@@ -5,57 +5,57 @@
     ViewData["Title"] = "Log in";
 }
 
-<section class="h-100 bg-white">
+<section class="h-100">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col">
-                <div class="card card-registration my-4">
-                    <div class="row g-0 h-50">
-                        @* Image Section *@
-                        <div class="col-xl-6 d-none d-xl-block">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
-                                 alt="Sample photo" class="img-fluid"
-                                 style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
-                        </div>
-
-                        @* Form Section  *@
-                        <div class="col-xl-6">
-                            <div class="card-body p-md-5 text-black">
-
-                                <form id="account" method="post"> 
-                                    <h3 class="mb-5 text-uppercase">Login</h3>
-
-                                    <div data-mdb-input-init class="form-outline mb-4">
-                                            <input asp-for="Input.Email" id="email" class="form-control form-control-lg" placeholder="name@example.com" autocomplete="username" aria-required="true" />
-                                            <label for="email" asp-for="Input.Email" class="form-label">Email Address</label>
-                                            <span asp-validation-for="Input.Email" class="text-danger"></span>
-                                    </div>
-
-                                    <div data-mdb-input-init class="form-outline mb-4">
-                                             <input asp-for="Input.Password" class="form-control form-control-lg" autocomplete="current-password" aria-required="true" placeholder="password" />
-                                             <label asp-for="Input.Password" class="form-label">Password</label>
-                                             <span asp-validation-for="Input.Password" class="text-danger"></span>
-                                    </div>
-
-                                    <div data-mdb-input-init class="form-outline mb-4">
-                                             <input class="form-check-input" asp-for="Input.RememberMe" id="rememberMe" />
-                                             <label class="form-check-label" for="rememberMe">@Html.DisplayNameFor(m => m.Input.RememberMe)</label>
-                                    </div>
-
-                                    <div class="d-flex justify-content-end pt-3">
-                                             <button type="submit" class="btn btn-success btn-lg btn-block">Log in</button>
-                                    </div>
-
-                                    <div class="d-flex justify-content-between align-items-center mt-4">
-                                        <a id="forgot-password" asp-page="./ForgotPassword" class="small text-decoration-none text-primary">Forgot password?</a>
-                                        <p class="mb-0">
-                                            Don't have an account?
-                                            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="text-decoration-none text-primary fw-bold">Register here</a>
-                                        </p>
-                                    </div>
-                                </form>
+            <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+                <div class="card shadow-lg border-0 my-4 rounded-4">
+                    <div class="bg-gradient-header text-white py-4 px-4 rounded-top-4">
+                        <div class="row align-items-center">
+                            <div class="col-12 text-center">
+                                <h2 class="mb-0 text-3xl text-black font-bold">Login</h2>
                             </div>
                         </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <form id="account" method="post">
+                            <div asp-validation-summary="All" class="text-danger mb-4"></div>
+
+                            <div class="d-flex align-items-center mb-4">
+                                <i class="fas fa-envelope fa-lg me-3 fa-fw text-gray-700"></i>
+                                <div data-mdb-input-init class="form-outline flex-fill">
+                                    <input asp-for="Input.Email" class="form-control form-control-lg rounded-pill" placeholder="Email" autocomplete="username" aria-required="true" />
+                                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center mb-4">
+                                <i class="fas fa-lock fa-lg me-3 fa-fw text-gray-700"></i>
+                                <div data-mdb-input-init class="form-outline flex-fill">
+                                    <input asp-for="Input.Password" class="form-control form-control-lg rounded-pill" placeholder="Password" autocomplete="current-password" aria-required="true" />
+                                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" asp-for="Input.RememberMe" id="rememberMe" />
+                                    <label class="form-check-label ms-2" for="rememberMe">@Html.DisplayNameFor(m => m.Input.RememberMe)</label>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end pt-3">
+                                <button id="login-submit" type="submit" class="btn bg-gradient-header btn-lg ms-2 rounded-pill px-5 py-3 shadow-sm text-white hover-scale-105 transition-all">Log in</button>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                <a id="forgot-password" asp-page="./ForgotPassword" class="small text-decoration-none text-primary">Forgot password?</a>
+                                <p class="mb-0">
+                                    Don't have an account?
+                                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="text-decoration-none text-primary fw-bold">Register here</a>
+                                </p>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -63,20 +63,103 @@
     </div>
 </section>
 
-<style>
-    .card-registration .select-input.form-control[readonly]:not([disabled]) {
-        font-size: 1rem;
-        line-height: 2.15;
-        padding-left: .75em;
-        padding-right: .75em;
-    }
-
-    .card-registration .select-arrow {
-        top: 13px;
-    }
-</style>
-
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
 
+<style>
+    /* Consistent orange color variables */
+    :root {
+        --orange-main-color: rgb(234,80,28); /* The primary orange from your header */
+        --orange-line-color: rgba(234,80,28,0.5); /* A lighter shade for the lines (if needed elsewhere) */
+    }
+
+    /* Consistent header background */
+    .bg-gradient-header {
+        background-color: var(--orange-main-color);
+        /* You can add a subtle gradient if you want, similar to your previous header example: */
+        /* background-image: linear-gradient(to right, rgba(234,80,28,0.8), rgb(234,80,28)); */
+    }
+
+    /* Consistent text colors */
+    .text-gray-700 {
+        color: #495057; /* Used for input icons */
+    }
+
+    .text-black {
+        color: #000; /* For header text */
+    }
+
+    /* Consistent typography */
+    .text-3xl {
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+    }
+
+    .font-bold {
+        font-weight: 700;
+    }
+
+    /* Consistent rounded corners */
+    .rounded-4 {
+        border-radius: 1rem !important;
+    }
+
+    .rounded-top-4 {
+        border-top-left-radius: 1rem !important;
+        border-top-right-radius: 1rem !important;
+    }
+
+    .rounded-pill {
+        border-radius: 50rem !important; /* For buttons and inputs */
+    }
+
+    /* Consistent hover effect and transition */
+    .hover-scale-105:hover {
+        transform: scale(1.05);
+    }
+
+    .transition-all {
+        transition-property: all;
+        transition-duration: 200ms;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Adjust the general card shadow and padding */
+    .card.shadow-lg {
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important; /* Softer shadow */
+    }
+
+    .card-body.p-4 {
+        padding: 1.5rem !important; /* Slightly more padding for the card body */
+    }
+
+    /* Styles for form controls to match the rounded pill style */
+    .form-control.rounded-pill {
+        border-radius: 50rem !important;
+        padding-left: 1.25rem; /* Add some padding for the text */
+        padding-right: 1.25rem;
+    }
+
+    /* Ensure icons align with inputs */
+    .d-flex.align-items-center .fa-fw {
+        width: 1.5em; /* Fixed width for icons for better alignment */
+        text-align: center;
+    }
+
+    .d-flex.align-items-center .form-outline {
+        margin-left: 0.75rem; /* Space between icon and input */
+    }
+
+    /* Specific styles for the Login button */
+    .btn.bg-gradient-header {
+        background-color: var(--orange-main-color);
+        color: #fff;
+        border: none;
+    }
+
+        .btn.bg-gradient-header:hover {
+            background-color: var(--orange-main-color); /* Maintain color on hover */
+            opacity: 0.9; /* Slight opacity change on hover */
+        }
+</style>

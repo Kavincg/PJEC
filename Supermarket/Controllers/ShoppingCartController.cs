@@ -112,7 +112,6 @@ namespace Supermarket.Controllers
             var domain = Request.Scheme + "://" + Request.Host.Value + "/";
             var options = new Stripe.Checkout.SessionCreateOptions
             {
-                //SuccessUrl = domain + $"ShoppingCart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
                 SuccessUrl = domain + $"ShoppingCart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
                 CancelUrl = domain + $"ShoppingCart/Summary",
                 LineItems = new List<Stripe.Checkout.SessionLineItemOptions>(),
@@ -171,7 +170,8 @@ namespace Supermarket.Controllers
             _unitOfWork.Carts.RemoveRange(shoppingCarts);
             _unitOfWork.Save();
 
-            return View(id);
+            return View(orderHeader);
+            //return View(id);
         }
 
 

@@ -1,130 +1,117 @@
 ﻿@model List<Product>
 @using Supermarket.RolesAndEmailSender
 
-<div class="card border-0 col-md-12" style="margin-top:100px">
-    <div class="card-header bg-body bg-gradient py-3 d-flex justify-content-around align-items-center">
-        <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-12 text-start">
-                <h1>Products</h1>
+<div class="container py-5">
+    @* Replaced margin-top with py-5 for consistent padding *@
+    <div class="card border-0 rounded-4 shadow-lg">
+        @* Added rounded-4 and shadow-lg for consistency *@
+        <div class="card-header bg-gradient-header text-white py-4 px-4 rounded-top-4">
+            @* Applied bg-gradient-header and rounded-top-4 *@
+            <div class="d-flex justify-content-between align-items-center">
+                @* Flex container for title and button *@
+                <h1 class="mb-0 text-3xl text-gray-800 font-bold text-white">Products</h1> @* Applied consistent header styling *@
+                @if (User.IsInRole(SD.Role_Admin))
+                {
+                    <a asp-controller="Product" asp-action="Create"
+                       class="btn bg-gradient-header rounded-pill px-4 py-2 shadow-sm text-white hover-scale-105 transition-all">
+                        <i class="bi bi-plus-circle me-2"></i> Create New Product
+                    </a>
+                }
             </div>
         </div>
-        <div class="row pb-3">
+        <div class="card-body p-4">
+            @* Consistent padding *@
+            <div class="mb-4">
+                @* Added margin-bottom for search form *@
+                <form asp-controller="Product" asp-action="Index" method="get">
+                    <div class="input-group search-bar rounded-pill overflow-hidden shadow-sm">
+                        @* Styled search bar *@
+                        <input type="text" name="search" class="form-control border-0" placeholder="Search Products by name or category...">
+                        <button type="submit" class="btn btn-outline-secondary px-4">
+                            <i class="bi bi-search"></i> Search
+                        </button>
+                    </div>
+                </form>
             </div>
-            @if (User.IsInRole(SD.Role_Admin))
+
+            @if (!Model.Any())
             {
-                <div class="col-6 text-end">
-                    <a asp-controller="Product" asp-action="Create" class="btn btn-outline-success">
-                        <i class="bi bi-plus-circle"></i>  Create New Product
-                    </a>
+                <div class="alert alert-info text-center" role="alert">
+                    No products found.
                 </div>
             }
-        </div>
-    </div>
-    <div class="card-body p-4">
-    <div>
-        <form asp-controller="Product" asp-action="Index" method="get" style="margin-bottom:20px">
-            <div class="container">
-                <div class="row height d-flex justify-content-center align-items-center">
-                    <div class="col-md-12">
-                        <div class="search d-flex align-items-center">
-                            <input type="text" name="search" class="form-control" placeholder="Search Products">
-                            <button type="submit" class="btn btn-outline-primary">Search</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div>
-        <div class="container">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 pb-3 align-items-center">
-                @foreach (var product in Model)
-                {
-                    <div class="col">
-
-                        @* new card  *@
-                        <div class="card cardHover">
-                            <a asp-action="Details" asp-route-id="@product.Id" class="card-link text-decoration-none text-dark">
-                                @{
-                                    List<Category> categories = ViewBag.Categories as List<Category>;
-                                    string categoryName = "";
-                                    if (categories != null)
-                                    {
-                                        var category = categories.FirstOrDefault(c => c.id == product.CategoryId);
-                                        if (category != null)
+            else
+            {
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 pb-3">
+                    @foreach (var product in Model)
+                    {
+                        <div class="col">
+                            <div class="card h-100 product-card shadow-sm hover-scale-105 transition-all" id="favorite-@product.Id">
+                                @* Added h-100, product-card and id for JS *@
+                                <a asp-action="Details" asp-route-id="@product.Id" class="card-link text-decoration-none text-dark">
+                                    @{
+                                        List<Category> categories = ViewBag.Categories as List<Category>;
+                                        string categoryName = "N/A"; // Default to N/A if category not found
+                                        if (categories != null)
                                         {
-                                            categoryName = category.Name;
+                                            var category = categories.FirstOrDefault(c => c.id == product.CategoryId);
+                                            if (category != null)
+                                            {
+                                                categoryName = category.Name;
+                                            }
                                         }
                                     }
-                                }
-                                <img src="~/img/@product.imgURL" class="card-img-top" style="width: 100%; height: 200px;" alt="@product.Name">
-                                <div class="mt-2 text-center">
-                                    <p class="card-title h6 text-dark opacity-75">@categoryName</p>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">@product.Name</h5>
-                                    <p class="card-text text-truncate-container">@product.Description</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="h5 mb-0">₹@product.price.ToString("F2")</span>
-                                    </div>
-                                </div>
-                                <div class="card-footer d-flex justify-content-between align-items-center bg-light">
-                                    @* <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-success btn-sm border-0 d-flex align-items-center justify-content-center"> *@
-                                    @*     <i class="bi bi-info-circle me-2 mb-1"></i> *@
-                                    @*     Details *@
-                                    @* </a> *@
-                                    @if (User.IsInRole(SD.Role_Admin))
-                                    {
-                                        <div class="row m-1">
-                                            <div class="col-12">
-                                                <div class="btn-group w-100" role="group">
-                                                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-outline-success w-50">
+                                    <img src="~/img/@product.imgURL" class="card-img-top product-thumbnail-img" alt="@product.Name">
+                                    <div class="card-body d-flex flex-column">
+                                        @* Use flex-column for body content organization *@
+                                        <p class="card-text text-dark opacity-75 fw-medium text-center mb-1">@categoryName</p> @* Styled category name *@
+                                        <h5 class="card-title text-dark fw-bold text-center mb-2">@product.Name</h5> @* Styled product name *@
+                                        <p class="card-text text-dark opacity-75 text-truncate-container flex-grow-1 mb-3">@product.Description</p> @* Description with truncation *@
+                                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                                            @* Price and actions at bottom *@
+                                            <span class="h5 mb-0 text-orange-600 font-bold">₹@product.price.ToString("F2")</span> @* Styled price *@
+                                            @if (User.IsInRole(SD.Role_Admin))
+                                            {
+                                                <div class="btn-group" role="group">
+                                                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id"
+                                                       class="btn btn-outline-secondary btn-sm rounded-start">
                                                         <i class="bi bi-pencil-square"></i>
                                                     </a>
-                                                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-outline-danger w-50">
+                                                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id"
+                                                       class="btn btn-outline-danger btn-sm rounded-end">
                                                         <i class="bi bi-trash-fill"></i>
                                                     </a>
                                                 </div>
-                                            </div>
+                                            }
                                         </div>
-                                    }
+                                    </div>
+                                </a>
+                                <div class="favourite-overlay">
+                                    @* Overlay for favorite icon *@
                                     <a href="javascript:void(0)" class="favourite-toggle" data-product-id="@product.Id">
                                         <i class="bi @(product.IsFavorited ? "bi-heart-fill text-danger" : "bi-heart") h4"></i>
                                     </a>
                                 </div>
-                            </a>
+                            </div>
                         </div>
-                    </div>
-                }
-            </div>
+                    }
+                </div>
+            }
         </div>
     </div>
 </div>
-<style>
-    .cardHover {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
 
-        .cardHover:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-        }
-
-    .text-truncate-container {
-        -webkit-line-clamp: 2;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-</style>
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> @* Ensure jQuery is loaded for AJAX *@
 
     <script>
-        $(document).on('click', '.favourite-toggle', function () {
+        $(document).on('click', '.favourite-toggle', function (e) {
+            e.preventDefault(); // Prevent the card link from navigating
+            e.stopPropagation(); // Stop propagation to prevent card click
+
             var $this = $(this);
             var productId = $this.data('product-id');
-            var productCard = $("#favorite-" + productId); // Define productCard inside the function
 
             $.ajax({
                 url: '@Url.Action("Favourite", "Product")',
@@ -133,26 +120,25 @@
                 success: function (response) {
                     if (response.isFavorited) {
                         $this.find('i').removeClass('bi-heart').addClass('bi-heart-fill text-danger');
-                        console.log("Added to Favorites"); // Silent log
                         localStorage.setItem('favorite-' + productId, 'true');
                     } else {
                         $this.find('i').removeClass('bi-heart-fill text-danger').addClass('bi-heart');
-                        console.log("Removed from Favorites"); // Silent log
                         localStorage.removeItem('favorite-' + productId);
-                    }
 
-                    // If on "My Favorites" page, remove the product card
-                    if (window.location.pathname.includes("GetFavs") && productCard) {
-                        productCard.remove();
+                        // If on "My Favorites" page (e.g., GetFavs) and unfavoriting, remove the product card
+                        if (window.location.pathname.includes("GetFavs")) {
+                            $('#favorite-' + productId).remove(); // Assuming each product card has an id="favorite-productId"
+                        }
                     }
                 },
                 error: function () {
-                    console.error("Something went wrong!");
+                    console.error("Something went wrong with favorite toggle!");
+                    Swal.fire('Error', 'Could not update favorite status.', 'error');
                 }
             });
         });
-        
-        // On page load, restore favorite states
+
+        // On page load, restore favorite states based on local storage
         $(document).ready(function () {
             $('.favourite-toggle').each(function () {
                 var $this = $(this);
@@ -164,3 +150,205 @@
         });
     </script>
 }
+
+<style>
+    /* Custom Orange from your existing styles */
+    :root {
+        --orange-main-color: rgb(234,80,28); /* The primary orange from your header */
+    }
+
+    .bg-gradient-header {
+        background-color: var(--orange-main-color);
+    }
+
+    /* Re-used utility classes for typography, spacing, and transitions */
+    .text-gray-800 {
+        color: #343a40;
+    }
+
+    .text-orange-600 {
+        color: #ea501c;
+    }
+    /* Explicitly defined for use */
+    .text-3xl {
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+    }
+
+    .font-bold {
+        font-weight: 700;
+    }
+
+    .font-semibold {
+        font-weight: 600;
+    }
+
+    .fw-medium {
+        font-weight: 500;
+    }
+    /* For custom font-medium */
+
+    .py-5 {
+        padding-top: 3rem !important;
+        padding-bottom: 3rem !important;
+    }
+
+    .mt-4 {
+        margin-top: 1.5rem !important;
+    }
+
+    .mb-4 {
+        margin-bottom: 1.5rem !important;
+    }
+
+    .p-4 {
+        padding: 1.5rem !important;
+    }
+    /* Adjusted to be a bit smaller than p-5 for card body */
+    .px-4 {
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+
+    .py-4 {
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+    }
+
+    .rounded-4 {
+        border-radius: 1rem !important;
+    }
+
+    .rounded-top-4 {
+        border-top-left-radius: 1rem !important;
+        border-top-right-radius: 1rem !important;
+    }
+
+    .shadow-lg {
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important;
+    }
+    /* Softer shadow */
+    .shadow-sm {
+        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
+    }
+    /* Bootstrap sm shadow */
+
+    .hover-scale-105:hover {
+        transform: scale(1.05);
+    }
+
+    .transition-all {
+        transition-property: all;
+        transition-duration: 200ms;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Card Styling for Products */
+    .product-card {
+        border-radius: 0.75rem; /* Slightly less rounded than main card */
+        overflow: hidden; /* Ensures rounded corners are visible */
+        position: relative; /* For favorite overlay positioning */
+        display: flex;
+        flex-direction: column;
+        height: 100%; /* Ensures all cards in a row have same height */
+    }
+
+    .product-thumbnail-img {
+        height: 200px; /* Fixed height for product images */
+        object-fit: cover; /* Cover the area, cropping if necessary */
+        border-bottom: 1px solid #eee; /* Subtle separator */
+    }
+
+    .card-link {
+        color: inherit; /* Inherit text color from parent, prevent blue link color */
+        text-decoration: none; /* Remove underline */
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1; /* Allow link to take full height for click */
+    }
+
+    .card-body {
+        padding: 1rem; /* Adjust padding inside product cards */
+    }
+
+    .text-truncate-container {
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Show only 2 lines of description */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 0.9rem; /* Smaller font for description */
+        color: #6c757d; /* Bootstrap text-secondary for description */
+    }
+
+    /* Search Bar Styling */
+    .search-bar .form-control {
+        border-top-left-radius: 50rem;
+        border-bottom-left-radius: 50rem;
+        padding-left: 1.5rem;
+        height: calc(2.8rem + 2px); /* Match button height */
+        box-shadow: none; /* Remove default focus shadow */
+    }
+
+        .search-bar .form-control:focus {
+            border-color: var(--orange-main-color); /* Orange border on focus */
+            box-shadow: 0 0 0 0.25rem rgba(234, 80, 28, 0.25); /* Orange shadow on focus */
+        }
+
+    .search-bar .btn {
+        background-color: var(--orange-main-color);
+        color: white;
+        border: 1px solid var(--orange-main-color);
+        border-top-right-radius: 50rem;
+        border-bottom-right-radius: 50rem;
+        height: calc(2.8rem + 2px);
+    }
+
+        .search-bar .btn:hover {
+            background-color: darken(var(--orange-main-color), 10%); /* Darker orange on hover */
+            border-color: darken(var(--orange-main-color), 10%);
+        }
+
+    .bg-gradient-header{
+        color: rgb(234,80,28);
+    }
+
+    /* Favorite Overlay */
+    .favourite-overlay {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        z-index: 10; /* Ensure it's above the image */
+    }
+
+    .favourite-toggle i {
+        color: #fff; /* White heart by default on image */
+        text-shadow: 0 0 5px rgba(0,0,0,0.5); /* Shadow for visibility */
+        transition: color 0.2s ease;
+    }
+
+        .favourite-toggle i.text-danger {
+            color: #dc3545 !important; /* Red for favorited, ensure it overrides */
+        }
+
+    .favourite-toggle:hover i {
+        transform: scale(1.1); /* Slight zoom on hover */
+    }
+
+
+    /* Admin Buttons (Edit/Delete) */
+    .btn-group .btn-outline-secondary,
+    .btn-group .btn-outline-danger {
+        transition: all 0.2s ease;
+    }
+
+        .btn-group .btn-outline-secondary:hover {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-group .btn-outline-danger:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+</style>

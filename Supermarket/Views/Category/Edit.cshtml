@@ -1,53 +1,168 @@
 ﻿@model Category
-<div class="card border-0 mt-4">
-    <div class="card-header bg-body bg-gradient ml-0 py-3">
-        <div class="row">
-            <div class="col-12 text-start">
-                <h2 class="text-dark py-2">Edit Category</h2>
+
+<div class="card shadow-lg border-0 mt-5 mb-4 rounded-4">
+    <div class="bg-gradient-header text-white py-4 px-4 rounded-top-4">
+        <div class="row align-items-center">
+            <div class="col-12 text-center">
+                <h2 class="mb-0 text-3xl text-black font-bold">Edit Category</h2>
             </div>
         </div>
     </div>
     <div class="card-body p-4">
         <form method="post">
             <input asp-for="id" hidden />
-            <div class="border p-3 mt-4">
-                @*<div asp-validation-summary="ModelOnly"></div>*@
-               <div class="form-floating py-2 col-12">
-                    <input asp-for="Name" class="form-control border-0 shadow" />
-                    <label asp-for="Name" class="ms-2"></label>
+
+            <div class="col-12">
+                <div class="form-floating py-2 mb-3">
+                    <input asp-for="Name" class="form-control rounded-pill" placeholder="Category Name" />
+                    <label asp-for="Name" class="ms-2">Category Name</label> 
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
-                <div class="form-floating py-2 col-12">
-                    <input asp-for="DisplayOrder" class="form-control border-1" />
-                    <label asp-for="DisplayOrder" class="ms-2"></label>
+                <div class="form-floating py-2 mb-3">
+                    <input asp-for="DisplayOrder" class="form-control rounded-pill" placeholder="Display Order" /> 
+                    <label asp-for="DisplayOrder" class="ms-2">Display Order</label>
                     <span asp-validation-for="DisplayOrder" class="text-danger"></span>
                 </div>
-                <div class="form-floating py-2 col-12">
-                    <input asp-for="logoUrl" class="form-control border-1" />
-                    <label asp-for="logoUrl" class="ms-2"></label>
+                <div class="form-floating py-2 mb-4">
+                    <input asp-for="logoUrl" class="form-control rounded-pill" placeholder="Logo URL" />
+                    <label asp-for="logoUrl" class="ms-2">Logo URL</label> 
                     <span asp-validation-for="logoUrl" class="text-danger"></span>
                 </div>
 
-                <div class="row mt-3">
-                    <div class="col-6 col-md-3">
-                        <button type="submit" class="btn btn-outline-success form-control">Update</button>
+                <div class="row pt-2 justify-content-end">
+                    <div class="col-12 col-md-4 col-lg-3 mb-2">
+                        <button type="submit" class="btn bg-gradient-header w-100 rounded-pill px-3 py-2 shadow-sm text-white hover-scale-105 transition-all">
+                            Update
+                        </button>
                     </div>
-                    <div class="col-6 col-md-3">
-                        <a asp-controller="Category" asp-action="Index" class="btn btn-outline-primary form-control">
+                    <div class="col-12 col-md-4 col-lg-3 mb-2">
+                        <a asp-controller="Category" asp-action="Index" class="btn btn-secondary w-100 rounded-pill px-3 py-2 shadow-sm text-white hover-scale-105 transition-all">
                             Back to List
                         </a>
                     </div>
                 </div>
-
-
             </div>
         </form>
     </div>
 </div>
 
-
-@section Scripts{
+@section Scripts {
     @{
-        <partial name="_ValidationScriptsPartial"/>
+        <partial name="_ValidationScriptsPartial" />
     }
 }
+
+<style>
+    /* Consistent orange color variables */
+    :root {
+        --orange-main-color: rgb(234,80,28); /* The primary orange from your header */
+        --orange-line-color: rgba(234,80,28,0.5); /* A lighter shade for the lines (if needed elsewhere) */
+    }
+
+    /* Consistent header background */
+    .bg-gradient-header {
+        background-color: var(--orange-main-color);
+        /* You can add a subtle gradient if you want, similar to your previous header example: */
+        /* background-image: linear-gradient(to right, rgba(234,80,28,0.8), rgb(234,80,28)); */
+    }
+
+    /* Consistent text colors */
+    .text-gray-700 {
+        color: #495057; /* Used for input icons, if any are added */
+    }
+
+    .text-black {
+        color: #000; /* For header text */
+    }
+
+    /* Consistent typography */
+    .text-3xl {
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+    }
+
+    .font-bold {
+        font-weight: 700;
+    }
+
+    /* Consistent rounded corners */
+    .rounded-4 {
+        border-radius: 1rem !important;
+    }
+
+    .rounded-top-4 {
+        border-top-left-radius: 1rem !important;
+        border-top-right-radius: 1rem !important;
+    }
+
+    .rounded-pill {
+        border-radius: 50rem !important; /* For buttons and inputs */
+    }
+
+    /* Consistent hover effect and transition */
+    .hover-scale-105:hover {
+        transform: scale(1.05);
+    }
+
+    .transition-all {
+        transition-property: all;
+        transition-duration: 200ms;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Adjust the general card shadow and padding */
+    .card.shadow-lg {
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important; /* Softer shadow */
+    }
+
+    .card-body.p-4 {
+        padding: 1.5rem !important; /* Slightly more padding for the card body */
+    }
+
+    /* Styles for form controls to match the rounded pill style */
+    .form-control.rounded-pill {
+        border-radius: 50rem !important;
+        padding-left: 1.25rem; /* Add some padding for the text */
+        padding-right: 1.25rem;
+    }
+
+    /* Adjustments for form-floating labels with rounded inputs */
+    .form-floating > .form-control.rounded-pill,
+    .form-floating > .form-control.rounded-pill ~ label {
+        height: calc(3.5rem + 2px); /* Standard height for form-floating */
+    }
+
+    .form-floating > label {
+        padding: 1rem 1.25rem; /* Adjust padding for label to match rounded input */
+    }
+
+    .form-floating > .form-control.rounded-pill:focus,
+    .form-floating > .form-control.rounded-pill:not(:placeholder-shown) {
+        padding-top: 1.625rem;
+        padding-bottom: 0.625rem;
+    }
+
+    /* Specific styles for the primary and secondary buttons */
+    .btn.bg-gradient-header {
+        background-color: var(--orange-main-color);
+        color: #fff;
+        border: none;
+    }
+
+        .btn.bg-gradient-header:hover {
+            background-color: var(--orange-main-color); /* Maintain color on hover */
+            opacity: 0.9; /* Slight opacity change on hover */
+        }
+
+    .btn-secondary {
+        background-color: #6c757d; /* Standard Bootstrap secondary color */
+        border-color: #6c757d;
+        color: #fff;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+            color: #fff;
+        }
+</style>
