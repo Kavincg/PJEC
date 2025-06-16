@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Supermarket.Data;
 
@@ -11,9 +12,11 @@ using Supermarket.Data;
 namespace Supermarket.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250616110154_restart")]
+    partial class restart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -256,36 +259,22 @@ namespace Supermarket.Migrations
                         {
                             id = 1,
                             DisplayOrder = 1,
-                            Name = "Books",
-                            logoUrl = "book.jpeg"
+                            Name = "Fruits",
+                            logoUrl = "fruits.jpeg"
                         },
                         new
                         {
                             id = 2,
-                            DisplayOrder = 2,
-                            Name = "Fashion",
-                            logoUrl = "fashion.jfif"
+                            DisplayOrder = 3,
+                            Name = "Vegetables",
+                            logoUrl = "vegetables.jpeg"
                         },
                         new
                         {
                             id = 3,
                             DisplayOrder = 3,
-                            Name = "Furniture",
-                            logoUrl = "Furniture.webp"
-                        },
-                        new
-                        {
-                            id = 4,
-                            DisplayOrder = 4,
-                            Name = "Media",
-                            logoUrl = "Media.jfif"
-                        },
-                        new
-                        {
-                            id = 5,
-                            DisplayOrder = 5,
-                            Name = "Groceries",
-                            logoUrl = "groceries.jfif"
+                            Name = "Drinks",
+                            logoUrl = "drinks.png"
                         });
                 });
 
@@ -438,152 +427,12 @@ namespace Supermarket.Migrations
                         new
                         {
                             Id = 1,
-                            CategoryId = 1,
-                            Description = "Mila, the seal, has found a special rock in the middle of the sea. One day, after a funny accident, she meets Charlie the seagull. The two become friends and together they share precious time on the rock until Charlie has to leave with his family. What will become of Mila and what will become of their friendship?",
-                            IsFavorited = false,
-                            Name = "rock in the ocean",
-                            imgURL = "rock_in_the_ocean.jpg",
-                            price = 400
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 1,
-                            Description = "Angie Ross, aged fifteen, sadistic, brutal, evil, wicked...\r\n\r\nThe press had been the first to brand this teenager with all the usual condemnations and who could blame them? But, what drove Angie to commit such horrendous crimes? It was Susan Raynor's job to unravel the human story behind the monstrous act and to assess whether Angie was the sadistic beast that society believed she was. Angie’s dreams of her 'cotton candy' home, far away from the horrors of her childhood, depended solely on the outcome of this assessment but how could she tell a story so carefully locked away?\r\n\r\nThis is a complex and harrowing narrative of misplaced trust and lost innocence that takes you on a journey outside of your emotional comfort zone.",
-                            IsFavorited = false,
-                            Name = "cotton candy",
-                            imgURL = "cotton_candy.jpg",
-                            price = 370
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 1,
-                            Description = "This book is based on true events, turned into a fictional story. On her journey to Idaho, in the late 1860's's, with her husband and adopted daughter, Philomena is captured by a war party of Sioux. She does not know if her husband is alive or dead, when Ottawa, takes her, her daughter, her friend, Milly and Milly's son as captives. As Philomena tries to deal with the horrors that befall her, an adopted son of Chief Ottawa, Wechela, whom the Sioux captured as a child from the Shoshone, befriends her and helps lift her burden. Philomena is not certain who to trust or what to believe, since the Indians seem to lie constantly, and change their threats of killing her daily. Her only desire is to escape from the tribe, but will that be possible, when she discovers what the chief has in store for her?",
-                            IsFavorited = false,
-                            Name = "vanish in the sunset",
-                            imgURL = "vanish_in_the_sunset.jpg",
-                            price = 700
-                        },
-                        new
-                        {
-                            Id = 4,
                             CategoryId = 2,
-                            Description = "The French fashion brings her famous wedge sneaker concept to the premium Chuck 70, giving the iconic silhouette a unique elevated stance. Blending effortless luxury style cues with classic Converse details, the limited-edition design captures the essence of Isabel Marant’s laid back but elevated aesthetic. Sophisticated materials, raw edge overlays and vibrant swirls of color create a distinctive carefree vibe.",
+                            Description = "",
                             IsFavorited = false,
-                            Name = "Converse X OFF-WHITE",
-                            imgURL = "converse.jpg",
-                            price = 6699
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CategoryId = 2,
-                            Description = "Relive the glamour of the Golden Age of Hollywood with these classic Ray-Ban aviator sunglasses. The legendary gold frame and tortoiseshell tips lend a versatile vintage look. With adjustable nose pads.",
-                            IsFavorited = false,
-                            Name = "Rayban Aviator",
-                            imgURL = "Rayban.jfif",
-                            price = 3000
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CategoryId = 2,
-                            Description = "The Seiko Presage SRPK75J1, also known as the “Cocktail Time Star Bar Purple Sunset,” is a sophisticated men’s watch made in Japan. This limited edition timepiece, with only 9,000 pieces available, features a 23-jewel automatic movement with the Seiko Cal. 4R35 engine, offering a power reserve of up to 41 hours. The 40.5 mm stainless steel case, with a thickness of 11.8 mm, houses a captivating gradated navy blue and purple dial with a pressed pattern and gloss finish, protected by a box-shaped Hardlex crystal. The dial is adorned with elegant dagger indexes and a date display at the 3 o’clock position. The watch is water-resistant up to 50 meters (165 feet) and boasts an accuracy of +45 to -35 seconds per day.",
-                            IsFavorited = false,
-                            Name = "Seiko Presage",
-                            imgURL = "seiko.jpg",
-                            price = 27899
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CategoryId = 3,
-                            Description = "The Nilkamal Tokyo Calipso Queen Bed elevates your bedroom with its contemporary design, perfectly blending style and functionality. Its PVC-upholstered cushioned headboard featuresan open-close storage compartment on each side, making organisation effortless. The headboard also includes five open shelves, giving easy access to everyday essentials. Ideal for those who appreciate minimalist aesthetics, this bed eliminates under-bed storage, creating a clean and uncluttered look. Crafted from premium engineered wood, it ensures exceptional durability and long-lasting performance, making it a perfect fit for modern homes.",
-                            IsFavorited = false,
-                            Name = "Bed",
-                            imgURL = "Bed.webp",
-                            price = 35999
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CategoryId = 3,
-                            Description = "This dark grey U-shaped sectional sleeper sofa combines multifunctional design with premium comfort. Featuring a sturdy hardwood frame, steel pull-out bed supporting 500 lbs per seat, and a spacious storage chaise, it comfortably seats 6 and sleeps 3. Upholstered in easy-care microfiber with detachable cushions, it’s perfect for modern living rooms seeking style, versatility, and convenience.",
-                            IsFavorited = false,
-                            Name = "Sofa",
-                            imgURL = "Sofa.jpg",
-                            price = 90000
-                        },
-                        new
-                        {
-                            Id = 9,
-                            CategoryId = 3,
-                            Description = "The TV stand is designed for TVs up to 70\" and features a  high gloss white finish , with a durable construction using high-density chipboard. It has  built-in LED lighting with over 6 million colors and 29 flashing modes . The stand includes  2 large drawers for storage  and  tempered glass shelving . It measures 63\" L x 13.78\" W x 17.91\" H, weighs 72.8 lbs, and has a  load-bearing capacity of 110 lbs . The package includes a TV cabinet, remote control, and instruction manual. Suitable for TVs between 32-70 inches, it is compatible with various rooms such as bedrooms, lounges, and living rooms.",
-                            IsFavorited = false,
-                            Name = "TV Stand",
-                            imgURL = "TVS.webp",
-                            price = 15999
-                        },
-                        new
-                        {
-                            Id = 10,
-                            CategoryId = 4,
-                            Description = "Call of Duty: Black Ops III combines three unique game modes: Campaign, Multiplayer and Zombies, providing fans with the deepest and most ambitious Call of Duty ever. ",
-                            IsFavorited = false,
-                            Name = "Call Of Duty: Black OPS 3 SPECIAL EDITION",
-                            imgURL = "COD_BO3.jpg",
-                            price = 5899
-                        },
-                        new
-                        {
-                            Id = 11,
-                            CategoryId = 4,
-                            Description = "The Boys is an American media franchise that includes action-drama / satirical black comedy superhero streaming television series. The show is set in a world where superpowered individuals called Supes are recognized as heroes by the general public and work for a powerful corporation known as Vought International. However, most of these Supes are selfish and corrupt outside of their heroic personas. The show follows a CIA team called The Boys who monitor and deal with these superheroes.",
-                            IsFavorited = false,
-                            Name = "The Boys",
-                            imgURL = "Boys.jpg",
-                            price = 399
-                        },
-                        new
-                        {
-                            Id = 12,
-                            CategoryId = 4,
-                            Description = "\"Let It Happen\" is a song by Tame Impala, the project of Australian rock artist Kevin Parker. It was released as the lead single from his third studio album under the moniker, Currents (2015), on 10 March 2015. The song explores themes of personal transition and was developed in various locations around the world. ",
-                            IsFavorited = false,
-                            Name = "Let It Happen - Tame Impala",
-                            imgURL = "LetItHappen.jfif",
-                            price = 99
-                        },
-                        new
-                        {
-                            Id = 13,
-                            CategoryId = 5,
-                            Description = "Experiece the taste of barbeque sauce melting on your tongue with the new lays barbecue flavoured chips.",
-                            IsFavorited = false,
-                            Name = "Lays",
-                            imgURL = "lays.webp",
-                            price = 40
-                        },
-                        new
-                        {
-                            Id = 14,
-                            CategoryId = 5,
-                            Description = "The worlds sweetest fruit also known of queen of fruits, now for your tongue",
-                            IsFavorited = false,
-                            Name = "Mango",
-                            imgURL = "mango.jfif",
-                            price = 200
-                        },
-                        new
-                        {
-                            Id = 15,
-                            CategoryId = 5,
-                            Description = "This vegetable is commonly avoided, but its benefits are known to few. Try it out and experience brand new health",
-                            IsFavorited = false,
-                            Name = "Broccoli",
-                            imgURL = "broc.jpg",
-                            price = 27899
+                            Name = "Tomato",
+                            imgURL = "",
+                            price = 60
                         });
                 });
 
