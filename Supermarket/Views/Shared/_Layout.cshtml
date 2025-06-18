@@ -65,6 +65,11 @@
                                 Orders
                             </a>
                         </div>
+                        <div class="m-2 fw-bold">
+                            <a class="nav-link text-white hover-lighten-bg rounded-pill px-3 py-2 transition-all" asp-area="Identity" asp-page="/Account/Manage/Index">
+                                EditUser
+                            </a>
+                        </div>
                     }
                     @if (User.IsInRole(SD.Role_Admin))
                     {

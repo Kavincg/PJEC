@@ -12,8 +12,8 @@ using Supermarket.Data;
 namespace Supermarket.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250616121750_seeddb")]
-    partial class seeddb
+    [Migration("20250617032510_initialMigration")]
+    partial class initialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -260,7 +260,7 @@ namespace Supermarket.Migrations
                             id = 1,
                             DisplayOrder = 1,
                             Name = "Books",
-                            logoUrl = "book.jpeg"
+                            logoUrl = "book.png"
                         },
                         new
                         {

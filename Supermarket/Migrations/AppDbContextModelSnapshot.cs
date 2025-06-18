@@ -257,7 +257,7 @@ namespace Supermarket.Migrations
                             id = 1,
                             DisplayOrder = 1,
                             Name = "Books",
-                            logoUrl = "book.jpeg"
+                            logoUrl = "book.png"
                         },
                         new
                         {
