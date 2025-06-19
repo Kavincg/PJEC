@@ -14,10 +14,8 @@
             </div>
         </div>
         <div class="card-body p-4">
-            @* IMPORTANT: Add enctype="multipart/form-data" for file uploads *@
             <form method="post" class="row g-3" enctype="multipart/form-data">
                 <input asp-for="id" hidden />
-                @* This hidden input will carry the existing logoUrl (filename) if no new file is selected *@
                 <input asp-for="logoUrl" hidden />
 
                 <div asp-validation-summary="All" class="text-danger mb-3"></div>
@@ -36,7 +34,6 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label text-muted mb-2">Category Logo</label>
-                        @* CRITICAL CHANGE: Added name="file" to match the IFormFile parameter in the controller *@
                         <input class="form-control border-secondary rounded-2" type="file" accept="image/*" id="imageUpload" name="file" />
                     </div>
 
@@ -52,7 +49,6 @@
 
                 <div class="col-md-4 d-flex align-items-center justify-content-center">
                     <div class="image-preview-container border p-2 text-center" style="min-height: 200px; width: 100%; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa;">
-                        @* Display existing image or a placeholder if no image exists *@
                         <img id="imagePreview" src="@existingImageUrl" alt="Category Image Preview" class="img-fluid" style="@(string.IsNullOrEmpty(existingImageUrl) ? "display:none;" : "") max-height: 250px; object-fit: contain;" />
                         <span id="noImageText" class="text-muted @(string.IsNullOrEmpty(existingImageUrl) ? "" : "d-none")">No image selected</span>
                     </div>
@@ -81,7 +77,6 @@
                     imagePreview.style.display = 'block';
                     noImageText.classList.add('d-none');
                 } else {
-                    // If file is cleared, revert to existing image or no image text
                     const existingImageUrl = '@existingImageUrl';
                     if (existingImageUrl) {
                         imagePreview.src = existingImageUrl;
@@ -95,8 +90,7 @@
                 }
             });
 
-            // Initial check for image display on page load (for existing images)
-            if (imagePreview.src && imagePreview.src !== window.location.href + '#') { // Avoid displaying placeholder if src is just '#'
+            if (imagePreview.src && imagePreview.src !== window.location.href + '#') { 
                 imagePreview.style.display = 'block';
                 noImageText.classList.add('d-none');
             } else {
@@ -108,10 +102,9 @@
 }
 
 <style>
-    /* Add the same style block as your Create.cshtml to ensure consistent styling */
     :root {
-        --orange-main-color: rgb(234,80,28); /* The primary orange from your header */
-        --orange-line-color: rgba(234,80,28,0.5); /* A lighter shade for the lines (if needed elsewhere) */
+        --orange-main-color: rgb(234,80,28);
+        --orange-line-color: rgba(234,80,28,0.5);
     }
 
     .bg-gradient-header {

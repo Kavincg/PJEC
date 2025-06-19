@@ -2,35 +2,27 @@
 @using Supermarket.RolesAndEmailSender
 
 <section class="py-5">
-    @* Consistent vertical padding *@
     <div class="container py-3">
-        @* Adjusted padding for content within the section *@
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-12 col-lg-10">
-                @* Adjusted column width for wider layout *@
 
                 <div class="card border-0 rounded-4 shadow-lg mb-4">
-                    @* Main card for favorites content *@
                     <div class="card-header bg-gradient-header text-white py-4 px-4 rounded-top-4">
-                        @* Consistent header styling *@
                         <h3 class="mb-0 text-3xl text-gray-800 font-bold text-white">My Favorites</h3>
                     </div>
                     <div class="card-body p-4">
-                        @* Consistent padding *@
 
                         @if (Model.Any())
                         {
                             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-                                @* Responsive grid for favorite products *@
                                 @foreach (var product in Model)
                                 {
                                     <div class="col">
                                         <div class="card h-100 product-card shadow-sm hover-scale-105 transition-all" id="favorite-@product.Id">
-                                            @* Individual product card consistent with product display *@
                                             <a asp-action="Details" asp-controller="Product" asp-route-id="@product.Id" class="card-link text-decoration-none text-dark">
                                                 @{
                                                     List<Category> categories = ViewBag.Categories as List<Category>;
-                                                    string categoryName = "N/A"; // Default to N/A if category not found
+                                                    string categoryName = "N/A";
                                                     if (categories != null)
                                                     {
                                                         var category = categories.FirstOrDefault(c => c.id == product.CategoryId);
@@ -84,8 +76,8 @@
 
     <script>
         $(document).on('click', '.favourite-toggle', function (e) {
-            e.preventDefault(); // Prevent the card link from navigating
-            e.stopPropagation(); // Stop propagation to prevent card click
+            e.preventDefault();
+            e.stopPropagation();
 
             var $this = $(this);
             var productId = $this.data('product-id');
@@ -102,13 +94,10 @@
                         $this.find('i').removeClass('bi-heart-fill text-danger').addClass('bi-heart');
                         localStorage.removeItem('favorite-' + productId);
 
-                        // If on "My Favorites" page (e.g., GetFavs) and unfavoriting, remove the product card
                         if (window.location.pathname.includes("GetFavs")) {
-                            $('#favorite-' + productId).remove(); // Assuming each product card has an id="favorite-productId"
-                            // Check if the list becomes empty after removing
+                            $('#favorite-' + productId).remove();
                             if ($('.product-card').length === 0) {
-                                // Reload or update a placeholder for empty favorites
-                                location.reload(); // Simple reload for now, consider dynamic update
+                                location.reload();
                             }
                         }
                     }
@@ -120,7 +109,6 @@
             });
         });
 
-        // On page load, restore favorite states based on local storage (for consistency across pages)
         $(document).ready(function () {
             $('.favourite-toggle').each(function () {
                 var $this = $(this);
@@ -134,16 +122,14 @@
 }
 
 <style>
-    /* Custom Orange from your existing styles */
     :root {
-        --orange-main-color: rgb(234, 80, 28); /* The primary orange from your header */
+        --orange-main-color: rgb(234, 80, 28);
     }
 
     .bg-gradient-header {
         background-color: var(--orange-main-color);
     }
 
-    /* Re-used utility classes for typography, spacing, and transitions */
     .text-gray-800 {
         color: #343a40;
     }
@@ -151,7 +137,6 @@
     .text-orange-600 {
         color: #ea501c;
     }
-    /* Explicitly defined for use */
     .text-3xl {
         font-size: 1.875rem;
         line-height: 2.25rem;
@@ -168,7 +153,6 @@
     .fw-medium {
         font-weight: 500;
     }
-    /* For custom font-medium */
 
     .py-5 {
         padding-top: 3rem !important;
@@ -186,7 +170,6 @@
     .p-4 {
         padding: 1.5rem !important;
     }
-    /* Adjusted to be a bit smaller than p-5 for card body */
     .px-4 {
         padding-left: 1.5rem !important;
         padding-right: 1.5rem !important;
@@ -209,11 +192,9 @@
     .shadow-lg {
         box-shadow: 0 1rem 3rem rgba(0, 0, 0, .1) !important;
     }
-    /* Softer shadow */
     .shadow-sm {
         box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
     }
-    /* Bootstrap sm shadow */
 
     .hover-scale-105:hover {
         transform: scale(1.05);
@@ -225,77 +206,74 @@
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Card Styling for Products (re-used for favorites) */
     .product-card {
-        border-radius: 0.75rem; /* Slightly less rounded than main card */
-        overflow: hidden; /* Ensures rounded corners are visible */
-        position: relative; /* For favorite overlay positioning */
+        border-radius: 0.75rem;
+        overflow: hidden;
+        position: relative;
         display: flex;
         flex-direction: column;
-        height: 100%; /* Ensures all cards in a row have same height */
+        height: 100%;
     }
 
     .product-thumbnail-img {
-        height: 200px; /* Fixed height for product images */
-        object-fit: cover; /* Cover the area, cropping if necessary */
-        border-bottom: 1px solid #eee; /* Subtle separator */
+        height: 200px;
+        object-fit: cover;
+        border-bottom: 1px solid #eee; 
     }
 
     .card-link {
-        color: inherit; /* Inherit text color from parent, prevent blue link color */
-        text-decoration: none; /* Remove underline */
+        color: inherit; 
+        text-decoration: none;
         display: flex;
         flex-direction: column;
-        flex-grow: 1; /* Allow link to take full height for click */
+        flex-grow: 1; 
     }
 
     .card-body {
-        padding: 1rem; /* Adjust padding inside product cards */
+        padding: 1rem;
     }
 
     .text-truncate-container {
         display: -webkit-box;
-        -webkit-line-clamp: 2; /* Show only 2 lines of description */
+        -webkit-line-clamp: 2; 
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
-        font-size: 0.9rem; /* Smaller font for description */
-        color: #6c757d; /* Bootstrap text-secondary for description */
+        font-size: 0.9rem; 
+        color: #6c757d; 
     }
 
-    /* Favorite Overlay (re-used) */
     .favourite-overlay {
         position: absolute;
         top: 0.5rem;
         right: 0.5rem;
-        z-index: 10; /* Ensure it's above the image */
+        z-index: 10; 
     }
 
     .favourite-toggle i {
-        color: #fff; /* White heart by default on image */
-        text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Shadow for visibility */
+        color: #fff; 
+        text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); 
         transition: color 0.2s ease;
     }
 
         .favourite-toggle i.text-danger {
-            color: #dc3545 !important; /* Red for favorited, ensure it overrides */
+            color: #dc3545 !important; 
         }
 
     .favourite-toggle:hover i {
-        transform: scale(1.1); /* Slight zoom on hover */
+        transform: scale(1.1);
     }
 
-    /* Empty Favorites Message */
     .alert-info {
         background-color: #e9f7fe;
         border-color: #bee5eb;
         color: #0c5460;
     }
 
-    /* Responsive adjustments (re-used as needed) */
-    @@media (max-width: 767.98px) { /* Small and extra-small screens */
+
+    @@media (max-width: 767.98px) { 
         .product-card .card-body {
-            text-align: center; /* Center content on smaller screens */
+            text-align: center; 
         }
     }
 </style>

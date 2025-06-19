@@ -1,17 +1,12 @@
 ﻿@model ProductVM
 @{
-    // Create a SelectList for categories, using "id" as value and "Name" as text.
     SelectList Cat = new SelectList(ViewBag.Categories, "id", "Name");
-    // Get the existing image URL if available to display it on page load
-    // Assuming images are stored in wwwroot/ProductImages/
     string existingImageUrl = Model.imgURL != null ? "/ProductImages/" + Model.imgURL : "";
 }
 
 <div class="container py-5">
     <div class="card shadow-lg border-0 rounded-4">
-        @* Changed rounded-3 to rounded-4 for consistency *@
         <div class="card-header bg-gradient-header text-white p-4 rounded-top-4">
-            @* Changed bg-dark to bg-gradient-header and rounded-top-3 to rounded-top-4 *@
             <div class="row align-items-center">
                 <div class="col-12 text-center text-md-start">
                     <h3 class="mb-0 text-white">Edit Product</h3>
@@ -22,10 +17,9 @@
             <form method="post" class="row g-3" enctype="multipart/form-data">
                 <div asp-validation-summary="All" class="text-danger mb-3"></div>
                 <input type="hidden" asp-for="Id" />
-                <input type="hidden" asp-for="imgURL" /> @* Keep the existing image URL in a hidden field to pass it back to the controller **@
+                <input type="hidden" asp-for="imgURL" /> 
 
                 <div class="col-md-8">
-                    @* Main form inputs take 8 columns **@
                     <div class="form-floating mb-3">
                         <input asp-for="Name" class="form-control border-secondary rounded-2" placeholder="Enter product name" />
                         <label asp-for="Name" class="text-muted">Product Name</label>
@@ -51,17 +45,14 @@
                         <span asp-validation-for="CategoryId" class="text-danger small mt-1 d-block"></span>
                     </div>
                     <div class="mb-3">
-                        @* Using mb-3 for spacing below label *@
                         <label asp-for="ProductImage" class="form-label text-muted mb-2">Upload Image</label>
                         <input asp-for="ProductImage" class="form-control border-secondary rounded-2" type="file" accept="image/*" id="imageUpload" />
                         <span asp-validation-for="ProductImage" class="text-danger small mt-1 d-block"></span>
                     </div>
 
                     <div class="col-12 d-flex justify-content-end gap-2 mt-4">
-                        @* Buttons are at the end, with a gap **@
                         <button type="submit" class="btn bg-gradient-header px-4 py-2 text-white">
-                            @* Added text-white for consistency and changed btn-primary to bg-gradient-header *@
-                            <i class="bi bi-pencil-square me-2"></i> Update Product @* Changed icon for update **@
+                            <i class="bi bi-pencil-square me-2"></i> Update Product
                         </button>
                         <a asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary px-4 py-2">
                             <i class="bi bi-arrow-left-circle me-2"></i> Back to List
@@ -69,7 +60,6 @@
                     </div>
                 </div>
                 <div class="col-md-4 d-flex align-items-center justify-content-center">
-                    @* Image preview takes 4 columns **@
                     <div class="image-preview-container border p-2 text-center" style="min-height: 200px; width: 100%; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa;">
                         <img id="imagePreview" src="@existingImageUrl" alt="Product Image" class="img-fluid" style="@(string.IsNullOrEmpty(existingImageUrl) ? "display:none;" : "") max-height: 250px; object-fit: contain;" />
                         <span id="noImageText" class="text-muted @(string.IsNullOrEmpty(existingImageUrl) ? "" : "d-none")">No image selected</span>
@@ -95,10 +85,9 @@
                 preview.src = URL.createObjectURL(file);
                 preview.style.display = 'block';
                 noImageText.classList.add('d-none');
-            } else { // Handle case where user clears selection
+            } else { 
                 const preview = document.getElementById('imagePreview');
                 const noImageText = document.getElementById('noImageText');
-                // Check if there was an existing image to revert to, otherwise hide.
                 const existingUrl = '@existingImageUrl';
                 if (existingUrl) {
                     preview.src = existingUrl;
@@ -115,28 +104,24 @@
 }
 
 <style>
-    /* Custom Orange for consistency */
     :root {
-        --orange-main-color: rgb(234,80,28); /* The primary orange from your header */
+        --orange-main-color: rgb(234,80,28);
     }
 
     .bg-gradient-header {
         background-color: var(--orange-main-color);
     }
 
-    /* Adjustments for the button text color in the gradient button */
     .btn.bg-gradient-header {
-        color: white !important; /* Ensure text is white for contrast */
+        color: white !important;
     }
 
-        /* Add hover effect for consistency with other buttons */
         .btn.bg-gradient-header:hover {
             background-color: white !important;
             color: var(--orange-main-color) !important;
-            border: 1px solid var(--orange-main-color); /* Add a border to define hover state */
+            border: 1px solid var(--orange-main-color);
         }
 
-    /* Styles for rounded corners consistency */
     .rounded-4 {
         border-radius: 1rem !important;
     }

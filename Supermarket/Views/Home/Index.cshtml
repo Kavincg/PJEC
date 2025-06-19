@@ -13,9 +13,7 @@
                                                                                                  justify-content: center;
                                                                                                  align-items: center;
                                                                                                  text-align: center;">
-            <!-- Overlay with consistent orange color and transparency -->
             <div class="overlay position-absolute top-0 start-0 w-100 h-100 bg-gradient-header" style="opacity: 0.7;"></div>
-            <!-- Content for the hero section -->
             <div class="content position-relative text-white z-index-1">
                 <h1 class="display-3 font-bold mb-3">Welcome to BuddyBasket</h1>
                 @* <p class="fs-4 text-white" style="letter-spacing:0.3rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">SHOPPING MADE EASY</p> *@
@@ -38,10 +36,9 @@
 
                     console.log(htmlContent);
 
-                    // Extract and execute inline scripts from Pagination content
                     var scripts = $(result).filter("script");
                     scripts.each(function () {
-                        $.globalEval(this.text); // Dynamically run each script
+                        $.globalEval(this.text);
                     });
 
                 }
@@ -51,20 +48,16 @@
 }
 
 <style>
-    /* Consistent orange color variables */
     :root {
         --orange-main-color: rgb(234,80,28);
         --orange-line-color: rgba(234,80,28,0.5);
     }
 
-    /* Consistent header background */
     .bg-gradient-header {
         background-color: var(--orange-main-color);
-        /* You can add a subtle gradient if you want, similar to your previous header example: */
         /* background-image: linear-gradient(to right, rgba(234,80,28,0.8), rgb(234,80,28)); */
     }
 
-    /* Consistent text colors */
     .text-black {
         color: #000;
     }
@@ -77,7 +70,6 @@
         color: #343a40;
     }
 
-    /* Consistent typography */
     .text-3xl {
         font-size: 1.875rem;
         line-height: 2.25rem;
@@ -88,10 +80,9 @@
     }
 
     .display-3 {
-        font-size: calc(1.525rem + 3.3vw); /* Responsive display size */
+        font-size: calc(1.525rem + 3.3vw);
     }
 
-    /* Consistent rounded corners */
     .rounded-4 {
         border-radius: 1rem !important;
     }
@@ -110,7 +101,6 @@
         border-radius: 50rem !important;
     }
 
-    /* Consistent hover effect and transition for general elements */
     .hover-scale-105:hover {
         transform: scale(1.05);
     }
@@ -121,7 +111,6 @@
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Adjust the general card shadow and padding */
     .card.shadow-lg {
         box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important;
     }
@@ -134,7 +123,6 @@
         box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
     }
 
-    /* Navbar specific styling (copied from _Layout for consistency in this file) */
     .navbar .nav-link {
         padding-top: 0.5rem;
         padding-bottom: 0.5rem;
@@ -148,7 +136,6 @@
             transform: scale(1.02);
         }
 
-    /* Search bar styling (copied from _Layout for consistency in this file) */
     .search-consistent .form-control {
         border-color: rgba(255, 255, 255, 0.3);
         background-color: rgba(255, 255, 255, 0.1);
@@ -196,10 +183,9 @@
         border-bottom-left-radius: 0 !important;
     }
 
-    /* Home page specific styles */
     .hero-section {
         /* box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important;  */
-        border-bottom-left-radius: 1rem !important; /* Rounded bottom corners for hero */
+        border-bottom-left-radius: 1rem !important;
         border-bottom-right-radius: 1rem !important;
     }
 </style>

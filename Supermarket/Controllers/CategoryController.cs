@@ -2,22 +2,20 @@
 using Microsoft.AspNetCore.Mvc;
 using Supermarket.Data.IRepository;
 using Supermarket.Models;
-using Microsoft.AspNetCore.Hosting; // Added for IWebHostEnvironment
-using System.IO; // Added for file operations
+using Microsoft.AspNetCore.Hosting;
+using System.IO; 
 
 namespace Supermarket.Controllers
 {
-    //[Area("Admin")] // Uncomment if you use Areas for admin
-    // [Authorize(Roles = SD.Role_Admin)] // Uncomment and ensure SD.Role_Admin is defined
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IWebHostEnvironment _webHostEnvironment; // Declare IWebHostEnvironment
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public CategoryController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment) // Inject IWebHostEnvironment
+        public CategoryController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment) 
         {
             _unitOfWork = unitOfWork;
-            _webHostEnvironment = webHostEnvironment; // Initialize it
+            _webHostEnvironment = webHostEnvironment; 
         }
 
         public IActionResult Index()
@@ -54,7 +52,7 @@ namespace Supermarket.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Category obj, IFormFile? file) // Added IFormFile? file parameter
+        public IActionResult Create(Category obj, IFormFile? file) 
         {
             if (obj.Name == obj.DisplayOrder.ToString())
             {
@@ -66,8 +64,8 @@ namespace Supermarket.Controllers
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
                 if (file != null)
                 {
-                    //string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName); // Generate unique file name
-                    string categoryPath = Path.Combine(wwwRootPath, @"img"); // Define server path for category images
+                    //string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName); 
+                    string categoryPath = Path.Combine(wwwRootPath, @"img"); 
 
                     if (!Directory.Exists(categoryPath))
                     {
@@ -115,7 +113,7 @@ namespace Supermarket.Controllers
 
                 if (file != null)
                 {
-                    //string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName); // unique name
+                    //string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     string filePath = Path.Combine(uploadFolder, file.FileName);
 
                     if (!Directory.Exists(uploadFolder))
@@ -148,9 +146,6 @@ namespace Supermarket.Controllers
             {
                 return NotFound();
             }
-
-            // Delete associated image when deleting category
-            // Now, obj.logoUrl will just be the filename, so combine it with the base path
             if (!string.IsNullOrEmpty(obj.logoUrl))
             {
                 string wwwRootPath = _webHostEnvironment.WebRootPath;

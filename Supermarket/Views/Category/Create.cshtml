@@ -1,8 +1,6 @@
 ﻿@using Supermarket.Models
 @model Category
 @{
-    // 'existingImageUrl' is not needed in the Create view as there's no existing image.
-    // Kept for consistency if copied from an Edit view, but it will always be empty here.
     string existingImageUrl = "";
 }
 
@@ -11,7 +9,7 @@
         <div class="card-header bg-gradient-header text-white p-4 rounded-top-3">
             <div class="row align-items-center">
                 <div class="col-12 text-center text-md-start">
-                    <h3 class="mb-0 text-white">Create New Category</h3> @* Corrected title *@
+                    <h3 class="mb-0 text-white">Create New Category</h3>
                 </div>
             </div>
         </div>
@@ -27,24 +25,20 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                        @* Ensure this is type="number" for DisplayOrder *@
                         <input asp-for="DisplayOrder" type="number" class="form-control border-secondary rounded-2" placeholder="Display Order" />
                         <label asp-for="DisplayOrder" class="text-muted">Display Order</label>
                         <span asp-validation-for="DisplayOrder" class="text-danger small mt-1 d-block"></span>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label text-muted mb-2">Category Logo</label> @* Changed label to Logo *@
-                        @* CRITICAL CHANGE: Added name="file" to match the IFormFile parameter in the controller *@
+                        <label class="form-label text-muted mb-2">Category Logo</label>
                         <input class="form-control border-secondary rounded-2" type="file" accept="image/*" id="imageUpload" name="file" />
                     </div>
 
                     <div class="col-12 d-flex justify-content-end gap-2 mt-4">
                         <button type="submit" class="btn bg-gradient-header px-4 py-2 text-white">
-                            @* Added text-white for styling *@
                             <i class="bi bi-plus-circle me-2"></i> Create
                         </button>
                         <a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary px-4 py-2">
-                            @* Corrected controller *@
                             <i class="bi bi-arrow-left-circle me-2"></i> Back to List
                         </a>
                     </div>
@@ -52,7 +46,6 @@
 
                 <div class="col-md-4 d-flex align-items-center justify-content-center">
                     <div class="image-preview-container border p-2 text-center" style="min-height: 200px; width: 100%; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa;">
-                        @* For Create, the initial image source is empty and hidden, text is visible *@
                         <img id="imagePreview" src="#" alt="Category Image" class="img-fluid" style="display:none; max-height: 250px; object-fit: contain;" />
                         <span id="noImageText" class="text-muted">No image selected</span>
                     </div>
@@ -88,10 +81,9 @@
 }
 
 <style>
-    /* Add the same style block as your Create.cshtml to ensure consistent styling */
     :root {
-        --orange-main-color: rgb(234,80,28); /* The primary orange from your header */
-        --orange-line-color: rgba(234,80,28,0.5); /* A lighter shade for the lines (if needed elsewhere) */
+        --orange-main-color: rgb(234,80,28); 
+        --orange-line-color: rgba(234,80,28,0.5);
     }
 
     .bg-gradient-header {

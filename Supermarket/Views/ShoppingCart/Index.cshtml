@@ -1,15 +1,15 @@
 ﻿@model ShoppingCartVM
 
-<section class="py-5"> @* Consistent vertical padding *@
-    <div class="container py-3"> @* Adjusted padding for content within the section *@
+<section class="py-5">
+    <div class="container py-3">
         <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-12 col-lg-10"> @* Adjusted column width for wider layout *@
+            <div class="col-12 col-lg-10"> 
 
-                <div class="card border-0 rounded-4 shadow-lg mb-4"> @* Main card for shopping cart content *@
-                    <div class="card-header bg-gradient-header text-white py-4 px-4 rounded-top-4"> @* Consistent header styling *@
+                <div class="card border-0 rounded-4 shadow-lg mb-4">
+                    <div class="card-header bg-gradient-header text-white py-4 px-4 rounded-top-4">>
                         <h3 class="mb-0 text-3xl text-gray-800 font-bold text-white">Shopping Cart</h3>
                     </div>
-                    <div class="card-body p-4"> @* Consistent padding *@
+                    <div class="card-body p-4">
 
                         @if (Model.ShoppingCartList.Any())
                         {
@@ -29,7 +29,7 @@
                                                 </p>
                                             </div>
                                             <div class="col-xl offset-lg-1 text-center quantity-control-column"> @* Quantity Column *@
-                                                <div class="input-group quantity-selector border rounded-pill overflow-hidden shadow-sm d-inline-flex align-items-center"> @* Added align-items-center *@
+                                                <div class="input-group quantity-selector border rounded-pill overflow-hidden shadow-sm d-inline-flex align-items-center">
                                                     <a asp-action="Minus" asp-route-cartId="@item.Id" class="btn btn-outline-secondary minus-btn flex-grow-0 py-2 px-3">
                                                         <i class="bi bi-dash-lg"></i>
                                                     </a>
@@ -58,7 +58,7 @@
                                         <span class="text-orange-600">₹ @Model.OrderHeader.OrderTotal.ToString("F2")</span>
                                     </h4>
 
-                                    <div class="d-grid gap-2"> @* Use d-grid for full width button *@
+                                    <div class="d-grid gap-2">
                                         <a asp-action="Summary" class="btn bg-gradient-header btn-lg rounded-pill py-3 text-white shadow-sm hover-scale-105 transition-all">
                                             Proceed to Summary
                                             <i class="bi bi-arrow-right-circle ms-2"></i>
@@ -87,31 +87,25 @@
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    @* Ensure jQuery is loaded if needed for other scripts, though for this basic +/- it's not strictly necessary *@
-    @* <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> *@
 
     <script>
-        // Client-side +/- button logic for immediate feedback (actual update still needs server call)
         document.addEventListener('click', function (e) {
             if (e.target.closest('.minus-btn')) {
                 const quantityInput = e.target.closest('.input-group').querySelector('.quantity-input');
                 let currentQuantity = parseInt(quantityInput.value);
                 if (currentQuantity > 1) {
                     quantityInput.value = currentQuantity - 1;
-                    // Note: This only updates the display. The actual cart update happens via the asp-action links.
                 }
             } else if (e.target.closest('.plus-btn')) {
                 const quantityInput = e.target.closest('.input-group').querySelector('.quantity-input');
                 let currentQuantity = parseInt(quantityInput.value);
                 quantityInput.value = currentQuantity + 1;
-                // Note: This only updates the display. The actual cart update happens via the asp-action links.
             }
         });
     </script>
 }
 
 <style>
-    /* Custom Orange from your existing styles */
     :root {
         --orange-main-color: rgb(234,80,28);
     }
@@ -120,7 +114,6 @@
         background-color: var(--orange-main-color);
     }
 
-    /* Re-used utility classes */
     .text-gray-800 { color: #343a40; }
     .text-orange-600 { color: #ea501c; }
     .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
@@ -143,48 +136,44 @@
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Shopping Cart Specific Styles */
     .product-cart-item {
-        border-radius: 0.75rem; /* Slightly less rounded for inner cards */
+        border-radius: 0.75rem; 
         overflow: hidden;
-        background-color: #fff; /* Ensure white background for each item */
+        background-color: #fff; 
     }
 
     .product-cart-img {
         width: 100%;
-        height: 120px; /* Fixed height for consistent image display */
-        object-fit: contain; /* Contain the entire image within the area */
-        background-color: #f8f9fa; /* Light background for images */
+        height: 120px; 
+        object-fit: contain; 
+        background-color: #f8f9fa; 
         border-radius: 0.5rem;
     }
 
     .text-truncate-container {
         display: -webkit-box;
-        -webkit-line-clamp: 2; /* Show up to 2 lines of description */
+        -webkit-line-clamp: 2; 
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
-        font-size: 0.9rem; /* Smaller font for description */
-        color: #495057; /* Bootstrap text-muted or text-secondary */
+        font-size: 0.9rem;
+        color: #495057; 
     }
 
-    /* Quantity Selector in Cart */
     .quantity-selector {
-        /* Ensure all items inside are aligned to the center vertically */
         align-items: center;
     }
 
     .quantity-selector .btn {
-        background-color: #f8f9fa; /* Light background for buttons */
+        background-color: #f8f9fa;
         border-color: #dee2e6;
         color: #343a40;
         font-weight: bold;
-        /* Ensure button height matches input height */
         display: flex;
         align-items: center;
         justify-content: center;
-        height: calc(1.5em + .75rem + 2px); /* Bootstrap's default input height formula */
-        padding: .375rem .75rem; /* Adjusted padding for better alignment with text input */
+        height: calc(1.5em + .75rem + 2px); 
+        padding: .375rem .75rem; 
     }
     .quantity-selector .btn:hover {
         background-color: #e2e6ea;
@@ -194,41 +183,38 @@
         border: 0;
         box-shadow: none;
         background-color: white;
-        width: 60px; /* Explicit width for the input field */
-        text-align: center; /* Ensure text is centered */
-        color: #343a40; /* Explicitly set text color to ensure visibility */
-        font-weight: bold; /* Make the quantity number bold */
-        font-size: 1.1rem; /* Slightly larger font size for readability */
-        padding: .375rem .25rem; /* Adjust padding if needed to center text */
-        height: calc(1.5em + .75rem + 2px); /* Match button height */
+        width: 60px;
+        text-align: center;
+        color: #343a40; 
+        font-weight: bold; 
+        font-size: 1.1rem; 
+        padding: .375rem .25rem; 
+        height: calc(1.5em + .75rem + 2px); 
     }
     .quantity-selector .form-control:focus {
         box-shadow: none;
     }
 
     .quantity-control-column {
-        min-width: 150px; /* Ensure enough space for quantity control */
+        min-width: 150px;
     }
 
     .product-price-column {
-        min-width: 120px; /* Ensure enough space for price and remove button */
+        min-width: 120px; 
     }
 
-    /* Buttons for Quantity and Remove */
-    .text-danger { color: #dc3545 !important; } /* Bootstrap red for danger */
+    .text-danger { color: #dc3545 !important; }
     .text-danger:hover {
-        color: #b02a37 !important; /* Darker red on hover */
+        color: #b02a37 !important; 
     }
 
-    /* Empty Cart Message */
     .alert-info {
         background-color: #e9f7fe;
         border-color: #bee5eb;
         color: #0c5460;
     }
 
-    /* Responsive adjustments */
-    @@media (max-width: 991.98px) { /* Medium and smaller screens */
+    @@media (max-width: 991.98px) { 
         .product-cart-item .card-body .row {
             flex-direction: column;
             text-align: center;
@@ -236,7 +222,7 @@
 
         .product-cart-img {
             margin-bottom: 1rem;
-            max-width: 150px; /* Smaller image on mobile */
+            max-width: 150px;
             height: auto;
         }
 
@@ -247,7 +233,7 @@
         }
 
         .quantity-selector {
-            justify-content: center; /* Center the quantity selector */
+            justify-content: center;
         }
     }
 </style>
