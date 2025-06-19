@@ -12,15 +12,15 @@ using Supermarket.Data;
 namespace Supermarket.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250617032510_initialMigration")]
-    partial class initialMigration
+    [Migration("20250619044922_im")]
+    partial class im
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0")
+                .HasAnnotation("ProductVersion", "9.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);

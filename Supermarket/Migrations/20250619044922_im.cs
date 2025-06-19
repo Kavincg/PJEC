@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Supermarket.Migrations
 {
     /// <inheritdoc />
-    public partial class initialMigration : Migration
+    public partial class im : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
