@@ -1,22 +1,16 @@
 ﻿@model ShoppingCart
 
 <div class="container py-5">
-    @* Changed margin-top to py-5 for consistent padding *@
     <form method="post" asp-controller="Product" asp-action="Details" enctype="multipart/form-data">
         <div class="card border-0 mt-4 rounded-4 shadow-lg">
-            @* Added rounded-4 and shadow-lg for consistency *@
-            <div class="card-header bg-gradient-header text-white py-4 px-4 rounded-top-4">
-                @* Applied bg-gradient-header and rounded-top-4 *@
+            <div class="bg-gradient-header text-white py-4 px-4 rounded-top-4">
                 <div class="row align-items-center">
                     <div class="col-12 d-flex justify-content-between align-items-center">
-                        @* Added align-items-center for vertical alignment *@
-                        <h3 class="mb-0 text-3xl text-gray-800 font-bold text-white">@Model.Product.Name</h3> @* Ensured consistent header styling *@
-                        <h3 class="mb-0 text-warning text-4xl font-bold">₹ @(Model.Product.price.ToString("F2"))</h3> @* Adjusted text size and boldness for price *@
+                        <h3 class="mb-0 text-3xl text-gray-800 font-bold text-white">@Model.Product.Name</h3> 
+                        <h3 class="mb-0 text-warning text-4xl font-bold">₹ @(Model.Product.price.ToString("F2"))</h3> 
                     </div>
                     <div class="col-12 mt-2">
-                        @* Added mt-2 for small spacing *@
                         <h6 class="text-white text-opacity-75 mb-0">
-                            @* Changed to text-white and text-opacity-75 for consistency *@
                             @{
                                 string categoryName = "No Category";
                                 if (@Model.Product.Category != null)
@@ -31,30 +25,23 @@
             </div>
 
             <div class="card-body p-5">
-                @* Increased padding for card body *@
                 <div class="row">
                     <div class="col-12 col-lg-4 text-center mb-4 mb-lg-0">
-                        @* Adjusted column and spacing for image *@
                         <img id="ProfilePicture" alt="Product Image" src="~/img/@Model.Product.imgURL" class="rounded img-fluid card-img product-detail-img" /> @* Added custom class *@
                     </div>
 
                     <div class="col-12 col-lg-7 offset-lg-1">
-                        @* Adjusted column for description and controls *@
                         <div class="mb-4">
-                            @* Added margin-bottom for description *@
-                            <h6 class="text-dark fw-bold mb-2">Description:</h6> @* Added mb-2 *@
+                            <h6 class="text-dark fw-bold mb-2">Description:</h6>
                             <span class="text-dark opacity-75 lh-base">
-                                @* Changed to text-dark and opacity-75, lh-base for slightly more line height *@
                                 @Html.Raw(@Model.Product.Description)
                             </span>
                         </div>
 
                         <div class="row align-items-center mb-4">
-                            @* Added align-items-center and mb-4 *@
                             <div class="col-md-6">
-                                <label for="quantity" class="form-label text-dark fw-bold">Quantity:</label> @* Added a label for quantity *@
+                                <label for="quantity" class="form-label text-dark fw-bold">Quantity:</label>
                                 <div class="input-group quantity-selector border rounded-pill overflow-hidden shadow-sm">
-                                    @* Styled input group *@
                                     <button type="button" class="btn btn-outline-secondary minus-btn flex-grow-0 py-2 px-3">
                                         <i class="bi bi-dash-lg"></i>
                                     </button>
@@ -63,7 +50,7 @@
                                         <i class="bi bi-plus-lg"></i>
                                     </button>
                                 </div>
-                                <span asp-validation-for="quantity" class="text-danger mt-1 d-block"></span> @* Added d-block for proper spacing *@
+                                <span asp-validation-for="quantity" class="text-danger mt-1 d-block"></span>
                             </div>
                         </div>
 
@@ -78,7 +65,6 @@
                             @if (TempData["ProductError"] != null)
                             {
                                 <div class="text-danger mt-3 text-center">
-                                    @* Added mt-3 and text-center *@
                                     @TempData["ProductError"]
                                 </div>
                             }
@@ -117,11 +103,10 @@
             const minusBtn = document.querySelector('.minus-btn');
             const plusBtn = document.querySelector('.plus-btn');
 
-            // Quantity Selector Logic
             if (quantityInput && minusBtn && plusBtn) {
                 minusBtn.addEventListener('click', () => {
                     let currentQuantity = parseInt(quantityInput.value);
-                    if (currentQuantity > 1) { // Ensure quantity doesn't go below 1
+                    if (currentQuantity > 1) {
                         quantityInput.value = currentQuantity - 1;
                     }
                 });
@@ -146,152 +131,3 @@
         }
     </script>
 }
-
-<style>
-    /* Custom Orange from your existing styles */
-    :root {
-        --orange-main-color: rgb(234,80,28); /* The primary orange from your header */
-    }
-
-    .bg-gradient-header {
-        background-color: var(--orange-main-color);
-    }
-
-    /* Re-used utility classes for typography, spacing, and transitions */
-    .text-gray-800 {
-        color: #343a40;
-    }
-    /* Keeping this for the general dark tone */
-    .text-3xl {
-        font-size: 1.875rem;
-        line-height: 2.25rem;
-    }
-
-    .text-4xl {
-        font-size: 2.25rem;
-        line-height: 2.5rem;
-    }
-
-    .font-bold {
-        font-weight: 700;
-    }
-
-    .font-semibold {
-        font-weight: 600;
-    }
-
-    .py-5 {
-        padding-top: 3rem !important;
-        padding-bottom: 3rem !important;
-    }
-
-    .mt-4 {
-        margin-top: 1.5rem !important;
-    }
-
-    .mb-4 {
-        margin-bottom: 1.5rem !important;
-    }
-
-    .p-5 {
-        padding: 3rem !important;
-    }
-
-    .px-4 {
-        padding-left: 1.5rem !important;
-        padding-right: 1.5rem !important;
-    }
-
-    .py-4 {
-        padding-top: 1.5rem !important;
-        padding-bottom: 1.5rem !important;
-    }
-
-    .rounded-4 {
-        border-radius: 1rem !important;
-    }
-
-    .rounded-top-4 {
-        border-top-left-radius: 1rem !important;
-        border-top-right-radius: 1rem !important;
-    }
-
-    .shadow-lg {
-        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important;
-    }
-
-    .hover-scale-105:hover {
-        transform: scale(1.05);
-    }
-
-    .transition-all {
-        transition-property: all;
-        transition-duration: 200ms;
-        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* Product Image Styling */
-    .product-detail-img {
-        width: 100%;
-        max-width: 300px; /* Limit max size for large screens */
-        height: auto; /* Maintain aspect ratio */
-        aspect-ratio: 1 / 1;
-        object-fit: contain;
-        background-color: white; /* Ensure white background for product image */
-        border: 1px solid #dee2e6; /* Subtle border */
-        padding: 0.5rem; /* Small padding inside image container */
-    }
-
-    /* Quantity Selector Styling */
-    .quantity-selector .btn {
-        background-color: #f8f9fa; /* Light background for buttons */
-        border-color: #dee2e6;
-        color: #343a40;
-        font-weight: bold;
-    }
-
-        .quantity-selector .btn:hover {
-            background-color: #e2e6ea;
-            color: #212529;
-        }
-
-    .quantity-selector .form-control {
-        border: 0; /* Remove individual border as input-group has one */
-        box-shadow: none;
-        background-color: white; /* Ensure white background for input */
-    }
-
-        .quantity-selector .form-control:focus {
-            box-shadow: none; /* Remove focus shadow */
-        }
-
-    /* Minor adjustments for text colors */
-    .text-dark {
-        color: #212529 !important;
-    }
-    /* Ensure Bootstrap's .text-dark is used explicitly */
-    .opacity-75 {
-        opacity: 0.75 !important;
-    }
-
-    .lh-base {
-        line-height: 1.5 !important;
-    }
-    /* Standard line height */
-    .text-warning {
-        color: #ffc107 !important;
-    }
-    /* Bootstrap warning color for price */
-
-    /* Responsive adjustments */
-    @@media (min-width: 992px) { /* Medium to large screens */
-        .col-lg-4 {
-            flex: 0 0 auto;
-            width: 33.33333333%; /* Standard col-lg-4 width */
-        }
-
-        .offset-lg-1 {
-            margin-left: 8.33333333%; /* Standard offset-lg-1 */
-        }
-    }
-</style>

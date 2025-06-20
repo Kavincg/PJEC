@@ -2,37 +2,30 @@
 
 <form asp-action="SummaryPost" method="post">
     <section class="py-5">
-        @* Consistent vertical padding as in shopping cart *@
         <div class="container py-3">
-            @* Adjusted padding for content within the section *@
             <div class="row d-flex justify-content-center align-items-center">
                 <div class="col-12 col-lg-10">
-                    @* Adjusted column width for wider layout, consistent with cart *@
 
                     <div class="card border-0 rounded-4 shadow-lg mb-4">
-                        @* Main card styling *@
-                        <div class="card-header bg-gradient-header text-white py-4 px-4 rounded-top-4">
-                            @* Consistent header styling *@
+                        <div class="bg-gradient-header text-white py-4 px-4 rounded-top-4">
                             <div class="row align-items-center">
                                 <div class="col-6">
                                     <h3 class="mb-0 text-3xl text-gray-800 font-bold text-white">Order Summary</h3>
                                 </div>
                                 <div class="col-6 text-end">
-                                    <a asp-action="Index" class="btn btn-outline-light rounded-pill px-4 py-2 shadow-sm hover-scale-105 transition-all">Back to Cart</a> @* Styled button *@
+                                    <a asp-action="Index" class="btn btn-outline-light rounded-pill px-4 py-2 shadow-sm hover-scale-105 transition-all">Back to Cart</a>
                                 </div>
                             </div>
                         </div>
 
                         <div class="card-body p-4">
-                            @* Consistent padding *@
                             <div class="row g-4">
                                 <div class="col-12 col-lg-6">
-                                    <h5 class="text-dark font-bold mb-3">Shipping Details:</h5> @* Matched text styling *@
+                                    <h5 class="text-dark font-bold mb-3">Shipping Details:</h5> 
                                     <div class="row mb-3 align-items-center">
-                                        @* Added align-items-center for better vertical alignment *@
-                                        <label asp-for="OrderHeader.Name" class="col-sm-3 col-form-label fw-medium">Name</label> @* Added fw-medium *@
+                                        <label asp-for="OrderHeader.Name" class="col-sm-3 col-form-label fw-medium">Name</label> 
                                         <div class="col-sm-9">
-                                            <input asp-for="OrderHeader.Name" class="form-control rounded-pill shadow-sm" id="OrderHeader_Name" /> @* Rounded input and shadow *@
+                                            <input asp-for="OrderHeader.Name" class="form-control rounded-pill shadow-sm" id="OrderHeader_Name" /> 
                                             <span asp-validation-for="OrderHeader.Name" class="text-danger small mt-1 d-block"></span>
                                         </div>
                                     </div>
@@ -76,23 +69,20 @@
                                 <div class="col-12 col-lg-6">
                                     <h5 class="text-dark font-bold mb-3">Order Summary:</h5>
                                     <ul class="list-group mb-3 shadow-sm rounded-3">
-                                        @* Added rounded-3 for consistent corners *@
                                         @foreach (var details in Model.ShoppingCartList)
                                         {
                                             <li class="list-group-item d-flex justify-content-between align-items-center py-3">
-                                                @* Added vertical padding *@
                                                 <div>
                                                     <h6 class="my-0 text-dark fw-bold">@details.Product.Name</h6>
                                                     <small class="text-muted">Quantity: @details.quantity</small>
                                                 </div>
-                                                <span class="text-dark font-bold">₹ @((details.Product.price * details.quantity).ToString("F2")) </span> @* Consistent currency display *@
+                                                <span class="text-dark font-bold">₹ @((details.Product.price * details.quantity).ToString("F2")) </span> 
                                             </li>
                                         }
 
                                         <li class="list-group-item d-flex justify-content-between align-items-center bg-light py-3 rounded-bottom-3">
-                                            @* Ensure bottom rounding and padding *@
                                             <h6 class="mb-0 text-dark font-bold">Total Amount:</h6>
-                                            <span class="text-orange-600 text-2xl font-bold">₹ @Model.OrderHeader.OrderTotal.ToString("F2")</span> @* Highlighted total and consistent currency *@
+                                            <span class="text-orange-600 text-2xl font-bold">₹ @Model.OrderHeader.OrderTotal.ToString("F2")</span>
                                         </li>
                                     </ul>
 
@@ -114,11 +104,9 @@
                         </div>
 
                         <div class="card-footer bg-light p-4 rounded-bottom-4">
-                            @* Rounded bottom for consistency *@
                             <div class="row align-items-center">
                                 <div class="col-12 col-md-8">
                                     <p class="text-muted mb-0 fw-medium">
-                                        @* Added fw-medium *@
                                         <i class="bi bi-calendar-check me-2"></i>Estimated Arrival Date:
                                         <span class="fw-bold">@DateTime.Now.AddDays(7).ToShortDateString() - @DateTime.Now.AddDays(14).ToShortDateString()</span>
                                     </p>
@@ -141,245 +129,3 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-
-<style>
-    /* Custom Orange from your existing styles */
-    :root {
-        --orange-main-color: rgb(234,80,28);
-    }
-
-    .bg-gradient-header {
-        background-color: var(--orange-main-color);
-    }
-
-    /* Re-used utility classes */
-    .text-gray-800 {
-        color: #343a40;
-    }
-
-    .text-orange-600 {
-        color: #ea501c;
-    }
-
-    .text-3xl {
-        font-size: 1.875rem;
-        line-height: 2.25rem;
-    }
-
-    .text-2xl {
-        font-size: 1.5rem;
-        line-height: 2rem;
-    }
-    /* Added for total amount */
-    .font-bold {
-        font-weight: 700;
-    }
-
-    .fw-medium {
-        font-weight: 500;
-    }
-
-    .py-5 {
-        padding-top: 3rem !important;
-        padding-bottom: 3rem !important;
-    }
-
-    .py-4 {
-        padding-top: 1.5rem !important;
-        padding-bottom: 1.5rem !important;
-    }
-
-    .px-4 {
-        padding-left: 1.5rem !important;
-        padding-right: 1.5rem !important;
-    }
-
-    .p-4 {
-        padding: 1.5rem !important;
-    }
-
-    .py-3 {
-        padding-top: 1rem !important;
-        padding-bottom: 1rem !important;
-    }
-
-    .px-5 {
-        padding-left: 3rem !important;
-        padding-right: 3rem !important;
-    }
-
-    .py-2 {
-        padding-top: 0.5rem !important;
-        padding-bottom: 0.5rem !important;
-    }
-
-    .rounded-3 {
-        border-radius: 0.5rem !important;
-    }
-
-    .rounded-4 {
-        border-radius: 1rem !important;
-    }
-
-    .rounded-pill {
-        border-radius: 50rem !important;
-    }
-
-    .rounded-top-4 {
-        border-top-left-radius: 1rem !important;
-        border-top-right-radius: 1rem !important;
-    }
-
-    .rounded-bottom-3 {
-        border-bottom-left-radius: 0.5rem !important;
-        border-bottom-right-radius: 0.5rem !important;
-    }
-
-    .rounded-bottom-4 {
-        border-bottom-left-radius: 1rem !important;
-        border-bottom-right-radius: 1rem !important;
-    }
-
-
-    .shadow-lg {
-        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important;
-    }
-
-    .shadow-sm {
-        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
-    }
-
-    .hover-scale-105:hover {
-        transform: scale(1.05);
-    }
-
-    .transition-all {
-        transition-property: all;
-        transition-duration: 200ms;
-        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* Shopping Cart Specific Styles */
-    .product-cart-item {
-        border-radius: 0.75rem; /* Slightly less rounded for inner cards */
-        overflow: hidden;
-        background-color: #fff; /* Ensure white background for each item */
-    }
-
-    .product-cart-img {
-        width: 100%;
-        height: 120px; /* Fixed height for consistent image display */
-        object-fit: contain; /* Contain the entire image within the area */
-        background-color: #f8f9fa; /* Light background for images */
-        border-radius: 0.5rem;
-    }
-
-    .text-truncate-container {
-        display: -webkit-box;
-        -webkit-line-clamp: 2; /* Show up to 2 lines of description */
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-size: 0.9rem; /* Smaller font for description */
-        color: #495057; /* Bootstrap text-muted or text-secondary */
-    }
-
-    /* Quantity Selector in Cart */
-    .quantity-selector {
-        align-items: center;
-    }
-
-        .quantity-selector .btn {
-            background-color: #f8f9fa; /* Light background for buttons */
-            border-color: #dee2e6;
-            color: #343a40;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: calc(1.5em + .75rem + 2px); /* Bootstrap's default input height formula */
-            padding: .375rem .75rem; /* Adjusted padding for better alignment with text input */
-        }
-
-            .quantity-selector .btn:hover {
-                background-color: #e2e6ea;
-                color: #212529;
-            }
-
-        .quantity-selector .form-control {
-            border: 0;
-            box-shadow: none;
-            background-color: white;
-            width: 60px; /* Explicit width for the input field */
-            text-align: center; /* Ensure text is centered */
-            color: #343a40; /* Explicitly set text color to ensure visibility */
-            font-weight: bold; /* Make the quantity number bold */
-            font-size: 1.1rem; /* Slightly larger font size for readability */
-            padding: .375rem .25rem; /* Adjust padding if needed to center text */
-            height: calc(1.5em + .75rem + 2px); /* Match button height */
-        }
-
-            .quantity-selector .form-control:focus {
-                box-shadow: none;
-            }
-
-    .quantity-control-column {
-        min-width: 150px; /* Ensure enough space for quantity control */
-    }
-
-    .product-price-column {
-        min-width: 120px; /* Ensure enough space for price and remove button */
-    }
-
-    /* Buttons for Quantity and Remove */
-    .text-danger {
-        color: #dc3545 !important;
-    }
-        /* Bootstrap red for danger */
-        .text-danger:hover {
-            color: #b02a37 !important; /* Darker red on hover */
-        }
-
-    /* Empty Cart Message */
-    .alert-info {
-        background-color: #e9f7fe;
-        border-color: #bee5eb;
-        color: #0c5460;
-    }
-
-    /* Responsive adjustments */
-    /* @@media (max-width: 991.98px) {  */
-    /* .product-cart-item .card-body .row */
-
-    .product-cart-img {
-        margin-bottom: 1rem;
-        max-width: 150px; /* Smaller image on mobile */
-        height: auto;
-    }
-
-    .quantity-control-column,
-    .product-price-column {
-        margin-top: 1rem;
-        text-align: center;
-    }
-
-    .quantity-selector {
-        justify-content: center; /* Center the quantity selector */
-    }
-
-    /* Additional styles for Order Summary Page */
-    .form-control.rounded-pill {
-        padding-left: 1.25rem;
-        padding-right: 1.25rem;
-        height: calc(2.25rem + 2px); /* Standard input height for consistency */
-    }
-
-    .list-group-item {
-        border-color: #e9ecef; /* Lighter border for list items */
-    }
-
-        .list-group-item:first-child {
-            border-top-left-radius: 0.5rem; /* Match rounded-3 of the ul */
-            border-top-right-radius: 0.5rem;
-        }
-</style>

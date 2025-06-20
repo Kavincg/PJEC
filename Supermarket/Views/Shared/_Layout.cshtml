@@ -17,29 +17,23 @@
     <link href="~/lib/datatables/css/jquery.datatables.css" rel="stylesheet" />
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
     <link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
           rel="stylesheet" />
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           rel="stylesheet" />
-    <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.0.0/mdb.min.css"
           rel="stylesheet" />
-    <!--Pagination-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!--Toastr Notification-->
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
-    <!--Navbar-->
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
 </head>
 <body>
-    <header style="margin-top:70px;">
-        <nav class="navbar border-bottom mb-3 fixed-top bg-gradient-header" style="height: 70px;">
+    <header >
+        <nav class="navbar fixed-top bg-gradient-header" style="height: 70px;">
             <div class="container-fluid">
                 <div class="col-2 d-flex align-items-center">
                     <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
-                        <img class="avatar" style="width: 50px; height: 50px; object-fit: cover;" src="~/img/logo3.png" alt="BuddyBasket Logo" />
+                        <img class="avatar" style="width: 45px; height: 45px; object-fit: cover;" src="~/img/logo3.png" alt="BuddyBasket Logo" />
                     </a>
                 </div>
                 <div class="col-6 d-flex h-100 justify-content-center align-items-center">
@@ -100,11 +94,14 @@
                         </div>
                     </form>
                 </div>
-                <div>
-                    <a class="nav-link text-white hover-lighten-bg rounded-pill px-3 py-2 transition-all" asp-area="Identity" asp-page="/Account/Manage/Index">
-                        <i class="bi bi-person-circle fs-1"></i>
-                    </a>
-                </div>
+                @if (User.Identity.IsAuthenticated)
+                    {
+                    <div>
+                        <a class="nav-link text-white hover-lighten-bg rounded-pill px-3 py-2 transition-all" asp-area="Identity" asp-page="/Account/Manage/Index">
+                            <i class="bi bi-person-circle fs-1"></i>
+                        </a>
+                    </div>
+                    }
             </div>
         </nav>
     </header>
@@ -116,109 +113,6 @@
     </div>
     <div style="height: 60px;"></div>
 
-    <style>
-        :root {
-            --orange-main-color: rgb(234,80,28);
-            --orange-line-color: rgba(234,80,28,0.5);
-        }
-
-        .bg-gradient-header {
-            background-color: var(--orange-main-color);
-            /* You can add a subtle gradient if you want, similar to your previous header example: */
-            /* background-image: linear-gradient(to right, rgba(234,80,28,0.8), rgb(234,80,28)); */
-        }
-
-        .text-black {
-            color: #000;
-        }
-
-        .text-white {
-            color: #fff !important;
-        }
-
-        .font-bold {
-            font-weight: 700;
-        }
-
-
-        .rounded-pill {
-            border-radius: 50rem !important;
-        }
-
-
-        .hover-scale-105:hover {
-            transform: scale(1.05);
-        }
-
-        .transition-all {
-            transition-property: all;
-            transition-duration: 200ms;
-            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-
-        .navbar .nav-link {
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-            font-weight: 600; /* Make links a bit bolder */
-            color: #fff; /* Default link color on orange background */
-        }
-
-            .navbar .nav-link.hover-lighten-bg:hover {
-                background-color: rgba(255, 255, 255, 0.1); /* Subtle white overlay on hover */
-                color: #fff; /* Keep text white on hover */
-                transform: scale(1.02); /* Slight scale on hover */
-            }
-
-
-        .search-consistent .form-control {
-            border-color: rgba(255, 255, 255, 0.3); /* Lighter border for search input */
-            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white background */
-            color: #fff; /* Text color for input */
-            height: 40px; /* Consistent height */
-            box-shadow: none;
-            padding-left: 1rem;
-            padding-right: 0.5rem;
-        }
-
-            .search-consistent .form-control::placeholder {
-                color: rgba(255, 255, 255, 0.7); /* Lighter placeholder text */
-                font-style: italic;
-            }
-
-            .search-consistent .form-control:focus {
-                background-color: rgba(255, 255, 255, 0.2);
-                border-color: rgba(255, 255, 255, 0.5);
-                box-shadow: none;
-            }
-
-        .search-consistent .btn-secondary-outline-dark {
-            background-color: transparent; /* Transparent background */
-            border: 1px solid rgba(255, 255, 255, 0.3); /* Light border */
-            border-left: none; /* No border on the left to merge with input */
-            color: #fff; /* White icon color */
-            height: 40px;
-            padding: 0.5rem 1rem;
-            transition: all 0.3s ease;
-        }
-
-            .search-consistent .btn-secondary-outline-dark:hover {
-                background-color: rgba(255, 255, 255, 0.2); /* Subtle hover background */
-                color: #fff;
-                border-color: rgba(255, 255, 255, 0.5);
-            }
-
-
-        .search-consistent .form-control.rounded-start-pill {
-            border-top-right-radius: 0 !important;
-            border-bottom-right-radius: 0 !important;
-        }
-
-        .search-consistent .btn.rounded-end-pill {
-            border-top-left-radius: 0 !important;
-            border-bottom-left-radius: 0 !important;
-        }
-    </style>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -228,17 +122,13 @@
     <script src="~/lib/datatables/js/jquery.datatables.js"></script>
     <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
     <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
-    <!-- MDB -->
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.0.0/mdb.umd.min.js"></script>
 
-    <!--Pagination-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!--Navbar-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!--Sweet Alert-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @await RenderSectionAsync("Scripts", required: false)

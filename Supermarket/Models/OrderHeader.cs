@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System; // Make sure this is included for DateTime
+using System;
 
 namespace Supermarket.Models
 {
@@ -19,10 +19,8 @@ namespace Supermarket.Models
 
         public DateTime PaymentDate { get; set; }
 
-        // --- Add these properties ---
         public string? OrderStatus { get; set; } // Added OrderStatus
         public string? PaymentStatus { get; set; } // Added PaymentStatus
-        // --- End of added properties ---
 
         public string? SessionId { get; set; }
         public string? PaymentIntentId { get; set; }

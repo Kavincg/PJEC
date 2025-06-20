@@ -1,7 +1,7 @@
 ﻿@model List<OrderHeader>
 
 @{
-    ViewData["Title"] = "Order List"; // Set the title for this page
+    ViewData["Title"] = "Order List";
 }
 
 <div class="card shadow-lg border-0 mt-5 mb-4 rounded-4">
@@ -26,7 +26,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var obj in Model.OrderByDescending(h => h.OrderDate)) // Changed to OrderDate for typical order list sorting
+                    @foreach (var obj in Model.OrderByDescending(h => h.OrderDate)) 
                     {
                         @if (!(string.IsNullOrEmpty(obj.PaymentIntentId))){
                             <tr>
@@ -51,133 +51,3 @@
         </div>
     </div>
 </div>
-
-@section Scripts {
-    <script>
-        // Any specific JavaScript for this page can go here if needed.
-    </script>
-}
-
-<style>
-    /* Re-using styles from your Order Confirmation page for consistency */
-    :root {
-        --orange-main-color: rgb(234,80,28); /* The primary orange from your header */
-        --orange-line-color: rgba(234,80,28,0.5); /* A lighter shade for the lines (if needed elsewhere) */
-    }
-
-    .bg-gradient-header {
-        background-color: var(--orange-main-color);
-        /* You can add a subtle gradient if you want, similar to your previous header example: */
-        /* background-image: linear-gradient(to right, rgba(234,80,28,0.8), rgb(234,80,28)); */
-    }
-
-    /* General text colors to ensure readability and hierarchy */
-    .text-gray-800 {
-        color: #343a40;
-    }
-
-    .text-gray-600 {
-        color: #6c757d;
-    }
-
-    .text-gray-700 {
-        color: #495057;
-    }
-
-    .text-orange-600 {
-        color: #ea501c;
-    }
-
-    /* Typography adjustments from previous file */
-    .text-3xl {
-        font-size: 1.875rem;
-        line-height: 2.25rem;
-    }
-
-    .font-bold {
-        font-weight: 700;
-    }
-
-    .font-semibold {
-        font-weight: 600;
-    }
-
-    .font-medium {
-        font-weight: 500;
-    }
-
-    /* Rounded corners from previous file */
-    .rounded-4 {
-        border-radius: 1rem !important;
-    }
-
-    .rounded-top-4 {
-        border-top-left-radius: 1rem !important;
-        border-top-right-radius: 1rem !important;
-    }
-
-    /* Hover effect and transition from previous file */
-    .hover-scale-105:hover {
-        transform: scale(1.05);
-    }
-
-    .transition-all {
-        transition-property: all;
-        transition-duration: 200ms;
-        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* Table Specific Styling */
-    .table-header-custom {
-        background-color: var(--orange-main-color); /* Match header background */
-        color: #fff; /* White text for header */
-    }
-
-        .table-header-custom th {
-            border-color: rgba(255, 255, 255, 0.3) !important; /* Lighter borders for header cells */
-            padding: 0.75rem 1rem; /* Adjust padding */
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-        }
-
-    .table-bordered {
-        border-color: #dee2e6; /* Bootstrap default border for general table */
-    }
-
-        .table-bordered th,
-        .table-bordered td {
-            border-color: #dee2e6; /* Ensure all cells have the standard border */
-        }
-
-    .table th, .table td {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        padding: 0.6rem 1rem; /* Consistent padding for body cells */
-        font-size: 0.95rem; /* Slightly larger for readability */
-    }
-
-    .table-striped tbody tr:nth-of-type(odd) {
-        background-color: #f8f9fa; /* Lighter stripe, consistent with bg-light-gray */
-    }
-
-    .table-hover tbody tr:hover {
-        background-color: #e2e6ea; /* Subtle hover effect */
-        cursor: pointer;
-    }
-
-    /* Adjust the general card shadow and padding */
-    .card.shadow-lg {
-        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important; /* Softer shadow */
-    }
-
-    .card-body.p-4 {
-        padding: 1.5rem !important; /* Slightly more padding for the card body */
-    }
-
-    /* Small adjustment for the details button icon spacing */
-    .btn .bi {
-        vertical-align: middle; /* Align icon better with text */
-    }
-</style>

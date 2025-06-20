@@ -24,19 +24,14 @@
 
     <div id="category-carousel" class="d-flex overflow-hidden mt-1">
         <div class="row flex-nowrap g-4">
-            @* Added g-4 for consistent gutter spacing between cards *@
             @foreach (var category in Model)
             {
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center">
-                    @* Removed mb-4 as g-4 handles spacing *@
                     <a asp-controller="Product" asp-action="FindByCategory" asp-route-categoryId="@category.id" class="d-block text-decoration-none h-100 w-100">
-                        @* Added h-100 and w-100 to make the link fill the card space *@
                         <div class="card border border-1 rounded-4 shadow-sm h-100 hover-scale-105 transition-all">
-                            @* Applied rounded-4 and shadow-sm, and h-100 *@
                             <img src="/img/@category.logoUrl" class="card-img-top border-bottom rounded-top-4" alt="@category.Name" style="width: 100%; height: 80%; object-fit: cover;"> @* Used border-bottom and rounded-top-4, object-fit: cover for better image scaling *@
                             <div class="card-body text-dark d-flex align-items-center justify-content-center">
-                                @* Centered text vertically and horizontally *@
-                                <h5 class="card-title text-center mb-0 font-semibold">@category.Name</h5> @* Centered title and removed margin-bottom *@
+                                <h5 class="card-title text-center mb-0 font-semibold">@category.Name</h5> 
                             </div>
                         </div>
                     </a>
@@ -46,138 +41,6 @@
     </div>
 </div>
 
-<style>
-    /* Custom Orange from your existing styles */
-    :root {
-        --orange-main-color: rgb(234,80,28); /* The primary orange from your header */
-    }
-
-    .bg-gradient-header {
-        background-color: var(--orange-main-color);
-    }
-
-    /* --- NEW CSS ADDITION --- */
-    /* Fix for "View All" button text on hover */
-    .btn.bg-gradient-header.text-white.hover-scale-105:hover {
-        /* Set a different text color on hover, e.g., black or the orange-main-color */
-        color: var(--orange-main-color) !important; /* Makes text orange on hover */
-        background-color: white !important; /* Changes background to white on hover */
-        border-color: var(--orange-main-color) !important; /* Adds an orange border on hover */
-    }
-    /* --- END NEW CSS ADDITION --- */
-
-
-    /* Re-used utility classes for typography, spacing, and transitions */
-    .text-gray-800 {
-        color: #343a40;
-    }
-
-    .text-3xl {
-        font-size: 1.875rem;
-        line-height: 2.25rem;
-    }
-
-    .text-4xl {
-        font-size: 2.25rem;
-        line-height: 2.5rem;
-    }
-
-    .font-bold {
-        font-weight: 700;
-    }
-
-    .font-semibold {
-        font-weight: 600;
-    }
-
-    .py-5 {
-        padding-top: 3rem !important;
-        padding-bottom: 3rem !important;
-    }
-
-    .mt-4 {
-        margin-top: 1.5rem !important;
-    }
-
-    .mb-4 {
-        margin-bottom: 1.5rem !important;
-    }
-
-    .p-5 {
-        padding: 3rem !important;
-    }
-
-    .px-4 {
-        padding-left: 1.5rem !important;
-        padding-right: 1.5rem !important;
-    }
-
-    .py-4 {
-        padding-top: 1.5rem !important;
-        padding-bottom: 1.5rem !important;
-    }
-
-    .rounded-4 {
-        border-radius: 1rem !important;
-    }
-
-    .rounded-top-4 {
-        border-top-left-radius: 1rem !important;
-        border-top-right-radius: 1rem !important;
-    }
-
-    .shadow-lg {
-        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important;
-    }
-
-    .shadow-sm {
-        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
-    }
-
-    .hover-scale-105:hover {
-        transform: scale(1.05);
-    }
-
-    .transition-all {
-        transition-property: all;
-        transition-duration: 200ms;
-        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* Pagination Specific Styles */
-    #category-carousel {
-        overflow-x: auto;
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch; /* For smoother scrolling on iOS */
-    }
-
-        #category-carousel::-webkit-scrollbar {
-            display: none; /* Hide scrollbar for Webkit browsers */
-        }
-
-    .col-auto {
-        overflow: visible; /* Ensure columns don't hide content */
-    }
-
-    /* Adjustments for buttons */
-    .btn-outline-secondary {
-        border-color: #dee2e6;
-        color: #6c757d;
-        background-color: #f8f9fa;
-    }
-
-        .btn-outline-secondary:hover {
-            background-color: #e2e6ea;
-            color: #343a40;
-            border-color: #dae0e5;
-        }
-
-    /* Ensure card images fit well */
-    .card-img-top {
-        object-fit: cover; /* Ensures the image covers the area without distortion */
-        height: 80%; /* Maintain original height or adjust as needed */
-    }
-</style>
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -191,7 +54,7 @@
                 prevBtn.addEventListener('click',
                     function() {
                         categoryCarousel.scrollBy({
-                            left: -categoryCarousel.offsetWidth * 0.8, // Scroll by 80% of carousel width
+                            left: -categoryCarousel.offsetWidth * 0.8, 
                             behavior: 'smooth'
                         });
                     });
@@ -199,7 +62,7 @@
                 nextBtn.addEventListener('click',
                     function() {
                         categoryCarousel.scrollBy({
-                            left: categoryCarousel.offsetWidth * 0.8, // Scroll by 80% of carousel width
+                            left: categoryCarousel.offsetWidth * 0.8, 
                             behavior: 'smooth'
                         });
                     });

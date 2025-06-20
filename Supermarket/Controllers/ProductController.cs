@@ -99,7 +99,7 @@ namespace Supermarket.Controllers
                 }
                 else
                 {
-                    product.imgURL = productvm.imgURL; // Keep the existing image if no new image is uploaded
+                    product.imgURL = productvm.imgURL;
                 }
 
                 product.Id = productvm.Id;
@@ -152,12 +152,12 @@ namespace Supermarket.Controllers
 
             if (cartFromDb != null)
             {
-                // update quantity
+                
                 cartFromDb.quantity += shoppingCart.quantity;
             }
             else
             {
-                //add cart record
+               
                 ShoppingCart shoppingMapping = new()
                 {
                     quantity = shoppingCart.quantity,

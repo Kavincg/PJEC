@@ -75,7 +75,7 @@ namespace Supermarket.Controllers
 
 
         [HttpPost]
-        public IActionResult SummaryPost(string paymentMethod) // Added paymentMethod parameter
+        public IActionResult SummaryPost(string paymentMethod)
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -93,20 +93,17 @@ namespace Supermarket.Controllers
                 item.price = item.Product.price;
             }
 
-            // Determine payment method and process accordingly
             if (paymentMethod == "COD")
             {
-                // COD Logic: Bypass Stripe, set payment ID to "COD"
-                ShoppingCartVM.OrderHeader.PaymentStatus = "Pending"; // Or any appropriate status for COD before payment
+                ShoppingCartVM.OrderHeader.PaymentStatus = "Pending"; 
                 ShoppingCartVM.OrderHeader.OrderStatus = "Pending";
-                ShoppingCartVM.OrderHeader.PaymentIntentId = "COD"; // Set payment ID to "COD"
-                ShoppingCartVM.OrderHeader.SessionId = "COD"; // Set session ID to "COD" or null
+                ShoppingCartVM.OrderHeader.PaymentIntentId = "COD"; 
+                ShoppingCartVM.OrderHeader.SessionId = "COD"; 
             }
-            else // Default to Card/Stripe if not COD
+            else 
             {
                 ShoppingCartVM.OrderHeader.PaymentStatus = "Pending";
                 ShoppingCartVM.OrderHeader.OrderStatus = "Pending";
-                // Stripe payment will update these after successful payment
             }
 
             _unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
@@ -127,7 +124,6 @@ namespace Supermarket.Controllers
 
             if (paymentMethod == "Card")
             {
-                // Stripe Integration for Card Payment
                 var domain = Request.Scheme + "://" + Request.Host.Value + "/";
                 var options = new Stripe.Checkout.SessionCreateOptions
                 {
@@ -144,7 +140,7 @@ namespace Supermarket.Controllers
                     {
                         PriceData = new SessionLineItemPriceDataOptions
                         {
-                            UnitAmount = (long)(item.price * 100), // Stripe expects amount in cents
+                            UnitAmount = (long)(item.price * 100),
                             Currency = "inr",
                             ProductData = new SessionLineItemPriceDataProductDataOptions
                             {
@@ -164,7 +160,7 @@ namespace Supermarket.Controllers
                 Response.Headers.Append("Location", session.Url);
                 return new StatusCodeResult(303);
             }
-            else // COD payment handled above, directly go to confirmation
+            else 
             {
                 return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartVM.OrderHeader.Id });
             }
@@ -174,7 +170,6 @@ namespace Supermarket.Controllers
         {
             OrderHeader orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == id);
 
-            // This block handles Stripe payment confirmation if a session ID exists and is not "COD"
             if (orderHeader.SessionId != null && orderHeader.SessionId != "COD")
             {
                 var service = new SessionService();
@@ -183,7 +178,6 @@ namespace Supermarket.Controllers
                 if (session.PaymentStatus.Equals("paid", StringComparison.CurrentCultureIgnoreCase))
                 {
                     _unitOfWork.OrderHeader.UpdateStripePaymentID(id, session.Id, session.PaymentIntentId);
-                    // Update order status after successful payment
                     _unitOfWork.OrderHeader.UpdateStatus(id, "Approved", "PaymentApproved");
                     _unitOfWork.Save();
                 }
@@ -217,7 +211,6 @@ namespace Supermarket.Controllers
             var cartFromDb = _unitOfWork.Carts.Get(u => u.Id == cartId);
             if (cartFromDb.quantity <= 1)
             {
-                //remove that from cart
 
                 _unitOfWork.Carts.Remove(cartFromDb);
                 //HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart

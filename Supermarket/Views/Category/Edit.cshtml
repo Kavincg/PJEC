@@ -6,7 +6,7 @@
 
 <div class="container py-5">
     <div class="card shadow-lg border-0 rounded-3">
-        <div class="card-header bg-gradient-header text-white p-4 rounded-top-3">
+        <div class="bg-gradient-header text-white p-4 rounded-top-3">
             <div class="row align-items-center">
                 <div class="col-12 text-center text-md-start">
                     <h3 class="mb-0 text-white">Edit Category</h3>
@@ -14,10 +14,8 @@
             </div>
         </div>
         <div class="card-body p-4">
-            @* IMPORTANT: Add enctype="multipart/form-data" for file uploads *@
             <form method="post" class="row g-3" enctype="multipart/form-data">
                 <input asp-for="id" hidden />
-                @* This hidden input will carry the existing logoUrl (filename) if no new file is selected *@
                 <input asp-for="logoUrl" hidden />
 
                 <div asp-validation-summary="All" class="text-danger mb-3"></div>
@@ -36,7 +34,6 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label text-muted mb-2">Category Logo</label>
-                        @* CRITICAL CHANGE: Added name="file" to match the IFormFile parameter in the controller *@
                         <input class="form-control border-secondary rounded-2" type="file" accept="image/*" id="imageUpload" name="file" />
                     </div>
 
@@ -52,7 +49,6 @@
 
                 <div class="col-md-4 d-flex align-items-center justify-content-center">
                     <div class="image-preview-container border p-2 text-center" style="min-height: 200px; width: 100%; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa;">
-                        @* Display existing image or a placeholder if no image exists *@
                         <img id="imagePreview" src="@existingImageUrl" alt="Category Image Preview" class="img-fluid" style="@(string.IsNullOrEmpty(existingImageUrl) ? "display:none;" : "") max-height: 250px; object-fit: contain;" />
                         <span id="noImageText" class="text-muted @(string.IsNullOrEmpty(existingImageUrl) ? "" : "d-none")">No image selected</span>
                     </div>
@@ -81,7 +77,6 @@
                     imagePreview.style.display = 'block';
                     noImageText.classList.add('d-none');
                 } else {
-                    // If file is cleared, revert to existing image or no image text
                     const existingImageUrl = '@existingImageUrl';
                     if (existingImageUrl) {
                         imagePreview.src = existingImageUrl;
@@ -95,8 +90,7 @@
                 }
             });
 
-            // Initial check for image display on page load (for existing images)
-            if (imagePreview.src && imagePreview.src !== window.location.href + '#') { // Avoid displaying placeholder if src is just '#'
+            if (imagePreview.src && imagePreview.src !== window.location.href + '#') { 
                 imagePreview.style.display = 'block';
                 noImageText.classList.add('d-none');
             } else {
@@ -106,107 +100,3 @@
         });
     </script>
 }
-
-<style>
-    /* Add the same style block as your Create.cshtml to ensure consistent styling */
-    :root {
-        --orange-main-color: rgb(234,80,28); /* The primary orange from your header */
-        --orange-line-color: rgba(234,80,28,0.5); /* A lighter shade for the lines (if needed elsewhere) */
-    }
-
-    .bg-gradient-header {
-        background-color: var(--orange-main-color);
-    }
-
-    .text-gray-700 {
-        color: #495057;
-    }
-
-    .text-black {
-        color: #000;
-    }
-
-    .text-3xl {
-        font-size: 1.875rem;
-        line-height: 2.25rem;
-    }
-
-    .font-bold {
-        font-weight: 700;
-    }
-
-    .rounded-4 {
-        border-radius: 1rem !important;
-    }
-
-    .rounded-top-4 {
-        border-top-left-radius: 1rem !important;
-        border-top-right-radius: 1rem !important;
-    }
-
-    .rounded-pill {
-        border-radius: 50rem !important;
-    }
-
-    .hover-scale-105:hover {
-        transform: scale(1.05);
-    }
-
-    .transition-all {
-        transition-property: all;
-        transition-duration: 200ms;
-        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .card.shadow-lg {
-        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important;
-    }
-
-    .card-body.p-4 {
-        padding: 1.5rem !important;
-    }
-
-    .form-control.rounded-pill {
-        border-radius: 50rem !important;
-        padding-left: 1.25rem;
-        padding-right: 1.25rem;
-    }
-
-    .form-floating > .form-control.rounded-pill,
-    .form-floating > .form-control.rounded-pill ~ label {
-        height: calc(3.5rem + 2px);
-    }
-
-    .form-floating > label {
-        padding: 1rem 1.25rem;
-    }
-
-    .form-floating > .form-control.rounded-pill:focus,
-    .form-floating > .form-control.rounded-pill:not(:placeholder-shown) {
-        padding-top: 1.625rem;
-        padding-bottom: 0.625rem;
-    }
-
-    .btn.bg-gradient-header {
-        background-color: var(--orange-main-color);
-        color: #fff;
-        border: none;
-    }
-
-        .btn.bg-gradient-header:hover {
-            background-color: var(--orange-main-color);
-            opacity: 0.9;
-        }
-
-    .btn-secondary {
-        background-color: #6c757d;
-        border-color: #6c757d;
-        color: #fff;
-    }
-
-        .btn-secondary:hover {
-            background-color: #5a6268;
-            border-color: #545b62;
-            color: #fff;
-        }
-</style>
