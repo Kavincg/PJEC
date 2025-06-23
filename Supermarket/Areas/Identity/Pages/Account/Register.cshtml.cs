@@ -23,6 +23,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 using Supermarket.Models;
 using Supermarket.RolesAndEmailSender;
+using System.Text.RegularExpressions;
 
 namespace Supermarket.Areas.Identity.Pages.Account
 {
@@ -120,14 +121,18 @@ namespace Supermarket.Areas.Identity.Pages.Account
             public IEnumerable<SelectListItem> RoleList { get; set; }
 
             [Required]
+            [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Name can only contain letters and spaces.")]
             public string Name { get; set; }
             [Required]
             public string StreetAdress { get; set; }
             [Required]
+            [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "City can only contain letters and spaces.")]
             public string City { get; set; }
             [Required]
+            [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "State can only contain letters and spaces.")]
             public string State { get; set; }
             [Required]
+            [RegularExpression(@"^\d{10}$", ErrorMessage = "Invalid Phone Number. Please enter exactly 10 digits.")]
             public string PhoneNumber { get; set; }
 
         }
