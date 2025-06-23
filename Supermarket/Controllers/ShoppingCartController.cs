@@ -98,7 +98,7 @@ namespace Supermarket.Controllers
                 ShoppingCartVM.OrderHeader.PaymentStatus = "Pending"; 
                 ShoppingCartVM.OrderHeader.OrderStatus = "Pending";
                 ShoppingCartVM.OrderHeader.PaymentIntentId = "COD"; 
-                ShoppingCartVM.OrderHeader.SessionId = "COD"; 
+                ShoppingCartVM.OrderHeader.SessionId = "COD";
             }
             else 
             {
@@ -166,34 +166,31 @@ namespace Supermarket.Controllers
             }
         }
 
-        public IActionResult OrderConfirmation(int id)
+        public IActionResult OrderConfirmation(int id, bool isView = false)
         {
             OrderHeader orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == id);
 
-            if (orderHeader.SessionId != null && orderHeader.SessionId != "COD")
+            if (!isView)
             {
-                var service = new SessionService();
-                Session session = service.Get(orderHeader.SessionId);
-
-                if (session.PaymentStatus.Equals("paid", StringComparison.CurrentCultureIgnoreCase))
+                if (orderHeader.SessionId != null && orderHeader.SessionId != "COD")
                 {
-                    _unitOfWork.OrderHeader.UpdateStripePaymentID(id, session.Id, session.PaymentIntentId);
-                    _unitOfWork.OrderHeader.UpdateStatus(id, "Approved", "PaymentApproved");
-                    _unitOfWork.Save();
+                    var service = new SessionService();
+                    Session session = service.Get(orderHeader.SessionId);
+
+                    if (session.PaymentStatus.Equals("paid", StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        _unitOfWork.OrderHeader.UpdateStripePaymentID(id, session.Id, session.PaymentIntentId);
+                        _unitOfWork.OrderHeader.UpdateStatus(id, "Approved", "PaymentApproved");
+                    }
                 }
-            }
-            else if (orderHeader.PaymentIntentId == "COD")
-            {
-                // For COD, the order status is already set to Pending, nothing more to do here for status update
-            }
 
-
-            List<ShoppingCart> shoppingCarts = _unitOfWork.Carts
+                List<ShoppingCart> shoppingCarts = _unitOfWork.Carts
                 .GetShoppingCartListByUserId(orderHeader.ApplicationUserId).ToList();
 
-            _unitOfWork.Carts.RemoveRange(shoppingCarts);
-            _unitOfWork.Save();
+                _unitOfWork.Carts.RemoveRange(shoppingCarts);
+                _unitOfWork.Save();
 
+            }
             return View(orderHeader);
         }
 

@@ -38,7 +38,7 @@
                                 <td>@obj.OrderTotal.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-IN"))</td>
                                 <td>
                                     <div class="d-grid">
-                                        <a asp-controller="ShoppingCart" asp-action="OrderConfirmation" asp-route-id="@obj.Id"
+                                        <a asp-controller="ShoppingCart" asp-action="OrderConfirmation" asp-route-id="@obj.Id" asp-route-isView="true"
                                            class="btn bg-gradient-header btn-sm rounded-pill px-3 py-2 shadow-sm text-white hover-scale-105 transition-all">
                                             <i class="bi bi-info-circle me-1"></i> Details
                                         </a>
