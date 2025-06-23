@@ -11,10 +11,10 @@
                         <div class="bg-gradient-header text-white py-4 px-4 rounded-top-4">
                             <div class="row align-items-center">
                                 <div class="col-6">
-                                    <h3 class="mb-0 text-3xl text-gray-800 font-bold text-white">Order Summary</h3>
+                                    <h3 class="text-gray-800 font-bold text-white">Summary - Your order overview!</h3>
                                 </div>
                                 <div class="col-6 text-end">
-                                    <a asp-action="Index" class="btn btn-outline-light rounded-pill px-4 py-2 shadow-sm hover-scale-105 transition-all">Back to Cart</a>
+                                    <a asp-action="Index" class="btn bg-black text-white rounded px-4 py-2 shadow-sm hover-scale-105 transition-all">Back to Cart</a>
                                 </div>
                             </div>
                         </div>
@@ -58,13 +58,7 @@
                                             <span asp-validation-for="OrderHeader.State" class="text-danger small mt-1 d-block"></span>
                                         </div>
                                     </div>
-                                    @* <div class="row mb-3 align-items-center"> *@
-                                    @*     <label asp-for="OrderHeader.PostalCode" class="col-sm-3 col-form-label fw-medium">Postal Code</label> *@
-                                    @*     <div class="col-sm-9"> *@
-                                    @*         <input asp-for="OrderHeader.PostalCode" class="form-control rounded-pill shadow-sm" id="OrderHeader_PostalCode" /> *@
-                                    @*         <span asp-validation-for="OrderHeader.PostalCode" class="text-danger small mt-1 d-block"></span> *@
-                                    @*     </div> *@
-                                    @* </div> *@
+                                    
                                 </div>
 
                                 <div class="col-12 col-lg-6">
@@ -83,7 +77,7 @@
 
                                         <li class="list-group-item d-flex justify-content-between align-items-center bg-light py-3 rounded-bottom-3">
                                             <h6 class="mb-0 text-dark font-bold">Total Amount:</h6>
-                                            <span class="text-orange-600 text-2xl font-bold">₹ @Model.OrderHeader.OrderTotal.ToString("F2")</span>
+                                            <span class="text-black text-2xl font-bold">₹ @Model.OrderHeader.OrderTotal.ToString("F2")</span>
                                         </li>
                                     </ul>
 
@@ -113,7 +107,7 @@
                                     </p>
                                 </div>
                                 <div class="col-12 col-md-4 text-end mt-3 mt-md-0">
-                                    <button type="submit" value="Place Order" class=" btn btn-outline-light rounded-pill px-4 shadow-sm hover-scale-105 transition-all bg-gradient-header btn-lg rounded-pill py-3 w-100">
+                                    <button type="submit" value="Place Order" class=" btn text-white bg-black rounded px-4 shadow-sm hover-scale-105 transition-all py-3">
                                         Place Order
                                         <i class="bi bi-bag-check ms-2"></i>
                                     </button>

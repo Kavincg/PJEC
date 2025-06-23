@@ -31,12 +31,13 @@
     <header >
         <nav class="navbar fixed-top bg-gradient-header" style="height: 70px;">
             <div class="container-fluid">
-                <div class="col-2 d-flex align-items-center">
+                <div class="col-2 d-flex align-items-center pb-5">
                     <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
-                        <img class="avatar" style="width: 45px; height: 45px; object-fit: cover;" src="~/img/logo3.png" alt="BuddyBasket Logo" />
+                        @* <img class="avatar" style="width: 45px; height: 45px; object-fit: cover;" src="~/img/logo3.png" alt="BuddyBasket Logo" /> *@
+                        <h4>BuddyBasket</h4>
                     </a>
                 </div>
-                <div class="col-6 d-flex h-100 justify-content-center align-items-center">
+                <div class="col-6 d-flex h-100 justify-content-center align-items-center pb-5">
                     @if (User.Identity.IsAuthenticated)
                     {
                         <div class="m-2 fw-bold">
@@ -85,36 +86,8 @@
                     }
                 </div>
                 
-                <style>
-                    
-                    .input-group.rounded-pill-wrapper {
-                       
-                        border: 1px solid var(--bs-border-color); 
-                        border-radius: var(--bs-border-radius-pill); 
-                        overflow: hidden; 
-                        box-shadow: var(--bs-box-shadow-sm); 
-                    }
-
-                        .input-group.rounded-pill-wrapper .form-control {
-                            border: 0; 
-                            box-shadow: none; 
-                        }
-
-                        .input-group.rounded-pill-wrapper .form-control:focus {    
-                            border-color: transparent; 
-                            outline: 0;
-                            box-shadow: inset 0 0 0 1px var(--bs-primary), 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25); 
-                        }
-
-                        .input-group.rounded-pill-wrapper .btn {
-                          
-                            border: 0; 
-                            display: flex;
-                            align-items: center; 
-                            justify-content: center; 
-                        }
-                </style>
-                  <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-end align-items-lg-center">
+                
+                  <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-end align-items-lg-center pb-5">
                         <form asp-controller="Category" asp-action="Search" method="get" class="d-flex w-50">
                                 <div class="input-group rounded-pill-wrapper">
                                     <input type="text" name="search"
@@ -122,14 +95,14 @@
                                            placeholder="Search Products"
                                            aria-label="Search categories">
                                     <button type="submit"
-                                            class="btn text-white" style="background-color:rgb(234,80,28)">
+                                            class="btn text-white" style="background-color: black;">
                                         <i class="bi bi-search fs-6"></i>
                                     </button>
                                 </div>
                         </form>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <div>
+                        <div class="">
                             <a class="nav-link text-white hover-lighten-bg rounded-pill px-3 py-2 transition-all" asp-area="Identity" asp-page="/Account/Manage/Index">
                                 <i class="bi bi-person-circle fs-1"></i>
                             </a>
